@@ -5,7 +5,7 @@ import type { GroupedTaskStatuses } from "@/types/taskStatuses";
 import { checkInstalledBinaries, installTask } from "./api";
 import { delay } from "./utils";
 
-export function useInstallationTasks(tasks: { key: string; label: string }[]) {
+export function useInstallationProgress(tasks: { key: string; label: string }[]) {
     const [groupedTaskStatuses, setGroupedTaskStatuses] = useState<GroupedTaskStatuses>(() =>
         ({ Installation: Object.fromEntries(tasks.map((label) => [label.label, "pending"])) })
     );

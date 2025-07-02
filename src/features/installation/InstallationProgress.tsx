@@ -5,7 +5,7 @@ import FullscreenCircularProgress from "@/components/FullscreenCircularProgress"
 import TaskList from "@/components/TaskList";
 
 import { INSTALL_TASKS } from "./constants";
-import { useInstallationTasks } from "./hooks";
+import { useInstallationProgress } from "./useInstallationProgress";
 
 export default function InstallationProgress({ onComplete }: { onComplete: () => void }) {
     const {
@@ -13,7 +13,7 @@ export default function InstallationProgress({ onComplete }: { onComplete: () =>
         currentTask,
         isInstalling,
         success,
-    } = useInstallationTasks(INSTALL_TASKS);
+    } = useInstallationProgress(INSTALL_TASKS);
 
     useEffect(() => {
         if (success && !isInstalling) {
