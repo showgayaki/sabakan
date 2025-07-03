@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { open } from "@tauri-apps/plugin-dialog";
 
-import { getHostOS } from "./api";
+import {
+    getHostOS,
+    startBrowsersync,
+    stopBrowsersync,
+} from "./api";
 
 export default function useBrowsersyncForm() {
     const [hostOs, setHostOs] = useState<string>("");
     const [directory, setDirectory] = useState<string>("");
+    const [isRunning, setIsRunning] = useState<boolean>(false);
 
     const selectDirectory = async () => {
         console.log("Selecting directory...");
@@ -22,11 +27,14 @@ export default function useBrowsersyncForm() {
         getHostOS().then(setHostOs).catch(console.error);
     }, []);
 
-
     return {
         hostOs,
         directory,
         setDirectory,
         selectDirectory,
+        startBrowsersync,
+        stopBrowsersync,
+        isRunning,
+        setIsRunning,
     }
 }

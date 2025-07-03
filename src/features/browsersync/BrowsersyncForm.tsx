@@ -1,8 +1,19 @@
-import DirectoryInputSection from "./components/DirectoryInputSection";
 import useBrowsersyncForm from "./useBrowsersyncForm";
 
+import DirectoryInputSection from "./components/DirectoryInputSection";
+import ButtonSection from "./components/ButtonSection";
+
 export default function BrowsersyncForm() {
-    const { hostOs, directory, setDirectory, selectDirectory } = useBrowsersyncForm();
+    const {
+        hostOs,
+        directory,
+        setDirectory,
+        selectDirectory,
+        startBrowsersync,
+        stopBrowsersync,
+        isRunning,
+        setIsRunning,
+    } = useBrowsersyncForm();
 
     return (
         <>
@@ -13,6 +24,18 @@ export default function BrowsersyncForm() {
                     setPath={setDirectory}
                     onClick={selectDirectory}
                     error={null}
+                />
+                <ButtonSection
+                    isRunning={isRunning}
+                    handleStartBrowsersync={() => {
+                        setIsRunning(true);
+                        startBrowsersync(directory);
+                    }}
+                    handleStopBrowsersync={() => {
+                        setIsRunning(false);
+                        stopBrowsersync();
+                    }}
+                    handleShowQrCode={() => {}}
                 />
             </form>
         </>

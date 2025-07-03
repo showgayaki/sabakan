@@ -13,7 +13,13 @@ interface DirectoryInputSectionProps {
     error?: string | null;
 }
 
-export default function DirectoryInputSection({hostOs, path, setPath, onClick, error }: DirectoryInputSectionProps) {
+export default function DirectoryInputSection({
+    hostOs,
+    path,
+    setPath,
+    onClick,
+    error,
+}: DirectoryInputSectionProps) {
     console.log("DirectoryInputSection rendered with hostOs:", hostOs);
     const placeholder = hostOs === "windows"
         ? "C:\\path\\to\\directory"
