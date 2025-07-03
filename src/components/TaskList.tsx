@@ -10,7 +10,6 @@ import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import type { GroupedTaskStatuses } from "@/types/taskStatuses";
-import ThumbUp from "@mui/icons-material/ThumbUp";
 
 interface TaskListProps {
     groupedTaskStatuses: GroupedTaskStatuses;
@@ -72,27 +71,5 @@ export default function TaskList({ groupedTaskStatuses }: TaskListProps) {
                 ))}
             </Box>
         </>
-    );
-}
-
-function GroupTitle({ group, image }: { group: string, image?: string }) {
-    const imageSize = 30;
-    return (
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 0.5 }}>
-            {
-                image ?
-                    <img
-                        src={`/images/${group.toLowerCase()}--checked.png`}
-                        alt={`${group} icon`}
-                        width={imageSize}
-                        height={imageSize}
-                        style={{ display: "inline-block" }}
-                    />
-                    : <ThumbUp color="info" sx={{ width: imageSize, height: imageSize }} />
-
-            }
-            <Typography>{group}</Typography>
-        </Box>
-
     );
 }
