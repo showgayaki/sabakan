@@ -1,5 +1,4 @@
 import { IconButton, IconButtonProps } from "@mui/material";
-// import IconButton from '@mui/material/IconButton';
 
 interface CustomIconButtonProps {
     size: 'small' | 'medium' | 'large';

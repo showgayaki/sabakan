@@ -9,6 +9,8 @@ export default function BrowsersyncForm() {
         directory,
         setDirectory,
         selectDirectory,
+        directoryError,
+        validate,
         startBrowsersync,
         stopBrowsersync,
         isRunning,
@@ -23,11 +25,15 @@ export default function BrowsersyncForm() {
                     path={directory}
                     setPath={setDirectory}
                     onClick={selectDirectory}
-                    error={null}
+                    error={directoryError}
                 />
                 <ButtonSection
                     isRunning={isRunning}
                     handleStartBrowsersync={() => {
+                        if (!validate()) {
+                            console.error("Validation failed, cannot start Browsersync.");
+                            return;
+                        }
                         setIsRunning(true);
                         startBrowsersync(directory);
                     }}

@@ -10,6 +10,7 @@ import {
 export default function useBrowsersyncForm() {
     const [hostOs, setHostOs] = useState<string>("");
     const [directory, setDirectory] = useState<string>("");
+    const [directoryError, setDirectoryError] = useState<string | null>(null);
     const [isRunning, setIsRunning] = useState<boolean>(false);
 
     const selectDirectory = async () => {
@@ -23,6 +24,24 @@ export default function useBrowsersyncForm() {
         }
     };
 
+    const validate = () => {
+        let hasError = false;
+
+        if (!directory) {
+            setDirectoryError("ディレクトリを選択してください");
+            hasError = true;
+        }
+
+        if (hasError) {
+            setTimeout(() => {
+                setDirectoryError(null);
+            }, 3000);
+            return false;
+        }
+
+        return true;
+    }
+
     useEffect(() => {
         getHostOS().then(setHostOs).catch(console.error);
     }, []);
@@ -32,6 +51,8 @@ export default function useBrowsersyncForm() {
         directory,
         setDirectory,
         selectDirectory,
+        directoryError,
+        validate,
         startBrowsersync,
         stopBrowsersync,
         isRunning,
