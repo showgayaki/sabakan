@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-import { BrowsersyncForm } from "./components/ScreenshotForm";
+import { BrowsersyncForm } from "./components/BrowsersyncForm";
 
 export default function Home() {
     return (
