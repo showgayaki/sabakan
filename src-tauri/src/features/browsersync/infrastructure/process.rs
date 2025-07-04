@@ -1,7 +1,6 @@
 use log::info;
 use nix::sys::signal::{killpg, Signal};
 use nix::unistd::Pid;
-use std::env::var;
 use std::io::{BufRead, BufReader};
 use std::os::unix::process::CommandExt;
 use std::process::{Child, Command, Stdio};
@@ -15,7 +14,7 @@ pub fn spawn_browsersync(target_dir: &str) -> Result<(Child, String), String> {
     let node_bin_dir = NODE_DIR.join("bin");
 
     // PATHに追加しておかないと、グローバルのnodeを使われちゃう
-    let path_var = var("PATH").unwrap_or_default();
+    let path_var = std::env::var("PATH").unwrap_or_default();
     let patched_path = format!("{}:{}", node_bin_dir.display(), path_var);
 
     // npm exec browser-sync -- start --cwd {target_dir} --server --files {target_files.join(",")}
@@ -53,10 +52,29 @@ pub fn spawn_browsersync(target_dir: &str) -> Result<(Child, String), String> {
     let stdout = child.stdout.take().ok_or("Missing stdout")?;
     let reader = BufReader::new(stdout);
 
+    // バックグラウンドスレッドから行を送信するためのチャンネルを作成
+    let (tx, rx) = std::sync::mpsc::channel();
+
+    // stdout を継続的に読み取るためのスレッドを起動
+    std::thread::spawn(move || {
+        for line_result in reader.lines() {
+            match line_result {
+                Ok(line) => {
+                    info!("[BrowserSync] {}", line);
+                    let _ = tx.send(line);
+                }
+                Err(e) => {
+                    info!("[BrowserSync] Error reading line: {}", e);
+                    break;
+                }
+            }
+        }
+    });
+
     let mut external_url = None;
 
-    for line in reader.lines() {
-        let line = line.map_err(|e| format!("Read error: {e}"))?;
+    // External URL が現れるのを待つ（チャンネルからブロッキングで読み取る）
+    for line in rx {
         if line.contains("External:") {
             if let Some(url) = line.split("External:").nth(1) {
                 external_url = Some(url.trim().to_string());
