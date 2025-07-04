@@ -1,7 +1,6 @@
-use log::{debug, error, info};
+use log::info;
 use std::process::Child;
 use std::sync::{Arc, Mutex};
-use tauri::AppHandle;
 
 use super::infrastructure::process::{spawn_browsersync, stop_browsersync};
 
@@ -10,17 +9,17 @@ pub struct BrowsersyncState {
 }
 
 impl BrowsersyncState {
-    pub async fn start(&self, app_handle: &AppHandle, target_dir: &str) -> Result<(), String> {
+    pub async fn start(&self, target_dir: &str) -> Result<String, String> {
         let mut lock = self.process.lock().unwrap();
         if lock.is_some() {
             return Err("Browsersync already running".to_string());
         }
 
-        let child = spawn_browsersync(target_dir).map_err(|e| e.to_string())?;
-        debug!("Browsersync process started with PID: {}", child.id());
+        let (child, external_url) = spawn_browsersync(target_dir).map_err(|e| e.to_string())?;
+        info!("Browsersync process started with PID: {}", child.id());
         *lock = Some(child);
 
-        Ok(())
+        Ok(external_url)
     }
 
     pub fn stop(&self) -> Result<(), String> {

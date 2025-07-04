@@ -6,11 +6,10 @@ use super::services::BrowsersyncState;
 #[command]
 pub async fn start_browsersync(
     state: State<'_, BrowsersyncState>,
-    app_handle: AppHandle,
     target_dir: String,
-) -> Result<(), String> {
+) -> Result<String, String> {
     debug!("start_browsersync command called");
-    state.start(&app_handle, &target_dir).await
+    state.start(&target_dir).await
 }
 
 #[command]

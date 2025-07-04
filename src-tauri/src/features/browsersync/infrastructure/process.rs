@@ -1,13 +1,14 @@
-use log::debug;
+use log::{debug, info};
 use nix::sys::signal::{killpg, Signal};
 use nix::unistd::Pid;
 use std::env::var;
+use std::io::{BufRead, BufReader};
 use std::os::unix::process::CommandExt;
-use std::process::{Child, Command};
+use std::process::{Child, Command, Stdio};
 
 use crate::constants::NODE_DIR;
 
-pub fn spawn_browsersync(target_dir: &str) -> Result<Child, String> {
+pub fn spawn_browsersync(target_dir: &str) -> Result<(Child, String), String> {
     let target_files = ["**/*.html", "**/*.css", "**/*.js", "**/*.php"];
 
     let npm_bin = NODE_DIR.join("bin/npm");
@@ -25,7 +26,7 @@ pub fn spawn_browsersync(target_dir: &str) -> Result<Child, String> {
     // - setpgid(0, 0) は POSIX 標準の安全なシステムコールで、メモリやスレッド状態を変更しない。
     // - 他の共有リソース（mutex等）やメモリ操作を行っていないため、pre_exec 内でも安全に使える。
     // - これにより、後から killpg() を使って browser-sync プロセスごと安全に停止できるようにしている。
-    unsafe {
+    let mut child = unsafe {
         Command::new(npm_bin)
             .env("PATH", patched_path)
             .arg("exec")
@@ -38,6 +39,8 @@ pub fn spawn_browsersync(target_dir: &str) -> Result<Child, String> {
             .current_dir(target_dir)
             .arg("--files")
             .arg(target_files.join(","))
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
             .pre_exec(|| {
                 // グループリーダーとしてプロセスグループを作る
                 libc::setpgid(0, 0);
@@ -45,12 +48,38 @@ pub fn spawn_browsersync(target_dir: &str) -> Result<Child, String> {
             })
             .spawn()
     }
-    .map_err(|e| format!("Failed to start browser-sync: {}", e))
+    .map_err(|e| format!("Failed to start browser-sync: {}", e))?;
+
+    let stdout = child.stdout.take().ok_or("Missing stdout")?;
+    let reader = BufReader::new(stdout);
+
+    let mut external_url = None;
+
+    for line in reader.lines() {
+        let line = line.map_err(|e| format!("Read error: {e}"))?;
+        if line.contains("External:") {
+            if let Some(url) = line.split("External:").nth(1) {
+                external_url = Some(url.trim().to_string());
+                break;
+            }
+        }
+    }
+
+    info!(
+        "Browsersync External URL: {}",
+        external_url.as_deref().unwrap_or("(not set)")
+    );
+
+    match external_url {
+        Some(url) => Ok((child, url)),
+        None => Err("External URL not found".into()),
+    }
 }
 
 pub fn stop_browsersync(process: &mut Child) -> Result<(), String> {
     let pid = process.id() as i32;
-    debug!("Stopping Browsersync process with PID: {}", pid);
+    info!("Stopping Browsersync process with PID: {}", pid);
+
     killpg(Pid::from_raw(pid), Signal::SIGKILL)
         .map_err(|e| format!("Failed to kill process group: {}", e))?;
 

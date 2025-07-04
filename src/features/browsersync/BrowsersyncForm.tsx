@@ -29,14 +29,15 @@ export default function BrowsersyncForm() {
                 />
                 <ButtonSection
                     isRunning={isRunning}
-                    handleStartBrowsersync={() => {
+                    handleStartBrowsersync={async () => {
                         if (!validate()) {
                             console.error("Validation failed, cannot start Browsersync.");
                             return;
                         }
                         console.log("Starting Browsersync with directory:", directory);
                         setIsRunning(true);
-                        startBrowsersync(directory);
+                        const url = await startBrowsersync(directory);
+                        console.log("Browsersync started at URL:", url);
                     }}
                     handleStopBrowsersync={() => {
                         console.log("Stopping Browsersync");
