@@ -12,19 +12,19 @@ export default function InstallationProgress({ onComplete }: { onComplete: () =>
         groupedTaskStatuses,
         currentTask,
         isInstalling,
-        success,
+        status,
     } = useInstallationProgress(INSTALL_TASKS);
 
     useEffect(() => {
-        if (success && !isInstalling) {
+        if (status == "success" && !isInstalling) {
             onComplete();
         }
-    }, [success, isInstalling, onComplete]);
+    }, [status, isInstalling, onComplete]);
 
     return (
         <>
             {isInstalling && (
-                <FullscreenCircularProgress success={success}>
+                <FullscreenCircularProgress status={status}>
                     <Typography variant="h6" sx={{ mb: 2 }}>
                         {currentTask ? `${currentTask} をインストール中です...` : "インストールが完了しました！"}
                     </Typography>

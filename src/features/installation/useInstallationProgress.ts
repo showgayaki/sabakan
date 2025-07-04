@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 import type { GroupedTaskStatuses } from "@/types/taskStatuses";
+import { ProgressStatus } from "@/types/progress";
 
 import { checkInstalledBinaries, installTask } from "./api";
 import { delay } from "./utils";
@@ -11,14 +12,14 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
     );
     const [currentTask, setCurrentTask] = useState<string | null>(null);
     const [isInstalling, setIsInstalling] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const [showDependenciesAlert, setShowDependenciesAlert] = useState(false);
+    const [status, setStatus] = useState<ProgressStatus>("idle");
     const isExecuted = useRef(false); // StrictMode（開発時）での2回実行を回避
 
     const check = async () => {
         if (isExecuted.current) return;
         isExecuted.current = true;
 
+        setStatus("pending");
         try {
             const installed = await checkInstalledBinaries();
             setGroupedTaskStatuses(
@@ -34,8 +35,7 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
                 setCurrentTask(missing[0].label);
                 setIsInstalling(true);
             } else {
-                setShowDependenciesAlert(true);
-                setSuccess(true);
+                setStatus("success");
             }
         } catch (error) {
             console.error("Error checking installed binaries:", error);
@@ -58,11 +58,11 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
             }
         }
 
-        setSuccess(true);
+        setStatus("success");
         setCurrentTask(null);
         await delay(3000);
         setIsInstalling(false);
-        setShowDependenciesAlert(true);
+        setStatus("idle");
     };
 
     useEffect(() => {
@@ -79,7 +79,6 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
         groupedTaskStatuses,
         currentTask,
         isInstalling,
-        success,
-        showDependenciesAlert,
+        status,
     };
 }
