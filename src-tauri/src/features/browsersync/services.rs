@@ -1,4 +1,4 @@
-use log::{error, info};
+use log::{debug, error, info};
 use std::process::Child;
 use std::sync::{Arc, Mutex};
 use tauri::AppHandle;
@@ -17,6 +17,7 @@ impl BrowsersyncState {
         }
 
         let child = spawn_browsersync(target_dir).map_err(|e| e.to_string())?;
+        debug!("Browsersync process started with PID: {}", child.id());
         *lock = Some(child);
 
         Ok(())
@@ -25,7 +26,11 @@ impl BrowsersyncState {
     pub fn stop(&self) -> Result<(), String> {
         let mut lock = self.process.lock().unwrap();
         if let Some(mut process) = lock.take() {
+            info!("Stopping Browsersync process...");
             stop_browsersync(&mut process)?;
+            info!("Browsersync stopped.");
+        } else {
+            info!("No Browsersync process to stop.");
         }
         Ok(())
     }

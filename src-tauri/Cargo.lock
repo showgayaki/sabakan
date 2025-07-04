@@ -382,8 +382,10 @@ name = "bs-launcher"
 version = "0.1.0"
 dependencies = [
  "flate2",
+ "libc",
  "log",
  "log4rs",
+ "nix",
  "reqwest",
  "serde",
  "serde_json",
