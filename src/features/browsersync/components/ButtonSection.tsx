@@ -5,7 +5,7 @@ import CustomIconButton from "@/components/CustomIconButton";
 
 interface ButtonSectionProps {
     isRunning: boolean;
-    handleStartBrowsersync: () => void;
+    handleStartBrowsersync:  () => void;
     handleStopBrowsersync: () => void;
     handleShowQrCode: () => void;
 }

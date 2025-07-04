@@ -2,23 +2,27 @@ import useBrowsersyncForm from "./useBrowsersyncForm";
 
 import DirectoryInputSection from "./components/DirectoryInputSection";
 import ButtonSection from "./components/ButtonSection";
+import BrowsersyncProgress from "./components/BrowsersyncProgress";
 
 export default function BrowsersyncForm() {
     const {
         hostOs,
         directory,
         setDirectory,
-        selectDirectory,
         directoryError,
-        validate,
-        startBrowsersync,
-        stopBrowsersync,
         isRunning,
-        setIsRunning,
+        status,
+        statusMessage,
+        selectDirectory,
+        handleStartBrowsersync,
+        handleStopBrowsersync,
     } = useBrowsersyncForm();
 
     return (
         <>
+            {statusMessage &&
+                <BrowsersyncProgress status={status} statusMessage={statusMessage} />
+            }
             <form className="space-y-4">
                 <DirectoryInputSection
                     hostOs={hostOs}
@@ -29,22 +33,9 @@ export default function BrowsersyncForm() {
                 />
                 <ButtonSection
                     isRunning={isRunning}
-                    handleStartBrowsersync={async () => {
-                        if (!validate()) {
-                            console.error("Validation failed, cannot start Browsersync.");
-                            return;
-                        }
-                        console.log("Starting Browsersync with directory:", directory);
-                        setIsRunning(true);
-                        const url = await startBrowsersync(directory);
-                        console.log("Browsersync started at URL:", url);
-                    }}
-                    handleStopBrowsersync={() => {
-                        console.log("Stopping Browsersync");
-                        setIsRunning(false);
-                        stopBrowsersync();
-                    }}
-                    handleShowQrCode={() => {}}
+                    handleStartBrowsersync={() => { handleStartBrowsersync(directory); }}
+                    handleStopBrowsersync={() => { handleStopBrowsersync(); }}
+                    handleShowQrCode={() => { }}
                 />
             </form>
         </>

@@ -1,5 +1,5 @@
 use log::debug;
-use tauri::{command, AppHandle, State};
+use tauri::{command, State};
 
 use super::services::BrowsersyncState;
 
@@ -13,7 +13,7 @@ pub async fn start_browsersync(
 }
 
 #[command]
-pub fn stop_browsersync(state: State<'_, BrowsersyncState>) -> Result<(), String> {
+pub fn stop_browsersync(state: State<'_, BrowsersyncState>) -> Result<bool, String> {
     debug!("stop_browsersync command called");
     state.stop()
 }

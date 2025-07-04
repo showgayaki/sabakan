@@ -1,4 +1,4 @@
-use log::{debug, info};
+use log::info;
 use nix::sys::signal::{killpg, Signal};
 use nix::unistd::Pid;
 use std::env::var;
@@ -76,7 +76,7 @@ pub fn spawn_browsersync(target_dir: &str) -> Result<(Child, String), String> {
     }
 }
 
-pub fn stop_browsersync(process: &mut Child) -> Result<(), String> {
+pub fn stop_browsersync(process: &mut Child) -> Result<bool, String> {
     let pid = process.id() as i32;
     info!("Stopping Browsersync process with PID: {}", pid);
 
@@ -87,5 +87,5 @@ pub fn stop_browsersync(process: &mut Child) -> Result<(), String> {
         .wait()
         .map_err(|e| format!("Failed to wait for process: {}", e))?;
 
-    Ok(())
+    Ok(true)
 }

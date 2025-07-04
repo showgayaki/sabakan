@@ -3,13 +3,29 @@ import {
     CircularProgress,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
+
+import { ProgressStatus } from "@/types/progress";
 
 interface FullscreenCircularProgressProps {
-    success?: boolean;
+    status: ProgressStatus;
     children: React.ReactNode;
 }
 
-export default function FullscreenCircularProgress({ success, children }: FullscreenCircularProgressProps) {
+export default function FullscreenCircularProgress({ status, children }: FullscreenCircularProgressProps) {
+    const renderIcon = () => {
+        switch (status) {
+            case "success":
+                return <CheckCircleIcon color="success" sx={{ width: "100%", height: "100%" }} />;
+            case "error":
+                return <ErrorIcon color="error" sx={{ width: "100%", height: "100%" }} />;
+            case "pending":
+                return <CircularProgress size={80} />;
+            case "idle":
+            default:
+                return null; // 何も表示しないなど
+        }
+    };
     return (
         <Box
             sx={{
@@ -27,10 +43,7 @@ export default function FullscreenCircularProgress({ success, children }: Fullsc
             }}
         >
             <Box sx={{ width: 80, height: 80, mb: 4 }}>
-                {success
-                    ? <CheckCircleIcon color="success" sx={{ width: "100%", height: "100%" }} />
-                    : <CircularProgress size={80} />
-                }
+                {renderIcon()}
             </Box>
             {children}
         </Box>

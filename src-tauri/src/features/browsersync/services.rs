@@ -22,7 +22,7 @@ impl BrowsersyncState {
         Ok(external_url)
     }
 
-    pub fn stop(&self) -> Result<(), String> {
+    pub fn stop(&self) -> Result<bool, String> {
         let mut lock = self.process.lock().unwrap();
         if let Some(mut process) = lock.take() {
             info!("Stopping Browsersync process...");
@@ -31,6 +31,6 @@ impl BrowsersyncState {
         } else {
             info!("No Browsersync process to stop.");
         }
-        Ok(())
+        Ok(true)
     }
 }
