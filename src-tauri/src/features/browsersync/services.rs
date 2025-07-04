@@ -11,9 +11,9 @@ pub struct BrowsersyncState {
 impl BrowsersyncState {
     pub async fn start(&self, target_dir: &str) -> Result<String, String> {
         let mut lock = self.process.lock().unwrap();
-        if lock.is_some() {
-            return Err("Browsersync already running".to_string());
-        }
+        // if lock.is_some() {
+        //     return Err("Browsersync already running".to_string());
+        // }
 
         let (child, external_url) = spawn_browsersync(target_dir).map_err(|e| e.to_string())?;
         info!("Browsersync process started with PID: {}", child.id());

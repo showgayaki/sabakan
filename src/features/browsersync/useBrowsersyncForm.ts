@@ -15,6 +15,8 @@ export default function useBrowsersyncForm() {
     const [status, setStatus] = useState<ProgressStatus>("idle");
     const [statusMessage, setStatusMessage] = useState<string | null>(null);
     const [isRunning, setIsRunning] = useState<boolean>(false);
+    const [url, setUrl] = useState<string>("");
+    const [isShowQrCode, setIsShowQrCode] = useState<boolean>(false);
 
     const selectDirectory = async () => {
         console.log("Selecting directory...");
@@ -54,23 +56,26 @@ export default function useBrowsersyncForm() {
         setStatus("pending");
         setStatusMessage("Browsersyncを起動しています...");
         console.log("Starting Browsersync with directory:", directory);
-        const externalUrl = await startBrowsersync(directory);
 
-        if (!externalUrl) {
-            console.error("Failed to start Browsersync.");
-            setStatus("error");
-            setStatusMessage("Browsersyncの起動に失敗しました😭");
-            setIsRunning(false);
-        } else {
+        try {
+            const externalUrl = await startBrowsersync(directory);
             console.log("Browsersync started at URL:", externalUrl);
+
+            setUrl(externalUrl);
             setStatus("success");
             setStatusMessage("Browsersyncを起動しました");
             setIsRunning(true);
+        } catch (error) {
+            console.error("Failed to start Browsersync:", error);
+            setStatus("error");
+            setStatusMessage("Browsersyncの起動に失敗しました😭");
+            setIsRunning(false);
         }
 
         setTimeout(() => {
+            setIsShowQrCode(true);
             setStatusMessage(null);
-        }, 1500);
+        }, 1000);
     }
 
     const handleStopBrowsersync = async () => {
@@ -93,7 +98,7 @@ export default function useBrowsersyncForm() {
 
         setTimeout(() => {
             setStatusMessage(null);
-        }, 1500);
+        }, 1000);
     }
 
     useEffect(() => {
@@ -111,5 +116,8 @@ export default function useBrowsersyncForm() {
         selectDirectory,
         handleStartBrowsersync,
         handleStopBrowsersync,
+        url,
+        isShowQrCode,
+        setIsShowQrCode,
     }
 }
