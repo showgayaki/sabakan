@@ -34,10 +34,12 @@ export default function BrowsersyncForm() {
                             console.error("Validation failed, cannot start Browsersync.");
                             return;
                         }
+                        console.log("Starting Browsersync with directory:", directory);
                         setIsRunning(true);
                         startBrowsersync(directory);
                     }}
                     handleStopBrowsersync={() => {
+                        console.log("Stopping Browsersync");
                         setIsRunning(false);
                         stopBrowsersync();
                     }}

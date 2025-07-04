@@ -2,7 +2,7 @@ use log::info;
 use std::process::Command;
 use tokio::task::spawn_blocking;
 
-use super::super::constants::NODE_DIR;
+use crate::constants::NODE_DIR;
 
 pub async fn install() -> Result<(), String> {
     return spawn_blocking(install_browsersync)

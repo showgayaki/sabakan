@@ -1,9 +1,8 @@
 use log::{error, info};
 use std::fs;
 
-use crate::constants::BINARY_DIR;
+use crate::constants::{BINARY_DIR, NODE_DIR};
 
-use super::constants::NODE_DIR;
 use super::infrastructure::{browsersync, node};
 
 pub fn check_installed_binaries() -> Vec<String> {

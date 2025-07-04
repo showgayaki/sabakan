@@ -3,8 +3,7 @@ pub(super) mod node;
 
 use log::{error, info};
 
-use super::constants::NODE_DIR;
-use crate::constants::{BINARY_DIR, HOST_OS};
+use crate::constants::{BINARY_DIR, HOST_OS, NODE_DIR};
 use crate::utils::archive::extract;
 use crate::utils::fs::{remove_file, set_executable};
 use crate::utils::network::download_file;
