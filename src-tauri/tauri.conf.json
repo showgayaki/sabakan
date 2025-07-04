@@ -13,8 +13,8 @@
         "windows": [
             {
                 "title": "bs-launcher",
-                "width": 442,
-                "height": 650,
+                "width": 400,
+                "height": 450,
                 "resizable": false
             }
         ],

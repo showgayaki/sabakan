@@ -1,9 +1,14 @@
-import { Tooltip, TooltipProps } from "@mui/material";
+import { Box, Tooltip, TooltipProps } from "@mui/material";
 
-export default function BottomArrowTooltip(props: TooltipProps, message: string) {
+export default function BottomArrowTooltip({
+    children,
+    ...props
+}: TooltipProps & { children: React.ReactNode }) {
     return (
-        <Tooltip open={Boolean(message)} placement="bottom" arrow
-            {...props}
-        />
+        <Tooltip placement="bottom" arrow {...props}>
+            <Box component="span">
+                {children}
+            </Box>
+        </Tooltip>
     );
 }

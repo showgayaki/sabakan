@@ -1,7 +1,7 @@
 import { IconButton, IconButtonProps } from "@mui/material";
 
 interface CustomIconButtonProps {
-    size: 'small' | 'medium' | 'large';
+    size?: 'small' | 'medium' | 'large';
     onClick: () => void;
     icon: React.ReactNode;
     iconButtonProps?: IconButtonProps;
@@ -15,7 +15,7 @@ export default function CustomIconButton({
 }: CustomIconButtonProps) {
     return (
         <IconButton
-            size={size}
+            size={size?? size}
             onClick={onClick}
             {...iconButtonProps}
         >

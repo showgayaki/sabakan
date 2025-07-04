@@ -5,7 +5,7 @@ import CustomIconButton from "@/components/CustomIconButton";
 
 interface ButtonSectionProps {
     isRunning: boolean;
-    handleStartBrowsersync:  () => void;
+    handleStartBrowsersync: () => void;
     handleStopBrowsersync: () => void;
     handleShowQrCode: () => void;
 }
@@ -16,33 +16,32 @@ export default function ButtonSection({
     handleStopBrowsersync,
     handleShowQrCode,
 }: ButtonSectionProps) {
+    const fontSize = 50;
+
     return (
         <Stack direction="row" justifyContent="end" alignItems="center">
             {isRunning ?
                 <CustomIconButton
-                    size="medium"
                     onClick={() => {
                         console.log("Stop Browsersync clicked");
                         handleStopBrowsersync();
                     }}
-                    icon={<StopCircle fontSize="large" />}
+                    icon={<StopCircle sx={{ fontSize: fontSize }} />}
                 />
                 : <CustomIconButton
-                    size="medium"
                     onClick={() => {
                         console.log("Start Browsersync clicked");
                         handleStartBrowsersync();
                     }}
-                    icon={<PlayCircle fontSize="large" />}
+                    icon={<PlayCircle sx={{ fontSize: fontSize }} />}
                 />
             }
             <CustomIconButton
-                size="medium"
                 onClick={() => {
                     console.log("Show QRCode clicked");
                     handleShowQrCode();
                 }}
-                icon={<QrCode fontSize="large" />}
+                icon={<QrCode sx={{ fontSize: fontSize }} />}
                 iconButtonProps={{
                     disabled: !isRunning,
                 }}

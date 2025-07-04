@@ -47,7 +47,6 @@ export default function CustomTextField({
                     "& .MuiInputBase-input, & .MuiInputBase-root .MuiInputBase-input.MuiAutocomplete-input": {
                         backgroundColor: disabled ? "#1c1c1c" : undefined,
                         color: disabled ? "#333333" : undefined,
-                        padding: "8.5px 14px",
                         fontSize: "0.75rem",
                     },
                 }}
@@ -65,7 +64,7 @@ export default function CustomTextField({
                         shrink: true,
                     },
                     input: {
-                        endAdornment: (
+                        endAdornment: iconRight && (
                             <InputAdornment position="end" sx={{ marginRight: "-6px" }}>
                                 {value && (
                                     <>
@@ -80,7 +79,7 @@ export default function CustomTextField({
                                     </>
                                 )}
                                 <Divider orientation="vertical" flexItem />
-                                {iconRight && iconRight}
+                                {iconRight}
                             </InputAdornment>
                         ),
                     },

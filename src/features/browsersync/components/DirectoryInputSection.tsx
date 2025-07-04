@@ -1,4 +1,4 @@
-import { Box, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Folder } from "@mui/icons-material";
 
 import CustomTextField from "@/components/CustomTextField";
@@ -27,28 +27,26 @@ export default function DirectoryInputSection({
 
     return (
         <BottomArrowTooltip title={error || ""}>
-            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-                <CustomTextField
-                    id="directoryInput"
-                    label="ディレクトリ選択"
-                    type="text"
-                    value={path}
-                    onChange={setPath}
-                    placeholder={placeholder}
-                    iconRight={
-                        <IconButton
-                            size="small"
-                            sx={{ marginLeft: 1 }}
-                            onClick={onClick}
-                        >
-                            <Folder />
-                        </IconButton>
-                    }
-                    textFieldProps={{
-                        error: Boolean(error),
-                    }}
-                />
-            </Box>
+            <CustomTextField
+                id="directoryInput"
+                label="ディレクトリ選択"
+                type="text"
+                value={path}
+                onChange={setPath}
+                placeholder={placeholder}
+                iconRight={
+                    <IconButton
+                        size="small"
+                        sx={{ marginLeft: 1 }}
+                        onClick={onClick}
+                    >
+                        <Folder />
+                    </IconButton>
+                }
+                textFieldProps={{
+                    error: Boolean(error),
+                }}
+            />
         </BottomArrowTooltip>
     );
 }

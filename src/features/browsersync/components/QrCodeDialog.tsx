@@ -11,7 +11,7 @@ interface QrCodeDialogProps {
 
 export default function QrCodeDialog({ open, onClose, qrCodeUrl }: QrCodeDialogProps) {
     return (
-        <CustomDialog open={open} onClose={onClose} title="QRコード">
+        <CustomDialog open={open} onClose={onClose} title={qrCodeUrl}>
             <Box sx={{ textAlign: "center", padding: 2 }}>
                 <QRCodeCanvas value={qrCodeUrl} />
             </Box>

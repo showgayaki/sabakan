@@ -32,8 +32,6 @@ pub fn spawn_browsersync(target_dir: &str) -> Result<(Child, String), String> {
             .arg("browser-sync")
             .arg("--")
             .arg("start")
-            .arg("--cwd")
-            .arg(target_dir)
             .arg("--server")
             .current_dir(target_dir)
             .arg("--files")
