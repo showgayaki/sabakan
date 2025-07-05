@@ -30,7 +30,7 @@ export default function ProxySection({
                 <CustomTextField
                     type="text"
                     value={proxy}
-                    onChange={(e) => setProxy(e)}
+                    onChange={setProxy}
                     disabled={!useProxy}
                     placeholder="http://localhost:8080"
                     textFieldProps={{

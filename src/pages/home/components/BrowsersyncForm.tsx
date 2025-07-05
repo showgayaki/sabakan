@@ -1,1 +1,1 @@
-export { default as BrowsersyncForm } from "@/features/browsersync/BrowsersyncForm";
+export { default as BrowsersyncForm } from "@/features/browsersync/components/BrowsersyncForm";
