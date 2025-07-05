@@ -12,8 +12,6 @@ export default function BrowsersyncForm() {
         hostOs,
         directory,
         browsersync,
-        isShowQrCode,
-        setIsShowQrCode,
         useProxy,
         setUseProxy,
     } = useBrowsersyncForm();
@@ -24,8 +22,8 @@ export default function BrowsersyncForm() {
                 <BrowsersyncProgress status={browsersync.status} statusMessage={browsersync.statusMessage} />
             }
             <QrCodeDialog
-                open={isShowQrCode}
-                onClose={() => setIsShowQrCode(false)}
+                open={browsersync.isShowQrCode}
+                onClose={() => browsersync.setIsShowQrCode(false)}
                 qrCodeUrl={browsersync.url}
             />
             <form>

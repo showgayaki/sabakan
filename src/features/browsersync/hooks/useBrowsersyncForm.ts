@@ -6,7 +6,6 @@ import useBrowsersync from "./useBrowsersync";
 
 export default function useBrowsersyncForm() {
     const [hostOs, setHostOs] = useState<string>("");
-    const [isShowQrCode, setIsShowQrCode] = useState<boolean>(false);
     const [useProxy, setUseProxy] = useState<boolean>(false);
 
     const directory = useDirectory(hostOs);
@@ -20,8 +19,6 @@ export default function useBrowsersyncForm() {
         hostOs,
         directory,
         browsersync,
-        isShowQrCode,
-        setIsShowQrCode,
         useProxy,
         setUseProxy,
     }
