@@ -11,9 +11,21 @@ export default function BottomArrowTooltip({
             disableFocusListener
             disableHoverListener
             disableTouchListener
+            slotProps={{
+                popper: {
+                    modifiers: [
+                        {
+                            name: 'offset',
+                            options: {
+                                offset: [0, 0], // X方向, Y方向
+                            },
+                        },
+                    ],
+                },
+            }}
             {...props}
         >
-            <Box component="span">
+            <Box>
                 {children}
             </Box>
         </Tooltip>
