@@ -15,13 +15,14 @@ export default function useBrowsersync() {
     const [url, setUrl] = useState<string>("");
     const [isShowQrCode, setIsShowQrCode] = useState<boolean>(false);
 
-    const handleStart = async (directoryPath: string) => {
+    const handleStart = async (directoryPath: string, proxyUrl: string) => {
         setStatus("pending");
         setStatusMessage("Browsersyncを起動しています...");
         console.log("Starting Browsersync with directory:", directoryPath);
+        console.log("Using proxy URL:", proxyUrl);
 
         try {
-            const externalUrl = await startBrowsersync(directoryPath);
+            const externalUrl = await startBrowsersync(directoryPath, proxyUrl);
             console.log("Browsersync started at URL:", externalUrl);
 
             setUrl(externalUrl);

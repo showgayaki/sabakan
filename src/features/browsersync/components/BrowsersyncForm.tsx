@@ -39,7 +39,7 @@ export default function BrowsersyncForm() {
                         setUseProxy={proxy.setUseProxy}
                         url={proxy.url}
                         setUrl={proxy.setUrl}
-                        proxyError={proxy.error}
+                        error={proxy.error}
                     />
                 </Stack>
                 <ButtonSection
@@ -49,7 +49,7 @@ export default function BrowsersyncForm() {
                         const validateProxy = proxy.validate();
 
                         if (validateDirectory && validateProxy) {
-                            browsersync.handleStart(directory.path);
+                            browsersync.handleStart(directory.path, proxy.url);
                         }
                     }}
                     handleStopBrowsersync={() => { browsersync.handleStop(); }}

@@ -9,7 +9,7 @@ interface ProxySectionProps {
     setUseProxy: (useProxy: boolean) => void;
     url: string;
     setUrl: (username: string) => void;
-    proxyError?: string | null;
+    error?: string | null;
 }
 
 export default function ProxySection({
@@ -17,7 +17,7 @@ export default function ProxySection({
     setUseProxy,
     url,
     setUrl,
-    proxyError,
+    error,
 }: ProxySectionProps) {
     return (
         <Box>
@@ -26,7 +26,7 @@ export default function ProxySection({
                 onChange={setUseProxy}
                 label="Proxyを使用する"
             />
-            <BottomArrowTooltip title={proxyError || ""}>
+            <BottomArrowTooltip title={error || ""}>
                 <CustomTextField
                     type="text"
                     value={url}
@@ -34,7 +34,7 @@ export default function ProxySection({
                     disabled={!useProxy}
                     placeholder="http://localhost:8080"
                     textFieldProps={{
-                        error: Boolean(proxyError),
+                        error: Boolean(error),
                     }}
                 />
             </BottomArrowTooltip>

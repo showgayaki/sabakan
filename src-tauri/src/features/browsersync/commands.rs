@@ -7,9 +7,10 @@ use super::services::BrowsersyncState;
 pub async fn start_browsersync(
     state: State<'_, BrowsersyncState>,
     target_dir: String,
+    proxy_url: String,
 ) -> Result<String, String> {
     debug!("start_browsersync command called");
-    state.start(&target_dir).await
+    state.start(&target_dir, &proxy_url).await
 }
 
 #[command]
