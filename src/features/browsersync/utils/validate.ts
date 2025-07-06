@@ -13,3 +13,17 @@ export function validateDirectoryPath(path: string, hostOs: string): string | nu
 
     return null; // エラーなし
 }
+
+export function validateUrl(proxyUrl: string): string | null {
+    if (!proxyUrl) {
+        return "URLを入力してください";
+    }
+
+    const urlRegex = /^(http|https):\/\/[^\s/$.?#].[^\s]*$/;
+
+    if (!urlRegex.test(proxyUrl)) {
+        return "URLの形式が正しくありません";
+    }
+
+    return null; // エラーなし
+}

@@ -1,0 +1,1 @@
+export const ERROR_DISPLAY_DURATION_MS = 3000;

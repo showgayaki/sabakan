@@ -7,16 +7,16 @@ import CustomTextField from "@/components/CustomTextField";
 interface ProxySectionProps {
     useProxy: boolean;
     setUseProxy: (useProxy: boolean) => void;
-    proxy: string;
-    setProxy: (username: string) => void;
+    url: string;
+    setUrl: (username: string) => void;
     proxyError?: string | null;
 }
 
 export default function ProxySection({
     useProxy,
     setUseProxy,
-    proxy,
-    setProxy,
+    url,
+    setUrl,
     proxyError,
 }: ProxySectionProps) {
     return (
@@ -29,8 +29,8 @@ export default function ProxySection({
             <BottomArrowTooltip title={proxyError || ""}>
                 <CustomTextField
                     type="text"
-                    value={proxy}
-                    onChange={setProxy}
+                    value={url}
+                    onChange={setUrl}
                     disabled={!useProxy}
                     placeholder="http://localhost:8080"
                     textFieldProps={{

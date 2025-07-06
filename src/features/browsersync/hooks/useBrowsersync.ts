@@ -7,6 +7,8 @@ import {
 } from "../api";
 
 export default function useBrowsersync() {
+    const MESSAGE_DISPLAY_DURATION_MS = 1000;  // メッセージ表示時間（ミリ秒）
+
     const [status, setStatus] = useState<ProgressStatus>("idle");
     const [statusMessage, setStatusMessage] = useState<string | null>(null);
     const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -34,9 +36,9 @@ export default function useBrowsersync() {
         }
 
         setTimeout(() => {
-            setIsShowQrCode(true);
             setStatusMessage(null);
-        }, 1000);
+            setIsShowQrCode(true);
+        }, MESSAGE_DISPLAY_DURATION_MS);
     }
 
     const handleStop = async () => {
@@ -59,7 +61,7 @@ export default function useBrowsersync() {
 
         setTimeout(() => {
             setStatusMessage(null);
-        }, 1000);
+        }, MESSAGE_DISPLAY_DURATION_MS);
     }
 
     return {

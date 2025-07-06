@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { open } from "@tauri-apps/plugin-dialog";
 
+import { ERROR_DISPLAY_DURATION_MS } from "@/constants/ui";
 import { validateDirectoryPath } from "../utils/validate";
 
 export default function useBrowsersyncForm(hostOs: string) {
@@ -20,20 +21,22 @@ export default function useBrowsersyncForm(hostOs: string) {
 
     const validate = () => {
         const message = validateDirectoryPath(path, hostOs);
-        setError(message);
-        console.log("Validation result:", message);
+        if (message) {
+            console.log("Directory validation failed:", message);
+            setError(message);
 
-        setTimeout(() => {
-            setError(null);
-        }, 3000);
+            setTimeout(() => {
+                setError(null);
+            }, ERROR_DISPLAY_DURATION_MS);
+        }
         return message === null;
     };
 
     return {
         path,
         setPath,
-        error,
         validate,
         selectDirectory,
+        error,
     }
 }

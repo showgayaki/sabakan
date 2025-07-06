@@ -12,8 +12,7 @@ export default function BrowsersyncForm() {
         hostOs,
         directory,
         browsersync,
-        useProxy,
-        setUseProxy,
+        proxy,
     } = useBrowsersyncForm();
 
     return (
@@ -36,17 +35,20 @@ export default function BrowsersyncForm() {
                         error={directory.error}
                     />
                     <ProxySection
-                        useProxy={useProxy}
-                        setUseProxy={setUseProxy}
-                        proxy=""
-                        setProxy={() => { }}
-                        proxyError={null}
+                        useProxy={proxy.useProxy}
+                        setUseProxy={proxy.setUseProxy}
+                        url={proxy.url}
+                        setUrl={proxy.setUrl}
+                        proxyError={proxy.error}
                     />
                 </Stack>
                 <ButtonSection
                     isRunning={browsersync.isRunning}
                     handleStartBrowsersync={() => {
-                        if (directory.validate()) {
+                        const validateDirectory = directory.validate();
+                        const validateProxy = proxy.validate();
+
+                        if (validateDirectory && validateProxy) {
                             browsersync.handleStart(directory.path);
                         }
                     }}
