@@ -51,7 +51,7 @@ export default function BrowsersyncForm() {
                         }
                     }}
                     handleStopBrowsersync={() => { browsersync.handleStop(); }}
-                    handleShowQrCode={() => setIsShowQrCode(true)}
+                    handleShowQrCode={() => browsersync.setIsShowQrCode(true)}
                 />
             </form>
         </>

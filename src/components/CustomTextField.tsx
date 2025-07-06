@@ -13,7 +13,7 @@ interface CustomTextFieldProps {
     id?: string;
     label?: string;
     value?: string;
-    onChange?: (value: string) => void;
+    onChange: (value: string) => void;
     placeholder?: string;
     disabled?: boolean;
     type?: string;
@@ -52,7 +52,7 @@ export default function CustomTextField({
                 }}
                 id={id ?? id}
                 value={value}
-                onChange={(e) => onChange?.(e.target.value)}
+                onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
                 disabled={disabled}
                 type={type}
@@ -69,7 +69,7 @@ export default function CustomTextField({
                                 {value && (
                                     <>
                                         <IconButton
-                                            onClick={() => onChange?.("")}
+                                            onClick={() => onChange("")}
                                             edge="end"
                                             size="small"
                                             sx={{ mr: 0.5 }}

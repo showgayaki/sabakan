@@ -7,10 +7,6 @@ interface CheckboxProps {
 }
 
 export default function CheckboxWithLabel({ checked, onChange, label }: CheckboxProps) {
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(e.target.checked);
-    };
-
     return (
         <FormControlLabel
             sx={{
@@ -21,9 +17,9 @@ export default function CheckboxWithLabel({ checked, onChange, label }: Checkbox
             label={label}
             control={
                 <Checkbox
-                    sx={{ py: 0, pr: 0.5 }}
+                    sx={{ py: 0, pr:0,  mr: 1 }}
                     checked={checked}
-                    onChange={handleChange}
+                    onChange={(e) => onChange(e.target.checked)}
                 />
             }
         />
