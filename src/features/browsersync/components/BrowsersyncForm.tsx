@@ -13,6 +13,7 @@ export default function BrowsersyncForm() {
         directory,
         browsersync,
         proxy,
+        logStream,
     } = useBrowsersyncForm();
 
     return (
@@ -23,7 +24,12 @@ export default function BrowsersyncForm() {
             {browsersync.isRunning &&
                 <LiveOverlay
                     url={browsersync.url}
-                    handleStopBrowsersync={browsersync.handleStop}
+                    logs={logStream.lines}
+                    logContainerRef={logStream.containerRef}
+                    handleStopBrowsersync={() => {
+                        logStream.setLines([]);
+                        browsersync.handleStop();
+                    }}
                 />
             }
             <form>

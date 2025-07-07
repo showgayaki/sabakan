@@ -4,10 +4,15 @@ use nix::unistd::Pid;
 use std::io::{BufRead, BufReader};
 use std::os::unix::process::CommandExt;
 use std::process::{Child, Command, Stdio};
+use tauri::{Emitter, Window};
 
 use crate::constants::NODE_DIR;
 
-pub fn spawn_browsersync(target_dir: &str, proxy_url: &str) -> Result<(Child, String), String> {
+pub fn spawn_browsersync(
+    window: Window,
+    target_dir: &str,
+    proxy_url: &str,
+) -> Result<(Child, String), String> {
     let target_files = ["**/*.html", "**/*.css", "**/*.js", "**/*.php"];
 
     let npm_bin = NODE_DIR.join("bin/npm");
@@ -71,6 +76,7 @@ pub fn spawn_browsersync(target_dir: &str, proxy_url: &str) -> Result<(Child, St
             match line_result {
                 Ok(line) => {
                     info!("[BrowserSync] {}", line);
+                    let _ = window.emit("browsersync_log", &line);
                     let _ = tx.send(line);
                 }
                 Err(e) => {

@@ -3,7 +3,6 @@ import { useState } from "react";
 import { ERROR_DISPLAY_DURATION_MS } from "@/constants/ui";
 import { validateUrl } from "../utils/validate";
 
-
 export default function useProxy() {
     const [useProxy, setUseProxy] = useState<boolean>(false);
     const [url, setUrl] = useState<string>("");
