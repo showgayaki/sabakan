@@ -4,8 +4,8 @@ import { Typography } from "@mui/material";
 import FullscreenCircularProgress from "@/components/FullscreenCircularProgress";
 import TaskList from "@/components/TaskList";
 
-import { INSTALL_TASKS } from "./constants";
-import { useInstallationProgress } from "./useInstallationProgress";
+import { INSTALL_TASKS } from "../constants/tasks";
+import { useInstallationProgress } from "../hooks/useInstallationProgress";
 
 export default function InstallationProgress({ onComplete }: { onComplete: () => void }) {
     const {

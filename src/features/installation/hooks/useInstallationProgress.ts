@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from "react";
 
 import type { GroupedTaskStatuses } from "@/types/taskStatuses";
 import { ProgressStatus } from "@/types/progress";
+import { delayMs } from "@/utils/delay";
 
-import { checkInstalledBinaries, installTask } from "./api";
-import { delay } from "./utils";
+import { checkInstalledBinaries, installTask } from "../api";
 
 export function useInstallationProgress(tasks: { key: string; label: string }[]) {
     const [groupedTaskStatuses, setGroupedTaskStatuses] = useState<GroupedTaskStatuses>(() =>
@@ -46,11 +46,11 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
         for (const task of tasks) {
             if (groupedTaskStatuses.Installation[task.label] !== "pending") continue;
             setCurrentTask(task.label);
-            await delay(100);
+            await delayMs(100);
             try {
                 await installTask(task.key);
                 setGroupedTaskStatuses(prev => ({ Installation: { ...prev.Installation, [task.label]: "success" } }));
-                await delay(100);
+                await delayMs(100);
             } catch (error) {
                 console.error(`Error in ${task.key}:`, error);
                 setGroupedTaskStatuses(prev => ({ Installation: { ...prev.Installation, [task.label]: "error" } }));
@@ -60,7 +60,7 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
 
         setStatus("success");
         setCurrentTask(null);
-        await delay(3000);
+        await delayMs(3000);
         setIsInstalling(false);
         setStatus("idle");
     };

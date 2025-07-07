@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import InstallationProgress from "@/features/installation/InstallationProgress";
+import InstallationProgress from "@/features/installation/components/InstallationProgress";
 
 export const AppInitializer = () => {
     const [installComplete, setInstallComplete] = useState(false);
