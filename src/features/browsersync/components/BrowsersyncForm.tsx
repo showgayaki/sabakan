@@ -4,8 +4,8 @@ import useBrowsersyncForm from "../hooks/useBrowsersyncForm";
 import DirectoryInputSection from "./DirectoryInputSection";
 import ProxySection from "./ProxySection";
 import ButtonSection from "./ButtonSection";
-import BrowsersyncProgress from "./BrowsersyncProgress";
-import QrCodeDialog from "./QrCodeDialog";
+import LaunchingOverlay from "./LaunchingOverlay";
+import LiveOverlay from "./LiveOverlay";
 
 export default function BrowsersyncForm() {
     const {
@@ -18,13 +18,14 @@ export default function BrowsersyncForm() {
     return (
         <>
             {browsersync.statusMessage &&
-                <BrowsersyncProgress status={browsersync.status} statusMessage={browsersync.statusMessage} />
+                <LaunchingOverlay status={browsersync.status} statusMessage={browsersync.statusMessage} />
             }
-            <QrCodeDialog
-                open={browsersync.isShowQrCode}
-                onClose={() => browsersync.setIsShowQrCode(false)}
-                qrCodeUrl={browsersync.url}
-            />
+            {browsersync.isRunning &&
+                <LiveOverlay
+                    url={browsersync.url}
+                    handleStopBrowsersync={browsersync.handleStop}
+                />
+            }
             <form>
                 <Stack spacing={2} sx={{ mb: 2 }}>
                     <DirectoryInputSection
@@ -42,19 +43,18 @@ export default function BrowsersyncForm() {
                         error={proxy.error}
                     />
                 </Stack>
-                <ButtonSection
-                    isRunning={browsersync.isRunning}
-                    handleStartBrowsersync={() => {
-                        const validateDirectory = directory.validate();
-                        const validateProxy = proxy.validate();
+                {!browsersync.statusMessage &&
+                    <ButtonSection
+                        handleStartBrowsersync={() => {
+                            const validateDirectory = directory.validate();
+                            const validateProxy = proxy.validate();
 
-                        if (validateDirectory && validateProxy) {
-                            browsersync.handleStart(directory.path, proxy.url);
-                        }
-                    }}
-                    handleStopBrowsersync={() => { browsersync.handleStop(); }}
-                    handleShowQrCode={() => browsersync.setIsShowQrCode(true)}
-                />
+                            if (validateDirectory && validateProxy) {
+                                browsersync.handleStart(directory.path, proxy.url);
+                            }
+                        }}
+                    />
+                }
             </form>
         </>
     );

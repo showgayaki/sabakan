@@ -26,7 +26,10 @@ export default function InstallationProgress({ onComplete }: { onComplete: () =>
         <>
             {isInstalling && (
                 <FullscreenOverlay>
-                    <ProgressIcon status={status} />
+                    <Typography variant="h6" sx={{ mb: 2 }}>
+                        初回セットアップを行っています...
+                    </Typography>
+                    <ProgressIcon status="pending" />
                     <Typography variant="h6" sx={{ mb: 2 }}>
                         {currentTask ? `${currentTask} をインストール中です...` : "インストールが完了しました！"}
                     </Typography>

@@ -1,15 +1,15 @@
-import { Typography, } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import { ProgressStatus } from "@/types/progress";
 import FullscreenOverlay from "@/components/FullscreenOverlay";
 import ProgressIcon from "@/components/ProgressIcon";
 
-interface BrowsersyncProgressProps {
+interface LaunchingOverlayProps {
     status: ProgressStatus;
     statusMessage: string;
 }
 
-export default function BrowsersyncProgress({ status, statusMessage }: BrowsersyncProgressProps) {
+export default function LaunchingOverlay({ status, statusMessage }: LaunchingOverlayProps) {
     return (
         <FullscreenOverlay>
             <ProgressIcon status={status} />

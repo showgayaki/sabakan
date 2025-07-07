@@ -1,50 +1,22 @@
 import { Stack } from "@mui/material";
-import { PlayCircle, StopCircle, QrCode } from "@mui/icons-material";
+import { PlayCircle } from "@mui/icons-material";
 
+import { BUTTON_FONT_SIZE } from "@/constants/ui";
 import CustomIconButton from "@/components/CustomIconButton";
 
 interface ButtonSectionProps {
-    isRunning: boolean;
     handleStartBrowsersync: () => void;
-    handleStopBrowsersync: () => void;
-    handleShowQrCode: () => void;
 }
 
-export default function ButtonSection({
-    isRunning,
-    handleStartBrowsersync,
-    handleStopBrowsersync,
-    handleShowQrCode,
-}: ButtonSectionProps) {
-    const fontSize = 50;
-
+export default function ButtonSection({ handleStartBrowsersync }: ButtonSectionProps) {
     return (
-        <Stack direction="row" justifyContent="end" alignItems="center">
-            {isRunning ?
-                <CustomIconButton
-                    onClick={() => {
-                        console.log("Stop Browsersync clicked");
-                        handleStopBrowsersync();
-                    }}
-                    icon={<StopCircle sx={{ fontSize: fontSize }} />}
-                />
-                : <CustomIconButton
-                    onClick={() => {
-                        console.log("Start Browsersync clicked");
-                        handleStartBrowsersync();
-                    }}
-                    icon={<PlayCircle sx={{ fontSize: fontSize }} />}
-                />
-            }
+        <Stack direction="row" justifyContent="center" alignItems="center">
             <CustomIconButton
                 onClick={() => {
-                    console.log("Show QRCode clicked");
-                    handleShowQrCode();
+                    console.log("Start Browsersync clicked");
+                    handleStartBrowsersync();
                 }}
-                icon={<QrCode sx={{ fontSize: fontSize }} />}
-                iconButtonProps={{
-                    disabled: !isRunning,
-                }}
+                icon={<PlayCircle sx={{ fontSize: BUTTON_FONT_SIZE }} />}
             />
         </Stack>
     )

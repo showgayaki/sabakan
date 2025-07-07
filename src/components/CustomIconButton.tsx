@@ -15,7 +15,8 @@ export default function CustomIconButton({
 }: CustomIconButtonProps) {
     return (
         <IconButton
-            size={size?? size}
+            sx={{ p: 0 }}
+            size={size ?? size}
             onClick={onClick}
             {...iconButtonProps}
         >

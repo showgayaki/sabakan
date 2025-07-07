@@ -13,9 +13,10 @@ export default function useBrowsersync() {
     const [statusMessage, setStatusMessage] = useState<string | null>(null);
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [url, setUrl] = useState<string>("");
-    const [isShowQrCode, setIsShowQrCode] = useState<boolean>(false);
 
     const handleStart = async (directoryPath: string, proxyUrl: string) => {
+        let startedSuccessfully = false;
+
         setStatus("pending");
         setStatusMessage("Browsersyncを起動しています...");
         console.log("Starting Browsersync with directory:", directoryPath);
@@ -28,7 +29,8 @@ export default function useBrowsersync() {
             setUrl(externalUrl);
             setStatus("success");
             setStatusMessage("Browsersyncを起動しました");
-            setIsRunning(true);
+
+            startedSuccessfully = true;
         } catch (error) {
             console.error("Failed to start Browsersync:", error);
             setStatus("error");
@@ -38,7 +40,9 @@ export default function useBrowsersync() {
 
         setTimeout(() => {
             setStatusMessage(null);
-            setIsShowQrCode(true);
+            if (startedSuccessfully) {
+                setIsRunning(true);
+            }
         }, MESSAGE_DISPLAY_DURATION_MS);
     }
 
@@ -72,7 +76,5 @@ export default function useBrowsersync() {
         handleStart,
         handleStop,
         url,
-        isShowQrCode,
-        setIsShowQrCode,
     }
 }
