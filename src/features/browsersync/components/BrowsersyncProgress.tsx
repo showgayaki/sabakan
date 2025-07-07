@@ -1,7 +1,8 @@
 import { Typography, } from "@mui/material";
 
 import { ProgressStatus } from "@/types/progress";
-import FullscreenCircularProgress from "@/components/FullscreenCircularProgress";
+import FullscreenOverlay from "@/components/FullscreenOverlay";
+import ProgressIcon from "@/components/ProgressIcon";
 
 interface BrowsersyncProgressProps {
     status: ProgressStatus;
@@ -10,7 +11,8 @@ interface BrowsersyncProgressProps {
 
 export default function BrowsersyncProgress({ status, statusMessage }: BrowsersyncProgressProps) {
     return (
-        <FullscreenCircularProgress status={status}>
+        <FullscreenOverlay>
+            <ProgressIcon status={status} />
             <Typography
                 variant="h6"
                 sx={{ textAlign: "center", mb: 3 }}
@@ -18,6 +20,6 @@ export default function BrowsersyncProgress({ status, statusMessage }: Browsersy
             >
                 {statusMessage}
             </Typography>
-        </FullscreenCircularProgress>
+        </FullscreenOverlay>
     );
 }
