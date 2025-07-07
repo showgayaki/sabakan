@@ -378,27 +378,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "bs-launcher"
-version = "0.1.0"
-dependencies = [
- "flate2",
- "libc",
- "log",
- "log4rs",
- "nix",
- "reqwest",
- "serde",
- "serde_json",
- "tar",
- "tauri",
- "tauri-build",
- "tauri-plugin-dialog",
- "tauri-plugin-opener",
- "tokio",
- "zip",
-]
-
-[[package]]
 name = "bumpalo"
 version = "3.19.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3536,6 +3515,27 @@ name = "ryu"
 version = "1.0.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "28d3b2b1366ec20994f1fd18c3c594f05c5dd4bc44d8bb0c1c632c8d6829481f"
+
+[[package]]
+name = "sabakan"
+version = "0.1.0"
+dependencies = [
+ "flate2",
+ "libc",
+ "log",
+ "log4rs",
+ "nix",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "tar",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-dialog",
+ "tauri-plugin-opener",
+ "tokio",
+ "zip",
+]
 
 [[package]]
 name = "same-file"

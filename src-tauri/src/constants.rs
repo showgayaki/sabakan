@@ -5,7 +5,7 @@ use std::sync::LazyLock;
 pub(crate) const HOST_OS: &str = env::consts::OS;
 pub(crate) const HOST_ARCH: &str = env::consts::ARCH;
 
-pub(crate) const APP_DIR_NAME: &str = ".bs-launcher";
+pub(crate) const APP_DIR_NAME: &str = ".sabakan";
 pub(crate) static HOME_DIR: LazyLock<PathBuf> = LazyLock::new(|| {
     env::var("HOME")
         .map(PathBuf::from)

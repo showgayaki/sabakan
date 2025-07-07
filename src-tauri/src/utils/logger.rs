@@ -15,7 +15,7 @@ use std::sync::LazyLock;
 use crate::constants::APP_DIR;
 
 pub fn init_logger() {
-    const LOG_FILE_NAME: &str = "bs-launcher.log";
+    const LOG_FILE_NAME: &str = "sabakan.log";
     const LOG_ROTATE_BASE: u32 = 1;
     const LOG_ROTATE_COUNT: u32 = 3;
     const MB: u64 = 1024 * 1024;
@@ -31,7 +31,7 @@ pub fn init_logger() {
             .unwrap_or_else(|_| APP_DIR.join(PathBuf::from("log")))
     });
 
-    // `bs-launcher.log` を `bs-launcher-{}.log` に変換
+    // `sabakan.log` を `sabakan-{}.log` に変換
     let log_pattern = {
         let path = PathBuf::from(LOG_FILE_NAME);
         if let Some(ext) = path.extension() {
@@ -41,9 +41,9 @@ pub fn init_logger() {
                 LOG_DIR.display(),
                 stem,
                 ext.to_string_lossy()
-            ) // bs-launcher-{}.log
+            ) // sabakan-{}.log
         } else {
-            format!("{}/{}-{{}}", LOG_DIR.display(), LOG_FILE_NAME) // bs-launcher-{}
+            format!("{}/{}-{{}}", LOG_DIR.display(), LOG_FILE_NAME) // sabakan-{}
         }
     };
 
