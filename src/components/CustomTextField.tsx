@@ -50,7 +50,7 @@ export default function CustomTextField({
                         fontSize: "0.75rem",
                     },
                 }}
-                id={id ?? id}
+                id={id}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
