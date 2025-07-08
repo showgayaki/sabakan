@@ -14,6 +14,17 @@ export default function useBrowsersyncForm() {
     const proxy = useProxy();
     const logStream = useLogStream();
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const validateDirectory = directory.validate();
+        const validateProxy = proxy.validate();
+
+        if (validateDirectory && validateProxy) {
+            browsersync.handleStart(directory.path, proxy.url);
+        }
+    }
+
     useEffect(() => {
         getHostOS().then(setHostOs).catch(console.error);
     }, []);
@@ -24,5 +35,6 @@ export default function useBrowsersyncForm() {
         browsersync,
         proxy,
         logStream,
+        handleSubmit,
     }
 }

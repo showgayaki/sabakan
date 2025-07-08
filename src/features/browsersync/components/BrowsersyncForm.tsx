@@ -13,6 +13,7 @@ export default function BrowsersyncForm() {
         browsersync,
         proxy,
         logStream,
+        handleSubmit,
     } = useBrowsersyncForm();
 
     return (
@@ -31,8 +32,15 @@ export default function BrowsersyncForm() {
                     }}
                 />
             }
-            <form>
-                <Stack spacing={2} sx={{ mb: 2 }}>
+            <Stack
+                component="form"
+                justifyContent="space-between"
+                onSubmit={handleSubmit}
+                sx={{
+                    height: "100%",
+                }}
+            >
+                <Stack spacing={2}>
                     <DirectoryInputSection
                         hostOs={hostOs}
                         path={directory.path}
@@ -49,18 +57,9 @@ export default function BrowsersyncForm() {
                     />
                 </Stack>
                 {browsersync.status === "idle" &&
-                    <ButtonSection
-                        handleStartBrowsersync={() => {
-                            const validateDirectory = directory.validate();
-                            const validateProxy = proxy.validate();
-
-                            if (validateDirectory && validateProxy) {
-                                browsersync.handleStart(directory.path, proxy.url);
-                            }
-                        }}
-                    />
+                    <ButtonSection />
                 }
-            </form>
+            </Stack>
         </>
     );
 }

@@ -4,19 +4,17 @@ import { PlayCircle } from "@mui/icons-material";
 import { BUTTON_FONT_SIZE } from "@/constants/ui";
 import CustomIconButton from "@/components/CustomIconButton";
 
-interface ButtonSectionProps {
-    handleStartBrowsersync: () => void;
-}
-
-export default function ButtonSection({ handleStartBrowsersync }: ButtonSectionProps) {
+export default function ButtonSection() {
     return (
-        <Stack direction="row" justifyContent="center" alignItems="center">
+        <Stack
+            direction="row"
+            justifyContent="center"
+        >
             <CustomIconButton
-                onClick={() => {
-                    console.log("Start Browsersync clicked");
-                    handleStartBrowsersync();
-                }}
                 icon={<PlayCircle sx={{ fontSize: BUTTON_FONT_SIZE }} />}
+                iconButtonProps={{
+                    type: "submit"
+                }}
             />
         </Stack>
     )
