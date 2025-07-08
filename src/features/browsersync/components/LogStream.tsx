@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 interface LogStreamProps {
     height: string;
@@ -11,23 +11,19 @@ export default function LogStream({ height, logs, containerRef }: LogStreamProps
         <Box
             ref={containerRef}
             sx={{
-                width: "90%",
+                width: "100%",
                 height,
                 backgroundColor: "#000",
-                px: 2,
+                px: 1,
                 overflowX: "auto",
                 overflowY: "auto",
                 fontSize: "0.825rem",
                 border: "1px solid #333",
                 whiteSpace: "pre",
-                boxSizing: "border-box",
-                flexGrow: 0,
             }}
         >
             {logs.map((line, index) => (
-                <Typography key={index} variant="body2">
-                    {line}
-                </Typography>
+                <p key={index} style={{ margin: 0 }}>{line}</p>
             ))}
         </Box>
     )

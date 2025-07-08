@@ -5,7 +5,6 @@ import DirectoryInputSection from "./DirectoryInputSection";
 import ProxySection from "./ProxySection";
 import ButtonSection from "./ButtonSection";
 import LaunchingOverlay from "./LaunchingOverlay";
-import LiveOverlay from "./LiveOverlay";
 
 export default function BrowsersyncForm() {
     const {
@@ -18,11 +17,11 @@ export default function BrowsersyncForm() {
 
     return (
         <>
-            {browsersync.statusMessage &&
-                <LaunchingOverlay status={browsersync.status} statusMessage={browsersync.statusMessage} />
-            }
-            {browsersync.isRunning &&
-                <LiveOverlay
+            {browsersync.status !== "idle" &&
+                <LaunchingOverlay
+                    status={browsersync.status}
+                    statusMessage={browsersync.statusMessage}
+                    isRunning={browsersync.isRunning}
                     url={browsersync.url}
                     logs={logStream.lines}
                     logContainerRef={logStream.containerRef}
@@ -49,7 +48,7 @@ export default function BrowsersyncForm() {
                         error={proxy.error}
                     />
                 </Stack>
-                {!browsersync.statusMessage &&
+                {browsersync.status === "idle" &&
                     <ButtonSection
                         handleStartBrowsersync={() => {
                             const validateDirectory = directory.validate();

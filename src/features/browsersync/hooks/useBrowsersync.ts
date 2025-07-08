@@ -5,12 +5,13 @@ import {
     startBrowsersync,
     stopBrowsersync,
 } from "../api";
+import { delayMs } from "@/utils/delay";
 
 export default function useBrowsersync() {
     const MESSAGE_DISPLAY_DURATION_MS = 1000;  // メッセージ表示時間（ミリ秒）
 
     const [status, setStatus] = useState<ProgressStatus>("idle");
-    const [statusMessage, setStatusMessage] = useState<string | null>(null);
+    const [statusMessage, setStatusMessage] = useState<string | undefined>("Browsersyncを起動しています..");
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [url, setUrl] = useState<string>("");
 
@@ -39,7 +40,7 @@ export default function useBrowsersync() {
         }
 
         setTimeout(() => {
-            setStatusMessage(null);
+            setStatusMessage(undefined);
             if (startedSuccessfully) {
                 setIsRunning(true);
             }
@@ -47,25 +48,33 @@ export default function useBrowsersync() {
     }
 
     const handleStop = async () => {
+        let stoppedSuccessfully = false;
         console.log("Stopping Browsersync...");
 
         setStatus("pending");
+        setIsRunning(false);
         setStatusMessage("Browsersyncを停止しています...");
+
+        await delayMs(1000);
         const result = await stopBrowsersync();
 
         if (result) {
             setStatus("success");
             setStatusMessage("Browsersyncを停止しました");
-            setIsRunning(false);
             console.log("Browsersync stopped successfully.");
+            stoppedSuccessfully = true;
         } else {
             setStatus("error");
             setStatusMessage("Browsersyncの停止に失敗しました😭");
             console.error("Failed to stop Browsersync.");
+            setIsRunning(true);
         }
 
         setTimeout(() => {
-            setStatusMessage(null);
+            if (stoppedSuccessfully) {
+                setStatus("idle");
+            }
+            setStatusMessage(undefined);
         }, MESSAGE_DISPLAY_DURATION_MS);
     }
 
