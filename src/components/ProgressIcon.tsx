@@ -10,7 +10,7 @@ interface ProgressIconProps {
 }
 
 export default function ProgressIcon({ size, status }: ProgressIconProps) {
-    const ICON_STYLE = { width: `${size}px`, height: `${size}px` };
+    const ICON_STYLE = { width: `${size}px`, height: `${size}px`, mb: 2 };
 
     switch (status) {
         case "success":
@@ -18,7 +18,7 @@ export default function ProgressIcon({ size, status }: ProgressIconProps) {
         case "error":
             return <ErrorIcon color="error" sx={ICON_STYLE} />;
         case "pending":
-            return <CircularProgress size={size} />;
+            return <CircularProgress size={size} sx={{mb: 2}} />;
         case "idle":
         default:
             return null; // 何も表示しないなど

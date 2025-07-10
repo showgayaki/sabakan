@@ -11,9 +11,9 @@ import { useInstallationProgress } from "../hooks/useInstallationProgress";
 export default function InstallationProgress({ onComplete }: { onComplete: () => void }) {
     const {
         groupedTaskStatuses,
-        currentTask,
         isInstalling,
         status,
+        statusMessage,
     } = useInstallationProgress(INSTALL_TASKS);
 
     useEffect(() => {
@@ -27,11 +27,11 @@ export default function InstallationProgress({ onComplete }: { onComplete: () =>
             {isInstalling && (
                 <FullscreenOverlay>
                     <Typography variant="h6" sx={{ mb: 2 }}>
-                        初回セットアップを行っています...
+                        初回セットアップを行っています
                     </Typography>
-                    <ProgressIcon status="pending" />
-                    <Typography variant="h6" sx={{ mb: 2 }}>
-                        {currentTask ? `${currentTask} をインストール中です...` : "インストールが完了しました！"}
+                    <ProgressIcon size={80} status={status} />
+                    <Typography variant="body1" sx={{ height: "3em", mb: 1, whiteSpace: "pre-line" }}>
+                        {statusMessage}
                     </Typography>
                     <TaskList groupedTaskStatuses={groupedTaskStatuses} />
                 </FullscreenOverlay>

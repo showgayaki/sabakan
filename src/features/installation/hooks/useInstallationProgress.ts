@@ -10,9 +10,9 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
     const [groupedTaskStatuses, setGroupedTaskStatuses] = useState<GroupedTaskStatuses>(() =>
         ({ Installation: Object.fromEntries(tasks.map((label) => [label.label, "pending"])) })
     );
-    const [currentTask, setCurrentTask] = useState<string | null>(null);
     const [isInstalling, setIsInstalling] = useState(false);
     const [status, setStatus] = useState<ProgressStatus>("idle");
+    const [statusMessage, setStatusMessage] = useState<string>("");
     const isExecuted = useRef(false); // StrictMode（開発時）での2回実行を回避
 
     const check = async () => {
@@ -32,34 +32,36 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
 
             const missing = tasks.filter(task => !installed.includes(task.label));
             if (missing.length > 0) {
-                setCurrentTask(missing[0].label);
                 setIsInstalling(true);
             } else {
                 setStatus("success");
             }
         } catch (error) {
             console.error("Error checking installed binaries:", error);
+            setStatus("error");
         }
     };
 
-    const installedBinaries = async () => {
+    const installBinaries = async () => {
         for (const task of tasks) {
             if (groupedTaskStatuses.Installation[task.label] !== "pending") continue;
-            setCurrentTask(task.label);
-            await delayMs(100);
+            await delayMs(200);
+            setStatusMessage(`${task.label}をインストールしています...`)
             try {
                 await installTask(task.key);
                 setGroupedTaskStatuses(prev => ({ Installation: { ...prev.Installation, [task.label]: "success" } }));
                 await delayMs(100);
             } catch (error) {
                 console.error(`Error in ${task.key}:`, error);
+                setStatus("error");
+                setStatusMessage(`${task.label}のインストールに失敗しました😰\nアプリを再起動してみてください`)
                 setGroupedTaskStatuses(prev => ({ Installation: { ...prev.Installation, [task.label]: "error" } }));
-                break;
+                return;
             }
         }
 
         setStatus("success");
-        setCurrentTask(null);
+        setStatusMessage("インストールが完了しました！");
         await delayMs(3000);
         setIsInstalling(false);
         setStatus("idle");
@@ -71,14 +73,14 @@ export function useInstallationProgress(tasks: { key: string; label: string }[])
 
     useEffect(() => {
         if (isInstalling) {
-            installedBinaries();
+            installBinaries();
         }
     }, [isInstalling]);
 
     return {
         groupedTaskStatuses,
-        currentTask,
         isInstalling,
         status,
+        statusMessage,
     };
 }
