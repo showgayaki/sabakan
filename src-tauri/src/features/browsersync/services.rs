@@ -3,6 +3,7 @@ use std::process::Child;
 use std::sync::{Arc, Mutex};
 use tauri::Window;
 
+use super::infrastructure::command::browsersync_command;
 use super::infrastructure::process::{spawn_browsersync, stop_browsersync};
 
 pub struct BrowsersyncState {
@@ -17,12 +18,10 @@ impl BrowsersyncState {
         proxy_url: &str,
     ) -> Result<String, String> {
         let mut lock = self.process.lock().unwrap();
-        // if lock.is_some() {
-        //     return Err("Browsersync already running".to_string());
-        // }
 
+        let command = browsersync_command(target_dir, proxy_url)?;
         let (child, external_url) =
-            spawn_browsersync(window, target_dir, proxy_url).map_err(|e| e.to_string())?;
+            spawn_browsersync(window, command).map_err(|e| e.to_string())?;
         info!("Browsersync process started with PID: {}", child.id());
         *lock = Some(child);
 
