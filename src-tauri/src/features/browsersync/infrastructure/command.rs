@@ -70,8 +70,6 @@ fn macos_command(
     proxy_url: &str,
     target_files: &[&str],
 ) -> Result<Command, String> {
-    use nix::sys::signal::{killpg, Signal};
-    use nix::unistd::Pid;
     use std::os::unix::process::CommandExt;
 
     let path = NODE_DIR
@@ -80,7 +78,7 @@ fn macos_command(
         .join("browser-sync");
     info!("browsersync_path: {}", path.display());
 
-    let mut command = build_base_command(&path, target_dir, proxy_url, &target_files);
+    let mut command = build_base_command(&path, target_dir, proxy_url, target_files);
 
     // SAFETY:
     // - CommandExt::pre_exec() は unsafe であり、spawn 前のプロセス空間で実行されるため、
