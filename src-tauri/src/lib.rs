@@ -1,5 +1,6 @@
-use log::info;
+use log::{error, info};
 use std::sync::{Arc, Mutex};
+use tauri::{Manager, State};
 
 mod commands;
 mod constants;
@@ -25,6 +26,18 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .manage(BrowsersyncState {
             process: Arc::new(Mutex::new(None)),
+        })
+        .on_window_event(|app, event| {
+            // ウィンドウが閉じられるときに、Browsersyncも終了する
+            if let tauri::WindowEvent::CloseRequested { .. } = event {
+                info!("Window closing...");
+                let state: State<BrowsersyncState> = app.state();
+                if let Err(e) = state.stop() {
+                    error!("{e}");
+                }
+                // macOSでは、ウィンドウを閉じてもプロセスが残るため、明示的に終了
+                std::process::exit(0);
+            }
         })
         .invoke_handler(tauri::generate_handler![
             get_host_os,
