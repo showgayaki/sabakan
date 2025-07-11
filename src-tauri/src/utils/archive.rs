@@ -35,11 +35,12 @@ fn extract_zip(zip_path: &Path, dest_dir: &Path) -> Result<(), String> {
         let file_name = file.name().to_string();
         let file_path = Path::new(&file_name);
 
-        let output_path = if let Some(file_name) = file_path.file_name() {
-            dest_dir.join(file_name) // **サブディレクトリを無視**
-        } else {
-            dest_dir.join(file_path) // **そのまま使用**
-        };
+        // let output_path = if let Some(file_name) = file_path.file_name() {
+        //     dest_dir.join(file_name) // **サブディレクトリを無視**
+        // } else {
+        //     dest_dir.join(file_path) // **そのまま使用**
+        // };
+        let output_path = dest_dir.join(file_path);
 
         if file_name.ends_with('/') {
             fs::create_dir_all(&output_path)

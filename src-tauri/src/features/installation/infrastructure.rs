@@ -3,20 +3,22 @@ pub(super) mod node;
 
 use log::{error, info};
 
-use crate::constants::{BINARY_DIR, HOST_OS, NODE_DIR};
+use crate::constants::{BINARY_DIR, NODE_DIR};
 use crate::utils::archive::extract;
-use crate::utils::fs::{remove_file, set_executable};
+use crate::utils::fs::remove_file;
+#[cfg(unix)]
+use crate::utils::fs::set_executable;
 use crate::utils::network::download_file;
 
 /// バイナリダウンロード
 async fn install_binary(binary_name: String, url: String) -> Result<(), String> {
     let exec_path = if binary_name == "Node.js" {
-        NODE_DIR.join("bin/node")
+        NODE_DIR.join("bin").join("node")
     } else {
         BINARY_DIR.join(&binary_name)
     };
     info!("Downloading {} from {:?}", &binary_name, &url);
-    let dest_path = BINARY_DIR.join(url.split('/').last().unwrap());
+    let dest_path = BINARY_DIR.join(url.split('/').next_back().unwrap());
 
     match download_file(&url, &dest_path).await {
         Ok(archive_path) => {
@@ -29,9 +31,8 @@ async fn install_binary(binary_name: String, url: String) -> Result<(), String> 
                 return Err(format!("Failed to extract {}: {}", &binary_name, &e));
             } else {
                 // macOS の場合は chmod +x
-                if HOST_OS != "windows" {
-                    set_executable(&exec_path).expect("Failed to set executable permissions");
-                }
+                #[cfg(unix)]
+                set_executable(&exec_path).expect("Failed to set executable permissions");
                 info!("{} installed at {:?}", &binary_name, &exec_path);
                 // アーカイブ削除
                 match remove_file(&archive_path) {

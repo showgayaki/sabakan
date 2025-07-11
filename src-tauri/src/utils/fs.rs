@@ -1,6 +1,8 @@
 use std::fs;
-use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
+
+#[cfg(unix)]
+use std::os::unix::fs::PermissionsExt;
 
 // /// 指定したディレクトリがなければ作成する
 // pub fn ensure_dir_exists(path: &Path) -> Result<(), String> {
@@ -25,6 +27,7 @@ pub fn remove_file(path: &Path) -> Result<(), String> {
 }
 
 /// 指定したファイルに実行権限（755）を付与
+#[cfg(unix)]
 pub fn set_executable(path: &Path) -> Result<(), String> {
     let metadata = fs::metadata(path).map_err(|e| format!("Failed to get metadata: {}", e))?;
     let mut permissions = metadata.permissions();

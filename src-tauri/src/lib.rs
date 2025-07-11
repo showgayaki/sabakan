@@ -18,7 +18,7 @@ use features::installation::commands::{
 
 pub fn run() {
     init_logger(); // ロガーの初期化
-    info!("Application started on {}({}).", HOST_OS, HOST_ARCH);
+    info!("Application started on {HOST_OS}({HOST_ARCH})");
 
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
@@ -29,8 +29,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             get_host_os,
             check_installed_binaries,
-            install_browsersync,
             install_nodejs,
+            install_browsersync,
             start_browsersync,
             stop_browsersync,
         ])

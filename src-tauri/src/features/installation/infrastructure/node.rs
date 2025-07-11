@@ -10,7 +10,7 @@ pub async fn install() -> Result<(), String> {
 
     return spawn_blocking(move || install_binary(binary_name.to_string(), url))
         .await
-        .map_err(|e| format!("Task failed: {:?}", e))?
+        .map_err(|e| format!("Task failed: {e}"))?
         .await;
 }
 
@@ -24,7 +24,6 @@ fn download_url() -> Result<String, String> {
     };
 
     Ok(format!(
-        "https://nodejs.org/dist/{}/node-{}-{}-{}.{}",
-        NODE_VER, NODE_VER, os, arch, ext
+        "https://nodejs.org/dist/{NODE_VER}/node-{NODE_VER}-{os}-{arch}.{ext}"
     ))
 }
