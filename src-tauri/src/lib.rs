@@ -27,16 +27,16 @@ pub fn run() {
         .manage(BrowsersyncState {
             process: Arc::new(Mutex::new(None)),
         })
-        .on_window_event(|app, event| {
+        .on_window_event(|window, event| {
             // ウィンドウが閉じられるときに、Browsersyncも終了する
             if let tauri::WindowEvent::CloseRequested { .. } = event {
                 info!("Window closing...");
-                let state: State<BrowsersyncState> = app.state();
+                let state: State<BrowsersyncState> = window.state();
                 if let Err(e) = state.stop() {
                     error!("{e}");
                 }
                 // macOSでは、ウィンドウを閉じてもプロセスが残るため、明示的に終了
-                std::process::exit(0);
+                window.app_handle().exit(0);
             }
         })
         .invoke_handler(tauri::generate_handler![
