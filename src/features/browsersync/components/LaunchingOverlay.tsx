@@ -82,6 +82,7 @@ export default function LaunchingOverlay({
                         handleStopBrowsersync();
                     }}
                     icon={<StopCircle sx={{ fontSize: BUTTON_FONT_SIZE }} />}
+                    disabled={!isRunning}
                 />
             </Stack>
         </FullscreenOverlay>

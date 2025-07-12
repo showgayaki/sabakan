@@ -4,6 +4,7 @@ interface CustomIconButtonProps {
     size?: 'small' | 'medium' | 'large';
     onClick?: () => void;
     icon: React.ReactNode;
+    disabled?: boolean;
     iconButtonProps?: IconButtonProps;
 }
 
@@ -11,6 +12,7 @@ export default function CustomIconButton({
     size,
     onClick,
     icon,
+    disabled,
     iconButtonProps,
 }: CustomIconButtonProps) {
     return (
@@ -18,6 +20,7 @@ export default function CustomIconButton({
             sx={{ p: 0 }}
             size={size}
             onClick={onClick}
+            disabled={disabled}
             {...iconButtonProps}
         >
             {icon}
