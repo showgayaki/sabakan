@@ -26,9 +26,10 @@ export default function BrowsersyncForm() {
                     url={browsersync.url}
                     logs={logStream.lines}
                     logContainerRef={logStream.containerRef}
-                    handleStopBrowsersync={() => {
+                    handleStopBrowsersync={async () => {
+                        await browsersync.handleStop();
+                        // LogStreamをクリア
                         logStream.setLines([]);
-                        browsersync.handleStop();
                     }}
                 />
             }
