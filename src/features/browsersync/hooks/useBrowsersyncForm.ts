@@ -17,7 +17,7 @@ export default function useBrowsersyncForm() {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const validateDirectory = directory.validate();
+        const validateDirectory = await directory.validate();
         const validateProxy = proxy.validate();
 
         if (validateDirectory && validateProxy) {

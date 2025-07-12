@@ -7,6 +7,7 @@ mod constants;
 mod features;
 mod utils;
 
+use commands::fs::directory_exists;
 use commands::system::get_host_os;
 use constants::{HOST_ARCH, HOST_OS};
 use utils::logger::init_logger;
@@ -41,6 +42,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             get_host_os,
+            directory_exists,
             check_installed_binaries,
             install_nodejs,
             install_browsersync,

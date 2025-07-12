@@ -36,3 +36,8 @@ pub fn set_executable(path: &Path) -> Result<(), String> {
         .map_err(|e| format!("Failed to set permissions: {}", e))?;
     Ok(())
 }
+
+/// ディレクトリの存在チェック
+pub fn directory_exists(path: &str) -> bool {
+    std::path::Path::new(path).is_dir()
+}

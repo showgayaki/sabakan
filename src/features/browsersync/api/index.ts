@@ -8,3 +8,6 @@ export const startBrowsersync = (targetDir: String, proxyUrl: String): Promise<s
 
 export const stopBrowsersync = (): Promise<{ success: boolean }> =>
     invoke("stop_browsersync");
+
+export const directoryExists = (path: String): Promise<boolean> =>
+    invoke("directory_exists", { path });

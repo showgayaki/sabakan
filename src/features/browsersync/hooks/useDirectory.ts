@@ -19,8 +19,8 @@ export default function useBrowsersyncForm(hostOs: string) {
         }
     };
 
-    const validate = () => {
-        const message = validateDirectoryPath(path, hostOs);
+    const validate = async () => {
+        const message = await validateDirectoryPath(path, hostOs);
         if (message) {
             console.log("Directory validation failed:", message);
             setError(message);
