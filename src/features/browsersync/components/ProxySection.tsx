@@ -19,12 +19,15 @@ export default function ProxySection({
     setUrl,
     error,
 }: ProxySectionProps) {
+    const helpText = `ローカル環境のWordPressサイトなどと連携したい場合は、そのURLを入力してください`;
+
     return (
         <Box>
             <CheckboxWithLabel
                 checked={useProxy}
                 onChange={setUseProxy}
                 label="Proxyを使用する"
+                helpText={helpText}
             />
             <BottomArrowTooltip title={error || ""}>
                 <CustomTextField

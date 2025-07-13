@@ -16,7 +16,12 @@ export default function HelpTooltipIcon({ title }: { title: string }) {
             </Typography>
         }
         >
-            <HelpOutlineIcon sx={{ fontSize: "26px", cursor: "pointer" }} />
+            <HelpOutlineIcon
+                sx={{
+                    fontSize: "1.2em",
+                    cursor: "pointer",
+                    fill: "rgb(170, 170, 170)",
+                }} />
         </Tooltip>
     )
 }
