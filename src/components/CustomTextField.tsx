@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
+import HelpTooltipIcon from "@/components/HelpTooltipIcon";
+
 interface CustomTextFieldProps {
     id?: string;
     label?: string;
@@ -18,6 +20,7 @@ interface CustomTextFieldProps {
     disabled?: boolean;
     type?: string;
     iconRight?: React.ReactNode;
+    helpText?: string;
     textFieldProps?: Partial<TextFieldProps>;
 }
 
@@ -30,15 +33,28 @@ export default function CustomTextField({
     disabled,
     type,
     iconRight,
+    helpText,
     textFieldProps,
 }: CustomTextFieldProps) {
     return (
         <FormControl fullWidth>
             {
                 label && (
-                    <InputLabel sx={{ position: "relative", top: "14px", left: "-14px" }}
-                        shrink htmlFor={id}>
+                    <InputLabel
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 0.8,
+                            position: "relative",
+                            top: "16px",
+                            left: "-12px",
+                            height: "30px"
+                        }}
+                        shrink
+                        htmlFor={id}
+                    >
                         {label}
+                        {helpText && <HelpTooltipIcon title={helpText} />}
                     </InputLabel>
                 )
             }

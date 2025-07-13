@@ -23,6 +23,15 @@ export default function DirectoryInputSection({
     const placeholder = hostOs === "windows"
         ? "C:\\path\\to\\directory"
         : "/path/to/directory";
+    const helpText = `監視対象にするディレクトリを選択してください。
+        このディレクトリをルートディレクトリとしてBrowsersyncサーバーが起動します。
+        選択されたディレクトリ内のファイルが更新されると、ブラウザがリロードされます。
+        対象のファイル拡張子は
+        ・.html
+        ・.css
+        ・.js
+        ・.pnp
+        です。`;
 
     return (
         <BottomArrowTooltip title={error || ""}>
@@ -42,6 +51,7 @@ export default function DirectoryInputSection({
                         <Folder />
                     </IconButton>
                 }
+                helpText={helpText}
                 textFieldProps={{
                     error: Boolean(error),
                 }}
