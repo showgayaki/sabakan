@@ -16,7 +16,7 @@ export default function CheckboxWithLabel({ htmlFor, checked, onChange, label, h
             sx={{
                 mr: 0,
                 "& .MuiFormControlLabel-label": {
-                    fontSize: "0.875rem",
+                    fontSize: 14,
                 },
             }}
             label={

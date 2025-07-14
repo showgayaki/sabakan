@@ -26,7 +26,7 @@ export default function CustomLabel({ label, htmlFor, helpText, isFormLabel = fa
                 component="label"
                 htmlFor={htmlFor}
                 sx={{
-                    fontSize: isFormLabel ? "14px" : "12px",
+                    fontSize: isFormLabel ? 14 : 12,
                     color: isFormLabel ? "inherit" : "rgb(170, 170, 170)",
                 }}
             >
@@ -50,7 +50,7 @@ export function HelpTooltipIcon({ title }: { title: string }) {
         >
             <HelpOutlineIcon
                 sx={{
-                    fontSize: "18px",
+                    fontSize: 18,
                     cursor: "pointer",
                     fill: "rgb(170, 170, 170)",
                 }} />

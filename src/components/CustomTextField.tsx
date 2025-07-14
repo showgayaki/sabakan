@@ -51,7 +51,7 @@ export default function CustomTextField({
                     "& .MuiInputBase-input, & .MuiInputBase-root .MuiInputBase-input.MuiAutocomplete-input": {
                         backgroundColor: disabled ? "#1c1c1c" : undefined,
                         color: disabled ? "#333333" : undefined,
-                        fontSize: "0.75rem",
+                        fontSize: 12,
                     },
                 }}
                 id={id}
