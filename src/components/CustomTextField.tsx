@@ -1,7 +1,6 @@
 import {
     Divider,
     FormControl,
-    InputLabel,
     TextField,
     TextFieldProps,
     InputAdornment,
@@ -9,10 +8,10 @@ import {
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
-import HelpTooltipIcon from "@/components/HelpTooltipIcon";
+import CustomLabel from "@/components/CustomLabel";
 
 interface CustomTextFieldProps {
-    id?: string;
+    id: string;
     label?: string;
     value?: string;
     onChange: (value: string) => void;
@@ -40,22 +39,11 @@ export default function CustomTextField({
         <FormControl fullWidth>
             {
                 label && (
-                    <InputLabel
-                        sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: 0.8,
-                            position: "relative",
-                            top: "16px",
-                            left: "-12px",
-                            height: "30px"
-                        }}
-                        shrink
+                    <CustomLabel
+                        label={label}
                         htmlFor={id}
-                    >
-                        {label}
-                        {helpText && <HelpTooltipIcon title={helpText} />}
-                    </InputLabel>
+                        helpText={helpText}
+                    />
                 )
             }
             <TextField

@@ -1,15 +1,16 @@
-import { Checkbox, FormControlLabel, Stack } from "@mui/material";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
-import HelpTooltipIcon from "@/components/HelpTooltipIcon";
+import CustomLabel from "@/components/CustomLabel";
 
 interface CheckboxProps {
+    htmlFor: string;
     checked: boolean;
     onChange: (checked: boolean) => void;
     label: string;
     helpText?: string;
 }
 
-export default function CheckboxWithLabel({ checked, onChange, label, helpText }: CheckboxProps) {
+export default function CheckboxWithLabel({ htmlFor, checked, onChange, label, helpText }: CheckboxProps) {
     return (
         <FormControlLabel
             sx={{
@@ -19,10 +20,12 @@ export default function CheckboxWithLabel({ checked, onChange, label, helpText }
                 },
             }}
             label={
-                <Stack direction="row" alignItems="center" sx={{ gap: 0.5 }}>
-                    {label}
-                    {helpText && <HelpTooltipIcon title={helpText} />}
-                </Stack>
+                <CustomLabel
+                    label={label}
+                    htmlFor={htmlFor}
+                    helpText={helpText}
+                    isFormLabel
+                />
             }
             control={
                 <Checkbox
