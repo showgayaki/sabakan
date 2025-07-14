@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-import BottomArrowTooltip from "@/components/CustomTooltips";
+import ValidationErrorTooltip from "@/components/CustomTooltips";
 import CheckboxWithLabel from "@/components/Checkbox";
 import CustomTextField from "@/components/CustomTextField";
 
@@ -31,7 +31,7 @@ export default function ProxySection({
                 label="Proxyを使用する"
                 helpText={helpText}
             />
-            <BottomArrowTooltip title={error || ""}>
+            <ValidationErrorTooltip title={error || ""}>
                 <CustomTextField
                     id={id}
                     type="text"
@@ -43,7 +43,7 @@ export default function ProxySection({
                         error: Boolean(error),
                     }}
                 />
-            </BottomArrowTooltip>
+            </ValidationErrorTooltip>
         </Box>
     );
 }

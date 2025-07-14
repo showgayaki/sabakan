@@ -1,11 +1,10 @@
-import { Box } from "@mui/material";
-
+import DefaultLayout from "@/layouts/DefaultLayout";
 import { BrowsersyncForm } from "./components/BrowsersyncForm";
 
 export default function Home() {
     return (
-        <Box sx={{ p: 2, height: "100vh"}}>
+        <DefaultLayout>
             <BrowsersyncForm />
-        </Box>
+        </DefaultLayout>
     );
 }

@@ -39,14 +39,16 @@ export default function CustomLabel({ label, htmlFor, helpText, isFormLabel = fa
 
 export function HelpTooltipIcon({ title }: { title: string }) {
     return (
-        <Tooltip title={
-            <Typography
-                variant="inherit"
-                sx={{ whiteSpace: "pre-line" }}
-            >
-                {title}
-            </Typography>
-        }
+        <Tooltip
+            arrow
+            title={
+                <Typography
+                    variant="inherit"
+                    sx={{ whiteSpace: "pre-line" }}
+                >
+                    {title}
+                </Typography>
+            }
         >
             <HelpOutlineIcon
                 sx={{

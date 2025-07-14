@@ -1,6 +1,6 @@
 import { Box, Tooltip, TooltipProps } from "@mui/material";
 
-export default function BottomArrowTooltip({
+export default function ValidationErrorTooltip({
     children,
     ...props
 }: TooltipProps & { children: React.ReactNode }) {

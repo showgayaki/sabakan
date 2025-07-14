@@ -2,7 +2,7 @@ import { IconButton } from "@mui/material";
 import { Folder } from "@mui/icons-material";
 
 import CustomTextField from "@/components/CustomTextField";
-import BottomArrowTooltip from "@/components/CustomTooltips";
+import ValidationErrorTooltip from "@/components/CustomTooltips";
 
 interface DirectoryInputSectionProps {
     hostOs: string;
@@ -34,7 +34,7 @@ export default function DirectoryInputSection({
         です。`;
 
     return (
-        <BottomArrowTooltip title={error || ""}>
+        <ValidationErrorTooltip title={error || ""}>
             <CustomTextField
                 id="directoryInput"
                 label="ディレクトリ選択"
@@ -56,6 +56,6 @@ export default function DirectoryInputSection({
                     error: Boolean(error),
                 }}
             />
-        </BottomArrowTooltip>
+        </ValidationErrorTooltip>
     );
 }
