@@ -80,6 +80,18 @@ function Hamburger() {
                 vertical: "top",
                 horizontal: "right",
             }}
+            slotProps={{
+                // MenuItemのスタイル調整
+                list: {
+                    sx: {
+                        "& .MuiMenuItem-root": {
+                            fontSize: 14,
+                            minHeight: 36,
+                            px: 2,
+                        },
+                    },
+                },
+            }}
         >
             <MenuItem onClick={handleClose}>ライセンス</MenuItem>
             <MenuItem onClick={handleClose}>このアプリについて</MenuItem>
