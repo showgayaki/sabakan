@@ -30,7 +30,7 @@ export default function DirectoryInputSection({
         ・.html
         ・.css
         ・.js
-        ・.pnp
+        ・.php
         です。`;
 
     return (

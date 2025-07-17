@@ -9,6 +9,7 @@ mod utils;
 
 use commands::fs::directory_exists;
 use commands::system::get_host_os;
+use commands::webview::open_license_window;
 use constants::{HOST_ARCH, HOST_OS};
 use utils::logger::init_logger;
 
@@ -36,8 +37,6 @@ pub fn run() {
                 if let Err(e) = state.stop() {
                     error!("{e}");
                 }
-                // macOSでは、ウィンドウを閉じてもプロセスが残るため、明示的に終了
-                window.app_handle().exit(0);
             }
         })
         .invoke_handler(tauri::generate_handler![
@@ -48,6 +47,7 @@ pub fn run() {
             install_browsersync,
             start_browsersync,
             stop_browsersync,
+            open_license_window,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

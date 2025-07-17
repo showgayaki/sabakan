@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    bs_launcher_lib::run()
+    sabakan_lib::run()
 }
