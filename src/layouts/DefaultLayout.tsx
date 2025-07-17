@@ -1,12 +1,11 @@
 import { Stack } from "@mui/material";
 
-import Header from "@/components/Header";
-
 interface DefaultLayoutProps {
+    header?: React.ReactNode;
     children: React.ReactNode;
 }
 
-export default function DefaultLayout({ children }: DefaultLayoutProps) {
+export default function DefaultLayout({ header, children }: DefaultLayoutProps) {
     return (
         <Stack
             direction="column"
@@ -14,7 +13,7 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
                 height: "100vh",
             }}
         >
-            <Header />
+            {header}
             <Stack
                 component="main"
                 direction="column"
