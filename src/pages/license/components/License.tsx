@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Box, Typography, Link } from "@mui/material";
+import { Box, Typography, Link, Stack } from "@mui/material";
+
+import { H2, H3, H4, Ul, Li, A, Pre } from "./Element";
 
 export default function Licenses() {
     const [nodeLicenses, setNodeLicenses] = useState<Record<string, any>>({});
-    const [rustLicenses, setRustLicenses] = useState<any[]>([]);
 
     const [visibleNodeLicenses, setVisibleNodeLicenses] = useState<string[]>([]);
     const [visibleRustLicenses, setVisibleRustLicenses] = useState<{ license: any, crate: any }[]>([]);
@@ -30,7 +31,6 @@ export default function Licenses() {
         fetch("/licenses/rust.json")
             .then(res => res.json())
             .then((data: any[]) => {
-                setRustLicenses(data);
                 let i = 0;
                 const BATCH_SIZE = 20;
                 const appendNext = () => {
@@ -57,51 +57,46 @@ export default function Licenses() {
     }, []);
 
     return (
-        <Box sx={{ width: "100%"}}>
-            <Typography variant="h4" gutterBottom>Licenses</Typography>
+        <Box sx={{ width: "100%" }}>
+            <H2 text="Licenses" />
+            <Stack spacing={5}>
+                <Box component="section">
+                    <H3 text="📦 Node Modules" />
+                    <Ul>
+                        {visibleNodeLicenses.map((name) => {
+                            const data = nodeLicenses[name];
+                            return (
+                                <Li>
+                                    <H4>
+                                        <A
+                                            href={data.repository || `https://www.npmjs.com/package/${name.split("@")[0]}`}
+                                            text={name}
+                                        />
+                                    </H4>
+                                    <Pre text={data.licenseText} />
+                                </Li>
+                            );
+                        })}
+                    </Ul>
+                </Box>
 
-            <Typography variant="h5" sx={{ mt: 4 }}>📦 Node Modules</Typography>
-            <ul style={{ listStyle: "none", padding: 0 }}>
-                {visibleNodeLicenses.map((name) => {
-                    const data = nodeLicenses[name];
-                    return (
-                        <li key={name} style={{ marginBottom: "2rem" }}>
-                            <h3>
-                                <Link
-                                    href={data.repository || `https://www.npmjs.com/package/${name.split("@")[0]}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {name}
-                                </Link>
-                            </h3>
-                            <pre style={{ maxHeight: 200, overflowY: "scroll", whiteSpace: "pre-wrap" }}>
-                                {data.licenseText}
-                            </pre>
-                        </li>
-                    );
-                })}
-            </ul>
-
-            <Typography variant="h5" sx={{ mt: 4 }}>🦀 Rust Crates({rustLicenses.length})</Typography>
-            <ul style={{ listStyle: "none", padding: 0 }}>
-                {visibleRustLicenses.map(({ license, crate }, idx) => (
-                    <li key={idx} style={{ marginBottom: "2rem" }}>
-                        <h3>
-                            <Link
-                                href={crate.crate.repository || `https://crates.io/crates/${crate.crate.name}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {crate.crate.name} {crate.crate.version}
-                            </Link>
-                        </h3>
-                        <pre style={{ maxHeight: 200, overflowY: "scroll", whiteSpace: "pre-wrap" }}>
-                            {license.text}
-                        </pre>
-                    </li>
-                ))}
-            </ul>
+                <Box component="section">
+                    <H3 text="🦀 Rust Crates" />
+                    <Ul>
+                        {visibleRustLicenses.map(({ license, crate }, idx) => (
+                            <Li>
+                                <H4>
+                                    <A
+                                        href={crate.crate.repository || `https://crates.io/crates/${crate.crate.name}`}
+                                        text={`${crate.crate.name} ${crate.crate.version}`}
+                                    />
+                                </H4>
+                                <Pre text={license.text} />
+                            </Li>
+                        ))}
+                    </Ul>
+                </Box>
+            </Stack>
         </Box>
     );
 }

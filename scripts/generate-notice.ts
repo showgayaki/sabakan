@@ -32,6 +32,12 @@ type NodeLicenseMap = Record<
 const nodeLicenses: NodeLicenseMap = JSON.parse(
     fs.readFileSync(path.resolve("licenses/node.json"), "utf-8")
 );
+// Apply override to license text before sorting
+for (const [name, info] of Object.entries(nodeLicenses)) {
+    if (name.startsWith("@tauri-apps/api")) {
+        info.licenseText = "MIT License\n\nSee: https://github.com/tauri-apps/tauri/blob/dev/LICENSE_MIT";
+    }
+}
 // Save sorted Node.js license data
 const sortedNodeLicenses = Object.fromEntries(
     Object.entries(nodeLicenses).sort(([a], [b]) => a.localeCompare(b))
@@ -48,11 +54,7 @@ for (const [name, info] of Object.entries(sortedNodeLicenses)) {
     output += `Repository: ${info.repository ?? "N/A"}\n\n\n`;
     output += "```\n";
 
-    const overrideLicenseText = name.startsWith("@tauri-apps/api")
-        ? "MIT License\n\nSee: https://github.com/tauri-apps/tauri/blob/dev/LICENSE_MIT"
-        : info.licenseText;
-
-    output += overrideLicenseText;
+    output += info.licenseText;
     output += "\n```\n\n"
 }
 
