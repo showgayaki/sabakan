@@ -1,30 +1,30 @@
-import { ReactNode } from "react";
+import { Stack } from "@mui/material";
+
 import Header from "@/components/Header";
-import { Box } from "@mui/material";
 
 interface DefaultLayoutProps {
-    children: ReactNode;
+    children: React.ReactNode;
 }
 
 export default function DefaultLayout({ children }: DefaultLayoutProps) {
     return (
-        <Box
+        <Stack
+            direction="column"
             sx={{
-                display: "flex",
-                flexDirection: "column",
                 height: "100vh",
             }}
         >
             <Header />
-            <Box
+            <Stack
                 component="main"
+                direction="column"
                 sx={{
                     flex: 1,
                     p: 2,
                 }}
             >
                 {children}
-            </Box>
-        </Box>
+            </Stack>
+        </Stack>
     );
 }

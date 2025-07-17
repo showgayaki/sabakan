@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -11,7 +10,7 @@ interface CustomDialogProps {
     open: boolean;
     onClose: () => void;
     title: string;
-    children: ReactNode;
+    children: React.ReactNode;
 }
 
 export default function CustomDialog({
