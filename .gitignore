@@ -3,7 +3,7 @@ ToDo.md
 licenses/*
 !licenses/node-format.json
 
-public/licenses/*
+public/license/*
 
 # Logs
 logs

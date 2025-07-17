@@ -1,18 +1,18 @@
 import { useState } from "react";
-
-import { openLicenseWindow } from "./api";
+import { useNavigate } from "react-router-dom";
 
 export type Hamburger = {
     anchorEl: HTMLElement | null;
     open: boolean;
     handleMenuClick: (event: React.MouseEvent<HTMLElement>) => void;
     handleClose: () => void;
-    handleLicenseClick: () => Promise<void>;
+    handleLicenseClick: () => void;
 }
 
 export default function useHamburger(): Hamburger {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const navigate = useNavigate();
 
     const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -22,13 +22,9 @@ export default function useHamburger(): Hamburger {
         setAnchorEl(null);
     };
 
-    const handleLicenseClick = async () => {
+    const handleLicenseClick = () => {
         handleClose();
-        try {
-            await openLicenseWindow();
-        } catch (e) {
-            console.error("Failed to open license window:", e);
-        }
+        navigate("/license");
     };
 
     return {

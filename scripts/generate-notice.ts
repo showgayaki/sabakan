@@ -32,19 +32,17 @@ type NodeLicenseMap = Record<
 const nodeLicenses: NodeLicenseMap = JSON.parse(
     fs.readFileSync(path.resolve("licenses/node.json"), "utf-8")
 );
-const rustLicenses: {
-    licenses: {
-        name: string;
-        text: string;
-        used_by: { crate: { name: string; version: string; repository?: string } }[];
-    }[];
-} = JSON.parse(fs.readFileSync(path.resolve("licenses/rust.json"), "utf-8"));
+// Save sorted Node.js license data
+const sortedNodeLicenses = Object.fromEntries(
+    Object.entries(nodeLicenses).sort(([a], [b]) => a.localeCompare(b))
+);
+fs.writeFileSync("licenses/node.json", JSON.stringify(sortedNodeLicenses, null, 2));
 
 let output = `# NOTICE\n\nThis application includes third-party software.\n\n`;
 
 // --- Node.js ---
 output += `## Node.js Dependencies\n\n`;
-for (const [name, info] of Object.entries(nodeLicenses).sort(([a], [b]) => a.localeCompare(b))) {
+for (const [name, info] of Object.entries(sortedNodeLicenses)) {
     output += `### ${name}\n`;
     output += `License: ${info.licenses}\n\n`;
     output += `Repository: ${info.repository ?? "N/A"}\n\n\n`;
@@ -59,34 +57,42 @@ for (const [name, info] of Object.entries(nodeLicenses).sort(([a], [b]) => a.loc
 }
 
 // --- Rust Crates ---
+const rustLicenses: {
+    licenses: {
+        name: string;
+        text: string;
+        used_by: { crate: { name: string; version: string; repository?: string } }[];
+    }[];
+} = JSON.parse(fs.readFileSync(path.resolve("licenses/rust.json"), "utf-8"));
+
 output += `## Rust Crates\n\n`;
+const seen = new Set();
 const rustEntries = rustLicenses.licenses
-  .flatMap(license => license.used_by.map(used => ({
-    name: `${used.crate.name} ${used.crate.version}`,
-    license: license.name,
-    text: license.text,
-    repository: used.crate.repository ?? "N/A",
-  })))
-  .sort((a, b) => a.name.localeCompare(b.name));
+    .flatMap(license => license.used_by.map(used => ({
+        name: `${used.crate.name} ${used.crate.version}`,
+        license: license.name,
+        text: license.text,
+        repository: used.crate.repository ?? "N/A",
+    })))
+    .filter(entry => {
+        const key = entry.name;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+// Save deduplicated and sorted Rust license data
+fs.writeFileSync("licenses/rust.json", JSON.stringify(rustEntries, null, 2));
 
 for (const entry of rustEntries) {
-  output += `### ${entry.name}\n`;
-  output += `License: ${entry.license}\n`;
-  output += `Repository: ${entry.repository}\n\n`;
-  output += "```\n";
-  output += entry.text;
-  output += "\n```\n\n";
+    output += `### ${entry.name}\n`;
+    output += `License: ${entry.license}\n`;
+    output += `Repository: ${entry.repository}\n\n`;
+    output += "```\n";
+    output += entry.text;
+    output += "\n```\n\n";
 }
 
 // --- Write to NOTICE ---
 fs.writeFileSync("NOTICE", output);
 console.log("✅ NOTICE file generated.");
-
-// --- Convert to HTML ---
-const inputPath = path.resolve("NOTICE");
-const outputPath = path.resolve("public/licenses/NOTICE.html");
-fs.mkdirSync(path.dirname(outputPath), { recursive: true });
-const markdown = fs.readFileSync(inputPath, "utf-8");
-const html = await marked(markdown);
-fs.writeFileSync(outputPath, html);
-console.log("✅ NOTICE.html generated.");
