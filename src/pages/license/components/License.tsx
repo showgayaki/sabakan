@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Accordion, AccordionSummary, AccordionDetails, Box, Stack } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import { H2, H3, H4, Ul, Li, A, Pre } from "./Element";
+import { H2, H3, Ul, Li, A, Pre } from "./Element";
 
 export default function Licenses() {
     const [nodeLicenses, setNodeLicenses] = useState<Record<string, any>>({});

@@ -12,6 +12,29 @@ const darkTheme = createTheme({
             secondary: "#aaaaaa",
         },
     },
+    components: {
+        MuiCssBaseline: {
+            styleOverrides: {
+                body: {
+                    scrollbarWidth: "thin",
+                },
+                "*::-webkit-scrollbar": {
+                    width: "8px",
+                    height: "8px",
+                },
+                "*::-webkit-scrollbar-track": {
+                    backgroundColor: "#444",
+                },
+                "*::-webkit-scrollbar-thumb": {
+                    backgroundColor: "#888",
+                    borderRadius: "4px",
+                },
+                "*::-webkit-scrollbar-thumb:hover": {
+                    backgroundColor: "#aaa",
+                },
+            },
+        },
+    },
 });
 
 export default darkTheme;
