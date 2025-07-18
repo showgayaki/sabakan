@@ -1,48 +1,75 @@
 import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
-import { marked } from "marked";
 
-// --- Node.js License Extraction ---
-console.log("🔍 Extracting Node.js license data...");
-execSync(`node_modules/license-checker/bin/license-checker --production --json --customPath licenses/node-format.json > licenses/tmp.json`);
-execSync(`jq 'del(."sabakan@0.1.0") | with_entries(.value |= del(.path, .licenseFile))' licenses/tmp.json > licenses/node.json`);
-console.log("✅ Node.js license data extracted.");
+const currentDir = process.cwd();
+console.log("📂 Current directory:", currentDir);
 
-// --- Rust License Extraction ---
-console.log("🔍 Extracting Rust license data...");
-// execSync(`cargo about generate --format json > licenses/rust.json`);
-const rustJson = execSync(`cargo about generate --format json`, {
-    cwd: path.resolve("src-tauri"),
-    maxBuffer: 1024 * 1024 * 10, // 10MB
-});
-fs.writeFileSync("licenses/rust.json", rustJson);
-console.log("✅ Rust license data extracted.");
-
-// --- Generate NOTICE markdown ---
 type NodeLicenseMap = Record<
     string,
     {
         licenses: string;
         licenseText: string;
         repository?: string;
+        path?: string;
+        licenseFile?: string;
     }
 >;
 
-const nodeLicenses: NodeLicenseMap = JSON.parse(
-    fs.readFileSync(path.resolve("licenses/node.json"), "utf-8")
-);
+const formatJsonPath = path.resolve(currentDir, "licenses", "node-format.json");
+const tmpJsonPath = path.resolve(currentDir, "licenses", "tmp.json");
+const nodeJsonPath = path.resolve(currentDir, "licenses", "node.json");
+
+// --- Node.js License Extraction ---
+console.log("🔍 Extracting Node.js license data...");
+
+const licenseCheckerBin = process.platform === "win32"
+    ? "license-checker.CMD"
+    : "license-checker";
+
+const licenseCheckerPath = path.resolve(currentDir, "node_modules", ".bin", licenseCheckerBin);
+execSync(`${licenseCheckerPath} --production --json --customPath ${formatJsonPath} > ${tmpJsonPath}`);
+
+// package.json を読み込む
+const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"));
+const selfKey = `${pkg.name}@${pkg.version}`;
+
+// licenses/tmp.json を読み込み
+const tmpData: NodeLicenseMap = JSON.parse(fs.readFileSync(tmpJsonPath, "utf-8"));
+
+// 自分自身のエントリを削除
+delete tmpData[selfKey];
+
+// path と licenseFile を削除
+for (const key of Object.keys(tmpData)) {
+    delete tmpData[key].path;
+    delete tmpData[key].licenseFile;
+}
+
 // Apply override to license text before sorting
-for (const [name, info] of Object.entries(nodeLicenses)) {
+for (const [name, info] of Object.entries(tmpData)) {
     if (name.startsWith("@tauri-apps/api")) {
         info.licenseText = "MIT License\n\nSee: https://github.com/tauri-apps/tauri/blob/dev/LICENSE_MIT";
     }
 }
 // Save sorted Node.js license data
 const sortedNodeLicenses = Object.fromEntries(
-    Object.entries(nodeLicenses).sort(([a], [b]) => a.localeCompare(b))
+    Object.entries(tmpData).sort(([a], [b]) => a.localeCompare(b))
 );
-fs.writeFileSync("licenses/node.json", JSON.stringify(sortedNodeLicenses, null, 2));
+fs.writeFileSync(nodeJsonPath, JSON.stringify(sortedNodeLicenses, null, 2));
+console.log("✅ Node.js license data extracted.");
+
+
+// --- Rust License Extraction ---
+console.log("🔍 Extracting Rust license data...");
+const rustJsonPath = path.resolve(currentDir, "licenses", "rust.json");
+
+execSync(`cargo about generate --format json -o ${rustJsonPath}`, {
+    cwd: path.resolve("src-tauri"),
+    maxBuffer: 1024 * 1024 * 10, // 10MB
+});
+console.log("✅ Rust license data extracted.");
+
 
 let output = `# NOTICE\n\nThis application includes third-party software.\n\n`;
 
@@ -65,7 +92,7 @@ const rustLicenses: {
         text: string;
         used_by: { crate: { name: string; version: string; repository?: string } }[];
     }[];
-} = JSON.parse(fs.readFileSync(path.resolve("licenses/rust.json"), "utf-8"));
+} = JSON.parse(fs.readFileSync(rustJsonPath, "utf-8"));
 
 output += `## Rust Crates\n\n`;
 const seen = new Set();
