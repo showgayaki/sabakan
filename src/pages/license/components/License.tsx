@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Box, Typography, Link, Stack } from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails, Box, Stack } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { H2, H3, H4, Ul, Li, A, Pre } from "./Element";
 
@@ -66,14 +67,20 @@ export default function Licenses() {
                         {visibleNodeLicenses.map((name) => {
                             const data = nodeLicenses[name];
                             return (
-                                <Li>
-                                    <H4>
-                                        <A
-                                            href={data.repository || `https://www.npmjs.com/package/${name.split("@")[0]}`}
-                                            text={name}
-                                        />
-                                    </H4>
-                                    <Pre text={data.licenseText} />
+                                <Li key={`${data.name}@${data.version}`}>
+                                    <Accordion slots={{ heading: "h4" }}
+                                        sx={{ "& .MuiAccordion-heading": { m: 0 } }}
+                                    >
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ fontSize: "0.875rem" }}>
+                                            <A
+                                                href={data.repository || `https://www.npmjs.com/package/${name.split("@")[0]}`}
+                                                text={name}
+                                            />
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <Pre text={data.licenseText} />
+                                        </AccordionDetails>
+                                    </Accordion>
                                 </Li>
                             );
                         })}
@@ -84,14 +91,20 @@ export default function Licenses() {
                     <H3 text="🦀 Rust Crates" />
                     <Ul>
                         {visibleRustLicenses.map(({ license, crate }, idx) => (
-                            <Li>
-                                <H4>
-                                    <A
-                                        href={crate.crate.repository || `https://crates.io/crates/${crate.crate.name}`}
-                                        text={`${crate.crate.name} ${crate.crate.version}`}
-                                    />
-                                </H4>
-                                <Pre text={license.text} />
+                            <Li key={`${idx}-${crate.crate.name}`}>
+                                <Accordion slots={{ heading: "h4" }}
+                                    sx={{ "& .MuiAccordion-heading": { m: 0 } }}
+                                >
+                                    <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ fontSize: "0.875rem" }}>
+                                        <A
+                                            href={crate.crate.repository || `https://crates.io/crates/${crate.crate.name}`}
+                                            text={`${crate.crate.name} ${crate.crate.version}`}
+                                        />
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Pre text={license.text} />
+                                    </AccordionDetails>
+                                </Accordion>
                             </Li>
                         ))}
                     </Ul>

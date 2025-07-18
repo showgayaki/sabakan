@@ -34,7 +34,7 @@ export function Ul({ children }: { children: React.ReactNode }) {
 
 export function Li({ children }: { children: React.ReactNode }) {
     return (
-        <Box component="li" sx={{ listStyle: "none", p: 0, m: 0, mb: 3 }}>
+        <Box component="li" sx={{ listStyle: "none", p: 0, m: 0, mb: 2 }}>
             {children}
         </Box>
     )
@@ -58,6 +58,7 @@ export function Pre({ text }: { text: string }) {
             sx={{
                 maxHeight: 300,
                 p: 1,
+                mt: 0,
                 bgcolor: "#333",
                 overflowY: "scroll",
                 whiteSpace: "pre-wrap",

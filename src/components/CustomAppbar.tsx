@@ -10,7 +10,7 @@ interface CustomAppbarProps {
 export default function CustomAppbar({ children }: CustomAppbarProps) {
     return (
         <AppBar
-            position="static"
+            position="fixed"
             sx={{
                 height: 48,
                 mb: 1,
