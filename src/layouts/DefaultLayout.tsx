@@ -7,23 +7,18 @@ interface DefaultLayoutProps {
 
 export default function DefaultLayout({ header, children }: DefaultLayoutProps) {
     return (
-        <Stack
-            direction="column"
-            sx={{
-                height: "100vh",
-            }}
-        >
+        <>
             {header}
             <Stack
                 component="main"
                 direction="column"
                 sx={{
-                    flex: 1,
+                    flexGrow: 1,
                     p: 2,
                 }}
             >
                 {children}
-            </Stack>
-        </Stack>
+            </Stack >
+        </>
     );
 }

@@ -10,10 +10,10 @@ interface CustomAppbarProps {
 export default function CustomAppbar({ children }: CustomAppbarProps) {
     return (
         <AppBar
-            position="fixed"
+            position="sticky"
             sx={{
+                top: 0,
                 height: 48,
-                mb: 1,
                 backgroundColor: "#222",
             }}
         >

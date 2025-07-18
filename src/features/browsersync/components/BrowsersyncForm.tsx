@@ -37,9 +37,7 @@ export default function BrowsersyncForm() {
                 component="form"
                 justifyContent="space-between"
                 onSubmit={handleSubmit}
-                sx={{
-                    height: "100%",
-                }}
+                sx={{flexGrow: 1}}
             >
                 <Stack spacing={2}>
                     <DirectoryInputSection
