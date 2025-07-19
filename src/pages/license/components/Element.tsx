@@ -1,13 +1,8 @@
 import {
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     Box,
     Typography,
     Link,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useState } from "react";
 
 export function H2({ text }: { text: string }) {
     return (

@@ -1,7 +1,7 @@
 ToDo.md
 # `node-format.json`だけリポジトリに含める
-licenses/*
-!licenses/node-format.json
+public/licenses/*
+!public/licenses/node-format.json
 
 public/license/*
 

@@ -12,14 +12,17 @@ export function LicenseAccordion({ repository, url, name, licenseText }
     : { repository: string, url: string, name: string, licenseText: string }
 ) {
     const [preText, setPreText] = useState<string>("");
+    const [expanded, setExepanded] = useState<boolean>(false);
 
     const onChange = () => {
-        if (preText === "") {
+        if (!expanded && preText === "") {
+            setExepanded(true);
             setPreText(licenseText);
         } else {
+            setExepanded(false);
             setTimeout(() => {
                 setPreText("");
-            }, 1000);
+            }, 200);
         }
     };
 

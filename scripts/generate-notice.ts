@@ -16,9 +16,10 @@ type NodeLicenseMap = Record<
     }
 >;
 
-const formatJsonPath = path.resolve(currentDir, "licenses", "node-format.json");
-const tmpJsonPath = path.resolve(currentDir, "licenses", "tmp.json");
-const nodeJsonPath = path.resolve(currentDir, "licenses", "node.json");
+const formatJsonPath = path.resolve(currentDir, "public", "licenses", "node-format.json");
+const tmpJsonPath = path.resolve(currentDir, "public", "licenses", "tmp.json");
+const nodeJsonPath = path.resolve(currentDir, "public", "licenses", "node.json");
+const rustJsonPath = path.resolve(currentDir, "public", "licenses", "rust.json");
 
 // --- Node.js License Extraction ---
 console.log("🔍 Extracting Node.js license data...");
@@ -62,7 +63,6 @@ console.log("✅ Node.js license data extracted.");
 
 // --- Rust License Extraction ---
 console.log("🔍 Extracting Rust license data...");
-const rustJsonPath = path.resolve(currentDir, "licenses", "rust.json");
 
 execSync(`cargo about generate --format json -o ${rustJsonPath}`, {
     cwd: path.resolve("src-tauri"),
