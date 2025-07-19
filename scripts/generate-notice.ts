@@ -70,22 +70,7 @@ execSync(`cargo about generate --format json -o ${rustJsonPath}`, {
 });
 console.log("✅ Rust license data extracted.");
 
-
-let output = `# NOTICE\n\nThis application includes third-party software.\n\n`;
-
-// --- Node.js ---
-output += `## Node.js Dependencies\n\n`;
-for (const [name, info] of Object.entries(sortedNodeLicenses)) {
-    output += `### ${name}\n`;
-    output += `License: ${info.licenses}\n\n`;
-    output += `Repository: ${info.repository ?? "N/A"}\n\n\n`;
-    output += "```\n";
-
-    output += info.licenseText;
-    output += "\n```\n\n"
-}
-
-// --- Rust Crates ---
+// Reformat Rust data into node.json-like structure
 const rustLicenses: {
     licenses: {
         name: string;
@@ -94,32 +79,59 @@ const rustLicenses: {
     }[];
 } = JSON.parse(fs.readFileSync(rustJsonPath, "utf-8"));
 
-output += `## Rust Crates\n\n`;
-const seen = new Set();
-const rustEntries = rustLicenses.licenses
-    .flatMap(license => license.used_by.map(used => ({
-        name: `${used.crate.name} ${used.crate.version}`,
-        license: license.name,
-        text: license.text,
-        repository: used.crate.repository ?? "N/A",
-    })))
-    .filter(entry => {
-        const key = entry.name;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-    })
-    .sort((a, b) => a.name.localeCompare(b.name));
-// Save deduplicated and sorted Rust license data
-fs.writeFileSync("licenses/rust.json", JSON.stringify(rustEntries, null, 2));
+const dedupedRustLicenses: Record<string, {
+    name: string;
+    version: string;
+    licenses: string;
+    repository?: string;
+    licenseText: string;
+}> = {};
 
-for (const entry of rustEntries) {
-    output += `### ${entry.name}\n`;
-    output += `License: ${entry.license}\n`;
-    output += `Repository: ${entry.repository}\n\n`;
+for (const license of rustLicenses.licenses) {
+    for (const used of license.used_by) {
+        const key = `${used.crate.name}@${used.crate.version}`;
+        if (!dedupedRustLicenses[key]) {
+            dedupedRustLicenses[key] = {
+                name: used.crate.name,
+                version: used.crate.version,
+                licenses: license.name,
+                repository: used.crate.repository,
+                licenseText: license.text,
+            };
+        }
+    }
+}
+
+const sortedRustLicenses = Object.fromEntries(
+    Object.entries(dedupedRustLicenses).sort(([a], [b]) => a.localeCompare(b))
+);
+
+fs.writeFileSync(rustJsonPath, JSON.stringify(sortedRustLicenses, null, 2));
+
+
+let output = `# NOTICE\n\nThis application includes third-party software.\n\n`;
+
+// --- Node.js ---
+output += `## Node.js Dependencies\n\n`;
+for (const [name, info] of Object.entries(sortedNodeLicenses)) {
+    output += `### ${name}\n`;
+    output += `License: ${info.licenses}\n`;
+    output += `Repository: ${info.repository ?? "N/A"}\n\n`;
     output += "```\n";
-    output += entry.text;
-    output += "\n```\n\n";
+
+    output += info.licenseText;
+    output += "\n```\n\n"
+}
+
+output += `## Rust Crates\n\n`;
+for (const [name, info] of Object.entries(sortedRustLicenses)) {
+    output += `### ${name}\n`;
+    output += `License: ${info.licenses}\n`;
+    output += `Repository: ${info.repository ?? "N/A"}\n\n`;
+    output += "```\n";
+
+    output += info.licenseText;
+    output += "\n```\n\n"
 }
 
 // --- Write to NOTICE ---

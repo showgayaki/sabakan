@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
 
-import { H2, H3, Ul, Li, LicenseAccordion } from "./Element";
+import { H2, H3, Ul, Li } from "./Element";
+import { LicenseAccordion } from "./LicenseAccordion";
 
 export default function Licenses() {
     const [nodeLicenses, setNodeLicenses] = useState<Record<string, any>>({});
+    const [rustLicenses, setRustLicenses] = useState<Record<string, any>>({});
 
     const [visibleNodeLicenses, setVisibleNodeLicenses] = useState<string[]>([]);
-    const [visibleRustLicenses, setVisibleRustLicenses] = useState<{ license: any, crate: any }[]>([]);
+    const [visibleRustLicenses, setVisibleRustLicenses] = useState<string[]>([]);
 
     useEffect(() => {
         fetch("/licenses/node.json")
@@ -20,18 +22,10 @@ export default function Licenses() {
 
         fetch("/licenses/rust.json")
             .then(res => res.json())
-            .then((data: any[]) => {
-                const formatted = data.map(entry => ({
-                    license: { name: entry.license, text: entry.text },
-                    crate: {
-                        crate: {
-                            name: entry.name.split(" ")[0],
-                            version: entry.name.split(" ")[1],
-                            repository: entry.repository
-                        }
-                    }
-                }));
-                setVisibleRustLicenses(formatted);
+            .then(data => {
+                setRustLicenses(data);
+                const keys = Object.keys(data);
+                setVisibleRustLicenses(keys);
             });
     }, []);
 
@@ -63,15 +57,16 @@ export default function Licenses() {
                 <Box component="section">
                     <H3 text="🦀 Rust Crates" />
                     <Ul>
-                        {visibleRustLicenses.map(({ license, crate }, idx) => {
-                            const key = `${crate.crate.name}@${crate.crate.version}`;
+                        {visibleRustLicenses.map((name) => {
+                            const data = rustLicenses[name];
+                            const key = `${data.name}@${data.version}`;
                             return (
                                 <Li key={key}>
                                     <LicenseAccordion
-                                        repository={crate.crate.repository}
-                                        url={`https://crates.io/crates/${crate.crate.name}`}
-                                        name={`${crate.crate.name} ${crate.crate.version}`}
-                                        licenseText={license.text}
+                                        repository={data.repository}
+                                        url={`https://crates.io/crates/${name}`}
+                                        name={name}
+                                        licenseText={data.licenseText}
                                     />
                                 </Li>
                             );
