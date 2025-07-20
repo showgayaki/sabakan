@@ -8,16 +8,23 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import { A, Pre } from "./Element";
 
-export function LicenseAccordion({ repository, url, name, licenseText }
-    : { repository: string, url: string, name: string, licenseText: string }
+export function LicenseAccordion({ repository, url, name }
+    : { repository: string, url: string, name: string }
 ) {
     const [preText, setPreText] = useState<string>("");
     const [expanded, setExepanded] = useState<boolean>(false);
 
-    const onChange = () => {
+    const onChange = async () => {
         if (!expanded && preText === "") {
             setExepanded(true);
-            setPreText(licenseText);
+            try {
+                const type = url.includes("npmjs.com") ? "node" : "rust";
+                const response = await fetch(`/licenses/license-texts/${type}/${name.replace(/\//g, "__slash__")}.txt`);
+                const text = await response.text();
+                setPreText(text);
+            } catch (e) {
+                setPreText("Failed to load license text.");
+            }
         } else {
             setExepanded(false);
             setTimeout(() => {

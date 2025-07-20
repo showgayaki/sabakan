@@ -55,7 +55,7 @@ function extractNodeLicenses() {
         }
     }
     // Save license texts to files and remove from JSON
-    const nodeLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-text", "node");
+    const nodeLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-texts", "node");
     if (!fs.existsSync(nodeLicenseTextDir)) {
         fs.mkdirSync(nodeLicenseTextDir, { recursive: true });
     }
@@ -103,7 +103,7 @@ function extractRustLicenses() {
         repository?: string;
     }> = {};
 
-    const rustLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-text", "rust");
+    const rustLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-texts", "rust");
     if (!fs.existsSync(rustLicenseTextDir)) {
         fs.mkdirSync(rustLicenseTextDir, { recursive: true });
     }
@@ -141,7 +141,7 @@ let output = `# NOTICE\n\nThis application includes third-party software.\n\n`;
 
 // --- Node.js ---
 const sortedNodeLicenses: Record<string, { licenses: string; repository?: string }> = JSON.parse(fs.readFileSync(nodeJsonPath, "utf-8"));
-const nodeLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-text", "node");
+const nodeLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-texts", "node");
 output += `## Node.js Dependencies\n\n`;
 for (const [name, info] of Object.entries(sortedNodeLicenses)) {
     output += `### ${name}\n`;
@@ -158,7 +158,7 @@ for (const [name, info] of Object.entries(sortedNodeLicenses)) {
 
 output += `## Rust Crates\n\n`;
 const sortedRustLicenses: Record<string, { licenses: string; repository?: string }> = JSON.parse(fs.readFileSync(rustJsonPath, "utf-8"));
-const rustLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-text", "rust");
+const rustLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-texts", "rust");
 for (const [name, info] of Object.entries(sortedRustLicenses)) {
     output += `### ${name}\n`;
     output += `License: ${info.licenses}\n`;
