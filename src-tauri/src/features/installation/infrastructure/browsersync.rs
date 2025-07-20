@@ -23,7 +23,6 @@ fn install_browsersync() -> Result<(), String> {
         .current_dir(&*NODE_DIR)
         .arg("install")
         .arg(format!("browser-sync@{BROWSERSYNC_VER}"))
-        .arg("pnpm")
         .spawn()
         .map_err(|e| format!("Failed to start npm: {e}"))?;
 

@@ -15,4 +15,4 @@ pub(crate) static APP_DIR: LazyLock<PathBuf> = LazyLock::new(|| HOME_DIR.join(AP
 pub(crate) static BINARY_DIR: LazyLock<PathBuf> =
     LazyLock::new(|| HOME_DIR.join(APP_DIR_NAME).join("bin"));
 
-pub(crate) static NODE_DIR: LazyLock<PathBuf> = LazyLock::new(|| BINARY_DIR.join("node"));
+pub static NODE_DIR: LazyLock<PathBuf> = LazyLock::new(|| BINARY_DIR.join("node"));
