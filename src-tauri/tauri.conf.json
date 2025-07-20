@@ -1,6 +1,6 @@
 {
     "$schema": "https://schema.tauri.app/config/2",
-    "productName": "sabakan",
+    "productName": "サバカン！",
     "version": "0.1.0",
     "identifier": "world.kanke.sabakan",
     "build": {

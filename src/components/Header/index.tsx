@@ -32,7 +32,7 @@ export default function Header({ variant }: HeaderProps) {
                     py: 0.5,
                 }}
             >
-                {variant === "home" ? HomeHeaderContent(): InnerHeaderContent()}
+                {variant === "home" ? <HomeHeaderContent />: <InnerHeaderContent />}
             </Toolbar>
         </AppBar>
     );

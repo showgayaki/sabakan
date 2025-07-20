@@ -37,7 +37,7 @@ export default function DirectoryInputSection({
         <ValidationErrorTooltip title={error || ""}>
             <CustomTextField
                 id="directoryInput"
-                label="ディレクトリ選択"
+                label="ルートディレクトリ選択"
                 type="text"
                 value={path}
                 onChange={setPath}
