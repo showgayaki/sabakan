@@ -2,136 +2,174 @@ import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
 
-const currentDir = process.cwd();
-console.log("📂 Current directory:", currentDir);
-
 type NodeLicenseMap = Record<
     string,
     {
         licenses: string;
-        licenseText: string;
         repository?: string;
         path?: string;
         licenseFile?: string;
     }
 >;
 
-const formatJsonPath = path.resolve(currentDir, "public", "licenses", "node-format.json");
-const tmpJsonPath = path.resolve(currentDir, "public", "licenses", "tmp.json");
-const nodeJsonPath = path.resolve(currentDir, "public", "licenses", "node.json");
-const rustJsonPath = path.resolve(currentDir, "public", "licenses", "rust.json");
+const currentDir = process.cwd();
+console.log("📂 Current directory:", currentDir);
 
-// --- Node.js License Extraction ---
-console.log("🔍 Extracting Node.js license data...");
+const licensDir = path.resolve(currentDir, "public", "licenses");
+const formatJsonPath = path.join(licensDir, "node-format.json");
+const tmpJsonPath = path.join(licensDir, "tmp.json");
+const nodeJsonPath = path.join(licensDir, "node.json");
+const rustJsonPath = path.join(licensDir, "rust.json");
 
-const licenseCheckerBin = process.platform === "win32"
-    ? "license-checker.CMD"
-    : "license-checker";
+function extractNodeLicenses() {
+    // --- Node.js License Extraction ---
+    console.log("🔍 Extracting Node.js license data...");
 
-const licenseCheckerPath = path.resolve(currentDir, "node_modules", ".bin", licenseCheckerBin);
-execSync(`${licenseCheckerPath} --production --json --customPath ${formatJsonPath} > ${tmpJsonPath}`);
+    const licenseCheckerBin = process.platform === "win32"
+        ? "license-checker.CMD"
+        : "license-checker";
 
-// package.json を読み込む
-const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"));
-const selfKey = `${pkg.name}@${pkg.version}`;
+    const licenseCheckerPath = path.resolve(currentDir, "node_modules", ".bin", licenseCheckerBin);
+    execSync(`${licenseCheckerPath} --production --json --customPath ${formatJsonPath} > ${tmpJsonPath}`);
 
-// licenses/tmp.json を読み込み
-const tmpData: NodeLicenseMap = JSON.parse(fs.readFileSync(tmpJsonPath, "utf-8"));
+    // package.json を読み込む
+    const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"));
+    const selfKey = `${pkg.name}@${pkg.version}`;
 
-// 自分自身のエントリを削除
-delete tmpData[selfKey];
+    // licenses/tmp.json を読み込み
+    const tmpData: NodeLicenseMap & Record<string, { licenseText?: string }> = JSON.parse(fs.readFileSync(tmpJsonPath, "utf-8"));
 
-// path と licenseFile を削除
-for (const key of Object.keys(tmpData)) {
-    delete tmpData[key].path;
-    delete tmpData[key].licenseFile;
-}
+    // 自分自身のエントリを削除
+    delete tmpData[selfKey];
 
-// Apply override to license text before sorting
-for (const [name, info] of Object.entries(tmpData)) {
-    if (name.startsWith("@tauri-apps/api")) {
-        info.licenseText = "MIT License\n\nSee: https://github.com/tauri-apps/tauri/blob/dev/LICENSE_MIT";
+    // path と licenseFile を削除
+    for (const key of Object.keys(tmpData)) {
+        delete tmpData[key].path;
+        delete tmpData[key].licenseFile;
     }
-}
-// Save sorted Node.js license data
-const sortedNodeLicenses = Object.fromEntries(
-    Object.entries(tmpData).sort(([a], [b]) => a.localeCompare(b))
-);
-fs.writeFileSync(nodeJsonPath, JSON.stringify(sortedNodeLicenses, null, 2));
-console.log("✅ Node.js license data extracted.");
 
-
-// --- Rust License Extraction ---
-console.log("🔍 Extracting Rust license data...");
-
-execSync(`cargo about generate --format json -o ${rustJsonPath}`, {
-    cwd: path.resolve("src-tauri"),
-    maxBuffer: 1024 * 1024 * 10, // 10MB
-});
-console.log("✅ Rust license data extracted.");
-
-// Reformat Rust data into node.json-like structure
-const rustLicenses: {
-    licenses: {
-        name: string;
-        text: string;
-        used_by: { crate: { name: string; version: string; repository?: string } }[];
-    }[];
-} = JSON.parse(fs.readFileSync(rustJsonPath, "utf-8"));
-
-const dedupedRustLicenses: Record<string, {
-    name: string;
-    version: string;
-    licenses: string;
-    repository?: string;
-    licenseText: string;
-}> = {};
-
-for (const license of rustLicenses.licenses) {
-    for (const used of license.used_by) {
-        const key = `${used.crate.name}@${used.crate.version}`;
-        if (!dedupedRustLicenses[key]) {
-            dedupedRustLicenses[key] = {
-                name: used.crate.name,
-                version: used.crate.version,
-                licenses: license.name,
-                repository: used.crate.repository,
-                licenseText: license.text,
-            };
+    // Apply override to license text before sorting
+    for (const [name, info] of Object.entries(tmpData)) {
+        if (name.startsWith("@tauri-apps/api")) {
+            info.licenseText = "MIT License\n\nSee: https://github.com/tauri-apps/tauri/blob/dev/LICENSE_MIT";
         }
     }
+    // Save license texts to files and remove from JSON
+    const nodeLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-text", "node");
+    if (!fs.existsSync(nodeLicenseTextDir)) {
+        fs.mkdirSync(nodeLicenseTextDir, { recursive: true });
+    }
+    for (const [name, info] of Object.entries(tmpData)) {
+        if (info.licenseText) {
+            const safeName = name.replace(/\//g, "__slash__");
+            const fileName = `${safeName}.txt`;
+            const filePath = path.join(nodeLicenseTextDir, fileName);
+            fs.writeFileSync(filePath, info.licenseText);
+            delete info.licenseText;
+        }
+    }
+    // Save sorted Node.js license data
+    const sortedNodeLicenses = Object.fromEntries(
+        Object.entries(tmpData).sort(([a], [b]) => a.localeCompare(b))
+    );
+    fs.writeFileSync(nodeJsonPath, JSON.stringify(sortedNodeLicenses, null, 2));
+    fs.unlinkSync(tmpJsonPath);
+    console.log("✅ Node.js license data extracted.");
 }
 
-const sortedRustLicenses = Object.fromEntries(
-    Object.entries(dedupedRustLicenses).sort(([a], [b]) => a.localeCompare(b))
-);
+function extractRustLicenses() {
+    // --- Rust License Extraction ---
+    console.log("🔍 Extracting Rust license data...");
 
-fs.writeFileSync(rustJsonPath, JSON.stringify(sortedRustLicenses, null, 2));
+    execSync(`cargo about generate --format json -o ${rustJsonPath}`, {
+        cwd: path.resolve("src-tauri"),
+        maxBuffer: 1024 * 1024 * 10, // 10MB
+    });
+    console.log("✅ Rust license data extracted.");
 
+    // Reformat Rust data into node.json-like structure
+    const rustLicenses: {
+        licenses: {
+            name: string;
+            text: string;
+            used_by: { crate: { name: string; version: string; repository?: string } }[];
+        }[];
+    } = JSON.parse(fs.readFileSync(rustJsonPath, "utf-8"));
+
+    const dedupedRustLicenses: Record<string, {
+        name: string;
+        version: string;
+        licenses: string;
+        repository?: string;
+    }> = {};
+
+    const rustLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-text", "rust");
+    if (!fs.existsSync(rustLicenseTextDir)) {
+        fs.mkdirSync(rustLicenseTextDir, { recursive: true });
+    }
+
+    for (const license of rustLicenses.licenses) {
+        for (const used of license.used_by) {
+            const key = `${used.crate.name}@${used.crate.version}`;
+            if (!dedupedRustLicenses[key]) {
+                dedupedRustLicenses[key] = {
+                    name: used.crate.name,
+                    version: used.crate.version,
+                    licenses: license.name,
+                    repository: used.crate.repository,
+                };
+                // Write license text file
+                const safeKey = key.replace(/\//g, "__slash__");
+                const fileName = `${safeKey}.txt`;
+                const filePath = path.join(rustLicenseTextDir, fileName);
+                fs.writeFileSync(filePath, license.text);
+            }
+        }
+    }
+
+    const sortedRustLicenses = Object.fromEntries(
+        Object.entries(dedupedRustLicenses).sort(([a], [b]) => a.localeCompare(b))
+    );
+
+    fs.writeFileSync(rustJsonPath, JSON.stringify(sortedRustLicenses, null, 2));
+}
+
+extractNodeLicenses();
+extractRustLicenses();
 
 let output = `# NOTICE\n\nThis application includes third-party software.\n\n`;
 
 // --- Node.js ---
+const sortedNodeLicenses: Record<string, { licenses: string; repository?: string }> = JSON.parse(fs.readFileSync(nodeJsonPath, "utf-8"));
+const nodeLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-text", "node");
 output += `## Node.js Dependencies\n\n`;
 for (const [name, info] of Object.entries(sortedNodeLicenses)) {
     output += `### ${name}\n`;
     output += `License: ${info.licenses}\n`;
     output += `Repository: ${info.repository ?? "N/A"}\n\n`;
-    output += "```\n";
 
-    output += info.licenseText;
-    output += "\n```\n\n"
+    const licenseTextPath = path.join(nodeLicenseTextDir, `${name.replace(/\//g, "__slash__")}.txt`);
+    const licenseText = fs.readFileSync(licenseTextPath, "utf-8");
+
+    output += "```\n";
+    output += licenseText.trim();
+    output += "\n```\n\n";
 }
 
 output += `## Rust Crates\n\n`;
+const sortedRustLicenses: Record<string, { licenses: string; repository?: string }> = JSON.parse(fs.readFileSync(rustJsonPath, "utf-8"));
+const rustLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-text", "rust");
 for (const [name, info] of Object.entries(sortedRustLicenses)) {
     output += `### ${name}\n`;
     output += `License: ${info.licenses}\n`;
     output += `Repository: ${info.repository ?? "N/A"}\n\n`;
-    output += "```\n";
 
-    output += info.licenseText;
-    output += "\n```\n\n"
+    const licenseTextPath = path.join(rustLicenseTextDir, `${name.replace(/\//g, "__slash__")}.txt`);
+    const licenseText = fs.readFileSync(licenseTextPath, "utf-8");
+
+    output += "```\n";
+    output += licenseText.trim();
+    output += "\n```\n\n";
 }
 
 // --- Write to NOTICE ---
