@@ -10,7 +10,7 @@ pub async fn download_file(url: &str, dest_path: &Path) -> Result<PathBuf, Strin
         .get(url)
         .send()
         .await
-        .map_err(|e| format!("Failed to download {}: {}", url, e))?;
+        .map_err(|e| format!("Failed to download {url}: {e}"))?;
 
     let mut file = File::create(dest_path)
         .map_err(|e| format!("Failed to create file {}: {}", dest_path.display(), e))?;
@@ -19,9 +19,9 @@ pub async fn download_file(url: &str, dest_path: &Path) -> Result<PathBuf, Strin
         &response
             .bytes()
             .await
-            .map_err(|e| format!("Failed to read response: {}", e))?,
+            .map_err(|e| format!("Failed to read response: {e}"))?,
     )
-    .map_err(|e| format!("Failed to write file: {}", e))?;
+    .map_err(|e| format!("Failed to write file: {e}"))?;
 
     Ok(dest_path.to_path_buf()) // ダウンロードしたファイルのパスを返す
 }

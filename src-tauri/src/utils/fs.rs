@@ -23,7 +23,7 @@ use std::os::unix::fs::PermissionsExt;
 // }
 
 pub fn remove_file(path: &Path) -> Result<(), String> {
-    fs::remove_file(path).map_err(|e| format!("Failed to remove file: {}", e))
+    fs::remove_file(path).map_err(|e| format!("Failed to remove file: {e}"))
 }
 
 /// 指定したファイルに実行権限（755）を付与
