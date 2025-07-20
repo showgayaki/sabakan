@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ErrorIcon from "@mui/icons-material/Error";
 
-import { ProgressStatus } from "@/types/progress";
+import type { ProgressStatus } from "@/types/progress";
 
 interface ProgressIconProps {
     size: number;

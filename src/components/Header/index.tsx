@@ -1,13 +1,52 @@
-import CustomAppbar from "@/components/CustomAppbar";
+import {
+    AppBar,
+    Toolbar,
+} from "@mui/material";
+
+import type { HeaderVariant } from "@/types/header";
+import BackButton from "@/components/BackButton";
 
 import AppLogo from "./AppLogo";
 import Hamburger from "./Hamburger";
 
-export default function Header() {
+interface HeaderProps {
+    variant: HeaderVariant;
+}
+
+export default function Header({ variant }: HeaderProps) {
     return (
-        <CustomAppbar>
+        <AppBar
+            position="sticky"
+            sx={{
+                top: 0,
+                height: 48,
+                backgroundColor: "#222",
+            }}
+        >
+            <Toolbar
+                sx={{
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    minHeight: 0,
+                    px: 2,
+                    py: 0.5,
+                }}
+            >
+                {variant === "home" ? HomeHeaderContent(): InnerHeaderContent()}
+            </Toolbar>
+        </AppBar>
+    );
+}
+
+function HomeHeaderContent() {
+    return (
+        <>
             <AppLogo />
             <Hamburger />
-        </CustomAppbar >
-    );
+        </>
+    )
+}
+
+function InnerHeaderContent(){
+    return <BackButton />
 }

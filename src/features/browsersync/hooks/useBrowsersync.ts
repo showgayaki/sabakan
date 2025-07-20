@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ProgressStatus } from "@/types/progress";
+import type { ProgressStatus } from "@/types/progress";
 import {
     startBrowsersync,
     stopBrowsersync,

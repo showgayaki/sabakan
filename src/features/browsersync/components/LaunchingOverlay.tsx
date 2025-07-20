@@ -2,11 +2,11 @@ import { Stack, Typography } from "@mui/material";
 import { StopCircle } from "@mui/icons-material";
 import { QRCodeCanvas } from "qrcode.react";
 
+import type { ProgressStatus } from "@/types/progress";
 import { BUTTON_FONT_SIZE } from "@/constants/ui";
 import CustomIconButton from "@/components/CustomIconButton";
 import FullscreenOverlay from "@/components/FullscreenOverlay";
 import ProgressIcon from "@/components/ProgressIcon";
-import { ProgressStatus } from "@/types/progress";
 
 import LogStream from "./LogStream";
 

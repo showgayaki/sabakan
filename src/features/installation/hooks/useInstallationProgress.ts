@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 import type { GroupedTaskStatuses } from "@/types/taskStatuses";
-import { ProgressStatus } from "@/types/progress";
+import type { ProgressStatus } from "@/types/progress";
 import { delayMs } from "@/utils/delay";
 
 import { checkInstalledBinaries, installTask } from "../api";
