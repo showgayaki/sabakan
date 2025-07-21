@@ -19,7 +19,14 @@ fn install_browsersync() -> Result<(), String> {
     let npm_bin = NODE_DIR.join("npm.cmd");
 
     info!("Installing Browsersync using {}", npm_bin.display());
-    let mut child = Command::new(npm_bin)
+    let mut cmd = Command::new(npm_bin);
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        cmd.creation_flags(0x08000000); // CREATE_NO_WINDOW
+    }
+
+    let mut child = cmd
         .current_dir(&*NODE_DIR)
         .arg("install")
         .arg(format!("browser-sync@{BROWSERSYNC_VER}"))

@@ -59,7 +59,8 @@ fn windows_command(
     info!("browsersync_path: {}", path.display());
 
     let mut command = build_base_command(&path, target_dir, proxy_url, target_files);
-    command.creation_flags(CREATE_NEW_PROCESS_GROUP);
+    // 0x08000000: コンソールを表示させない
+    command.creation_flags(CREATE_NEW_PROCESS_GROUP | 0x08000000);
 
     Ok(command)
 }
