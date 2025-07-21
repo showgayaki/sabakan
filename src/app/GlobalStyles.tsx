@@ -1,4 +1,3 @@
-// 例: src/App.tsx または src/main.tsx などのルート近くに追加
 import { Global, css } from "@emotion/react";
 
 export const GlobalStyles = () => (
