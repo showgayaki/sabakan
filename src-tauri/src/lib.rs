@@ -17,11 +17,13 @@ use features::installation::commands::{
     check_installed_binaries, install_browsersync, install_nodejs,
 };
 
-pub use constants::NODE_DIR;
-pub use utils::logger::init_logger;
+use utils::logger::init_logger;
+use utils::path::add_path;
 
 pub fn run() {
+    init_logger();
     info!("Application started on {HOST_OS}({HOST_ARCH})");
+    add_path();
 
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
