@@ -1,6 +1,5 @@
 [package]
-name = "sabakan"
-version = "0.1.0"
+name = "Sabakan"
 description = "Support Your Web Development"
 edition = "2021"
 license = "MIT"

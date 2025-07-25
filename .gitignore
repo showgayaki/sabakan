@@ -3,7 +3,12 @@ ToDo.md
 public/licenses/*
 !public/licenses/node-format.json
 
-public/license/*
+# App Store
+*.plist
+*.provisionprofile
+
+# build scripts
+/build*.sh
 
 # Logs
 logs

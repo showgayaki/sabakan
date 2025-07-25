@@ -1,12 +1,15 @@
 use log::{error, info};
+use std::env;
 use std::sync::{Arc, Mutex};
 use tauri::{Manager, State};
 
+mod bootstrap;
 mod commands;
 mod constants;
 mod features;
 mod utils;
 
+use bootstrap::{init_app_data_dir, init_env_path, init_logger};
 use commands::fs::directory_exists;
 use commands::system::get_host_os;
 use constants::{HOST_ARCH, HOST_OS};
@@ -17,19 +20,20 @@ use features::installation::commands::{
     check_installed_binaries, install_browsersync, install_nodejs,
 };
 
-use utils::logger::init_logger;
-use utils::path::add_path;
-
 pub fn run() {
-    init_logger();
-    info!("Application started on {HOST_OS}({HOST_ARCH})");
-    add_path();
-
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .manage(BrowsersyncState {
             process: Arc::new(Mutex::new(None)),
+        })
+        .setup(|app| {
+            init_app_data_dir(app.path()); // APP_DATA_DIR を初期化
+            init_logger(); // ロガー初期化
+            init_env_path(); // PATH設定
+            info!("Application started on {HOST_OS}({HOST_ARCH})");
+
+            Ok(())
         })
         .on_window_event(|window, event| {
             // ウィンドウが閉じられるときに、Browsersyncも終了する

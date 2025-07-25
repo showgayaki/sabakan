@@ -10,7 +10,7 @@ export default function MenuItems({ hamburger }: MenuItemsProps) {
     return (
         <>
             <MenuItem onClick={hamburger.handleLicenseClick}>ライセンス</MenuItem>
-            <MenuItem onClick={hamburger.handleClose}>このアプリについて</MenuItem>
+            {/* <MenuItem onClick={hamburger.handleClose}>このアプリについて</MenuItem> */}
         </>
     )
 }

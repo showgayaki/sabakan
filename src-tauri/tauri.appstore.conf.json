@@ -1,0 +1,15 @@
+{
+    "identifier": "world.kanke.sabakan",
+    "bundle": {
+        "category": "DeveloperTool",
+        "icon": [
+            "icons/icon.icns"
+        ],
+        "macOS": {
+            "entitlements": "./Entitlements.plist",
+            "files": {
+                "embedded.provisionprofile": "./sabakan_appstore.provisionprofile"
+            }
+        }
+    }
+}
