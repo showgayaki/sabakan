@@ -1,14 +1,20 @@
-use log::info;
+use log::{error, info};
 use std::io::{BufRead, BufReader};
 use std::process::{Child, Command};
 use tauri::{Emitter, Window};
 
 pub fn spawn_browsersync(window: Window, mut command: Command) -> Result<(Child, String), String> {
-    let mut child = command
-        .spawn()
-        .map_err(|e| format!("Failed to start browser-sync: {e}"))?;
+    info!("spawn browsersync called.");
 
-    let stdout = child.stdout.take().ok_or("Missing stdout")?;
+    let mut child = command.spawn().map_err(|e| {
+        error!("Failed to start browser-sync: {e}");
+        format!("Failed to start browser-sync: {e}")
+    })?;
+
+    let stdout = child.stdout.take().ok_or({
+        error!("Failed to capture stdout from browser-sync");
+        "Missing stdout"
+    })?;
     let reader = BufReader::new(stdout);
 
     // バックグラウンドスレッドから行を送信するためのチャンネルを作成

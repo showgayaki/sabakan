@@ -1,8 +1,7 @@
 use log::info;
-use std::path::Path;
 use std::process::{Command, Stdio};
 
-use crate::constants::NODE_DIR;
+use crate::constants::BROWSERSYNC_PATH;
 
 pub fn browsersync_command(target_dir: &str, proxy_url: &str) -> Result<Command, String> {
     // Command Ex:
@@ -16,16 +15,21 @@ pub fn browsersync_command(target_dir: &str, proxy_url: &str) -> Result<Command,
     #[cfg(unix)]
     let command = macos_command(target_dir, proxy_url, &target_files)?;
 
+    info!("Executing: {:?}", command);
     Ok(command)
 }
 
 fn build_base_command(
-    browsersync_path: &Path,
+    // browsersync_path: &Path,
     target_dir: &str,
     proxy_url: &str,
     target_files: &[&str],
 ) -> Command {
-    let mut command = Command::new(browsersync_path);
+    let mut command = Command::new(
+        BROWSERSYNC_PATH
+            .get()
+            .expect("BROWSESYNC_PATH not initialized"),
+    );
     command.current_dir(target_dir).arg("start");
 
     if proxy_url.trim().is_empty() {
@@ -53,6 +57,8 @@ fn windows_command(
     use winapi::um::winbase::CREATE_NEW_PROCESS_GROUP;
 
     let path = NODE_DIR
+        .get()
+        .expect("NODE_DIR is not initialized")
         .join("node_modules")
         .join(".bin")
         .join("browser-sync.cmd");
@@ -72,14 +78,7 @@ fn macos_command(
     target_files: &[&str],
 ) -> Result<Command, String> {
     use std::os::unix::process::CommandExt;
-
-    let path = NODE_DIR
-        .join("node_modules")
-        .join(".bin")
-        .join("browser-sync");
-    info!("browsersync_path: {}", path.display());
-
-    let mut command = build_base_command(&path, target_dir, proxy_url, target_files);
+    let mut command = build_base_command(target_dir, proxy_url, target_files);
 
     // SAFETY:
     // - CommandExt::pre_exec() は unsafe であり、spawn 前のプロセス空間で実行されるため、

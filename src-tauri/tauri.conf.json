@@ -32,6 +32,14 @@
             "icons/icon.icns",
             "icons/icon.ico"
         ],
+        "resources": [
+            "binaries/node/bin/node",
+            "binaries/node/lib/**/*",
+            "binaries/node/node_modules/**/*",
+            "binaries/node/package.json",
+            "binaries/node/package-lock.json",
+            "binaries/browser-sync"
+        ],
         "windows": {
             "wix": {
                 "language": "ja-JP"

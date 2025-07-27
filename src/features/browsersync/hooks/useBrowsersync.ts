@@ -36,7 +36,7 @@ export default function useBrowsersync() {
             console.error("Failed to start Browsersync:", error);
             setStatus("error");
             setStatusMessage("Browsersyncの起動に失敗しました😭");
-            setIsRunning(false);
+            return;
         }
 
         setTimeout(() => {

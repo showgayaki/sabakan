@@ -12,4 +12,4 @@ pub(crate) static BINARY_DIR: LazyLock<PathBuf> = LazyLock::new(|| {
         .expect("APP_DATA_DIR is not initialized")
         .join("bin")
 });
-pub(crate) static NODE_DIR: LazyLock<PathBuf> = LazyLock::new(|| BINARY_DIR.join("node"));
+pub(crate) static BROWSERSYNC_PATH: OnceLock<PathBuf> = OnceLock::new();

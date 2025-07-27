@@ -10,6 +10,10 @@ public/licenses/*
 # build scripts
 /build*.sh
 
+# binaries
+/src-tauri/binaries/node/*
+!/src-tauri/binaries/node/package.json
+
 # Logs
 logs
 *.log

@@ -32,15 +32,8 @@ function extractNodeLicenses() {
     const licenseCheckerPath = path.resolve(currentDir, "node_modules", ".bin", licenseCheckerBin);
     execSync(`${licenseCheckerPath} --production --json --customPath ${formatJsonPath} > ${tmpJsonPath}`);
 
-    // package.json を読み込む
-    const pkg = JSON.parse(fs.readFileSync("package.json", "utf-8"));
-    const selfKey = `${pkg.name}@${pkg.version}`;
-
     // licenses/tmp.json を読み込み
     const tmpData: NodeLicenseMap & Record<string, { licenseText?: string }> = JSON.parse(fs.readFileSync(tmpJsonPath, "utf-8"));
-
-    // 自分自身のエントリを削除
-    delete tmpData[selfKey];
 
     // path と licenseFile を削除
     for (const key of Object.keys(tmpData)) {
@@ -87,6 +80,11 @@ function extractRustLicenses() {
     });
     console.log("✅ Rust license data extracted.");
 
+    // tauri.conf.json からproductNameを読み込む
+    const tauriConf = JSON.parse(fs.readFileSync("src-tauri/tauri.conf.json", "utf-8"));
+    const productName = tauriConf.productName;
+    console.log(`Self package productName: ${productName}`);
+
     // Reformat Rust data into node.json-like structure
     const rustLicenses: {
         licenses: {
@@ -111,6 +109,10 @@ function extractRustLicenses() {
     for (const license of rustLicenses.licenses) {
         for (const used of license.used_by) {
             const key = `${used.crate.name}@${used.crate.version}`;
+            // Sabakan自身のパッケージは除外
+            if (key.startsWith(productName)) {
+                continue;
+            }
             if (!dedupedRustLicenses[key]) {
                 dedupedRustLicenses[key] = {
                     name: used.crate.name,

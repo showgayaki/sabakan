@@ -31,7 +31,7 @@ fn install_browsersync() -> Result<(), String> {
     }
 
     let mut child = cmd
-        .current_dir(&*NODE_DIR)
+        .current_dir(NODE_DIR.get())
         .arg("install")
         .arg(format!("browser-sync@{BROWSERSYNC_VER}"))
         .spawn()

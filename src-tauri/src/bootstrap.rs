@@ -16,10 +16,10 @@ use log4rs::{
     encode::pattern::PatternEncoder,
 };
 
-use crate::constants::{APP_DATA_DIR, NODE_DIR};
+use crate::constants::{APP_DATA_DIR, BROWSERSYNC_PATH};
 
-pub fn init_app_data_dir<R: Runtime>(path: &PathResolver<R>) {
-    let data_dir = path
+pub fn init_app_data_dir<R: Runtime>(resolver: &PathResolver<R>) {
+    let data_dir = resolver
         .home_dir()
         .expect("Failed to get home_dir")
         .join(".sabakan");
@@ -29,20 +29,22 @@ pub fn init_app_data_dir<R: Runtime>(path: &PathResolver<R>) {
         .expect("APP_DATA_DIR already initialized");
 }
 
-pub fn init_env_path() {
-    let current_path = env::var("PATH").unwrap_or_default();
-    info!("Current PATH: {}", current_path);
-
-    let node_path = if cfg!(windows) {
-        NODE_DIR.clone()
+pub fn init_browsersync_path<R: Runtime>(resolver: &PathResolver<R>) {
+    let resource_path = if cfg!(debug_assertions) {
+        // 開発モード：Cargo.tomlがあるディレクトリをベースにする
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
     } else {
-        NODE_DIR.join("bin")
+        // リリースモード：resource_dir() で Resources ディレクトリを取得
+        resolver.resource_dir().expect("Missing resource_dir")
     };
+    info!("resource_path: {:?}", resource_path);
 
-    info!("Adding node path: {}", node_path.display());
+    let browsersync_path = resource_path.join("binaries").join("browser-sync");
 
-    env::set_var("PATH", node_path);
-    info!("Updated PATH: {}", env::var("PATH").unwrap_or_default());
+    BROWSERSYNC_PATH
+        .set(browsersync_path)
+        .expect("BROWSESYNC_PATH already initialized");
+    info!("BROWSESYNC_PATH: {:?}", BROWSERSYNC_PATH);
 }
 
 pub fn init_logger() {

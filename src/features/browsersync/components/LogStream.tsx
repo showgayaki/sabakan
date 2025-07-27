@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 
 interface LogStreamProps {
-    height: string;
+    height: number;
     logs: string[];
     containerRef: React.RefObject<HTMLDivElement>;
 }

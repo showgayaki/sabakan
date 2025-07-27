@@ -30,7 +30,7 @@ export default function LaunchingOverlay({
     handleStopBrowsersync,
 }: LaunchingOverlayProps) {
     const QR_CODE_SIZE = 100;
-    const LOG_STREAM_HEIGHT = `calc(100% - ${QR_CODE_SIZE}px)`;
+    const LOG_STREAM_HEIGHT = 200;
 
     const SPACING_1_HEIGHT = 8;
     const STATUS_MESSAGE_HEIGHT = 32 + SPACING_1_HEIGHT;
@@ -39,7 +39,7 @@ export default function LaunchingOverlay({
     return (
         <FullscreenOverlay>
             <Stack
-                spacing={1.5}
+                spacing={1}
                 alignItems="center"
                 sx={{
                     width: "100%",
@@ -82,7 +82,7 @@ export default function LaunchingOverlay({
                         handleStopBrowsersync();
                     }}
                     icon={<StopCircle sx={{ fontSize: BUTTON_FONT_SIZE }} />}
-                    disabled={!isRunning}
+                    disabled={status !== "error" && status !== "success"}
                 />
             </Stack>
         </FullscreenOverlay>
