@@ -15,25 +15,38 @@ type NodeLicenseMap = Record<
 const currentDir = process.cwd();
 console.log("📂 Current directory:", currentDir);
 
-const licensDir = path.resolve(currentDir, "public", "licenses");
-const formatJsonPath = path.join(licensDir, "node-format.json");
-const tmpJsonPath = path.join(licensDir, "tmp.json");
-const nodeJsonPath = path.join(licensDir, "node.json");
-const rustJsonPath = path.join(licensDir, "rust.json");
+const licenseDir = path.resolve(currentDir, "public", "licenses");
+const formatJsonPath = path.join(licenseDir, "node-format.json");
+const tmpJsonPath = path.join(licenseDir, "tmp.json");
+const nodeJsonPath = path.join(licenseDir, "node.json");
+const rustJsonPath = path.join(licenseDir, "rust.json");
 
 function extractNodeLicenses() {
-    // --- Node.js License Extraction ---
-    console.log("🔍 Extracting Node.js license data...");
+    console.log("🔍 Extracting Node.js license data from root directory...");
 
     const licenseCheckerBin = process.platform === "win32"
         ? "license-checker.CMD"
         : "license-checker";
 
+    // `/sabakan/package.json` の license を tmp.json に書き出す
     const licenseCheckerPath = path.resolve(currentDir, "node_modules", ".bin", licenseCheckerBin);
     execSync(`${licenseCheckerPath} --production --json --customPath ${formatJsonPath} > ${tmpJsonPath}`);
 
-    // licenses/tmp.json を読み込み
+    // public/licenses/tmp.json を読み込み
     const tmpData: NodeLicenseMap & Record<string, { licenseText?: string }> = JSON.parse(fs.readFileSync(tmpJsonPath, "utf-8"));
+
+    console.log("🔍 Extracting Node.js license data from src-tauri/binaries/node directory...");
+    execSync(`${licenseCheckerPath} --production --json --customPath ${formatJsonPath} > ${tmpJsonPath}`, {
+        cwd: path.resolve(currentDir, "src-tauri", "binaries", "node"),
+    });
+
+    // `/sabakan/src-tauri/binaries/node/package.json` の license を tmp.json に書き出す
+    const tmpBinariesData: NodeLicenseMap & Record<string, { licenseText?: string }> = JSON.parse(fs.readFileSync(tmpJsonPath, "utf-8"));
+
+    // tmpDataとtmpBinariesDataをガッチャンコ
+    for (const [key, value] of Object.entries(tmpBinariesData)) {
+        tmpData[key] = value;
+    }
 
     // path と licenseFile を削除
     for (const key of Object.keys(tmpData)) {
