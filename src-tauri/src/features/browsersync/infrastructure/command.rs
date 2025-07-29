@@ -19,12 +19,7 @@ pub fn browsersync_command(target_dir: &str, proxy_url: &str) -> Result<Command,
     Ok(command)
 }
 
-fn build_base_command(
-    // browsersync_path: &Path,
-    target_dir: &str,
-    proxy_url: &str,
-    target_files: &[&str],
-) -> Command {
+fn build_base_command(target_dir: &str, proxy_url: &str, target_files: &[&str]) -> Command {
     let mut command = Command::new(
         BROWSERSYNC_PATH
             .get()
@@ -42,7 +37,7 @@ fn build_base_command(
         .arg("--files")
         .arg(target_files.join(","))
         .stdout(Stdio::piped())
-        .stderr(Stdio::null());
+        .stderr(Stdio::piped());
 
     command
 }
@@ -56,15 +51,7 @@ fn windows_command(
     use std::os::windows::process::CommandExt;
     use winapi::um::winbase::CREATE_NEW_PROCESS_GROUP;
 
-    let path = NODE_DIR
-        .get()
-        .expect("NODE_DIR is not initialized")
-        .join("node_modules")
-        .join(".bin")
-        .join("browser-sync.cmd");
-    info!("browsersync_path: {}", path.display());
-
-    let mut command = build_base_command(&path, target_dir, proxy_url, target_files);
+    let mut command = build_base_command(target_dir, proxy_url, target_files);
     // 0x08000000: コンソールを表示させない
     command.creation_flags(CREATE_NEW_PROCESS_GROUP | 0x08000000);
 

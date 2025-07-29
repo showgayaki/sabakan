@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+
+# `/Applications/Sabakan.app/Contents/Resources/binaries/` 想定
 basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
-# LOG_FILE="$basedir/browsersync.log"
 
 # Node 実行バイナリのパス
 NODE_EXEC="$basedir/node/bin/node"
@@ -8,14 +9,8 @@ NODE_EXEC="$basedir/node/bin/node"
 # BrowserSync の実行スクリプト（.bin を介さず直接 bin.js を実行）
 BIN_JS="$basedir/node/node_modules/browser-sync/dist/bin.js"
 
-echo "[INFO] Launching BrowserSync" # >> "$LOG_FILE" 2>&1
-echo "[INFO] Using BIN_JS=$BIN_JS" # >> "$LOG_FILE" 2>&1
+echo "[INFO] Launching BrowserSync"
+echo "[INFO] Using BIN_JS=$BIN_JS"
 
-# 実行
-if [ -x "$NODE_EXEC" ]; then
-  echo "[INFO] Using bundled Node: $NODE_EXEC" >> "$LOG_FILE"
-  exec "$NODE_EXEC" "$BIN_JS" "$@" # >> "$LOG_FILE" 2>&1
-else
-  echo "[WARN] Fallback to system Node" >> "$LOG_FILE"
-  exec node "$BIN_JS" "$@" # >> "$LOG_FILE" 2>&1
-fi
+# --jitless: V8 の JIT 無効化
+"$NODE_EXEC" --jitless --no-expose_wasm "$BIN_JS" "$@"

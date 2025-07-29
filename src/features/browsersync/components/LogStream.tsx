@@ -15,6 +15,7 @@ export default function LogStream({ height, logs, containerRef }: LogStreamProps
                 height,
                 backgroundColor: "#000",
                 px: 1,
+                py: 0.5,
                 overflowX: "auto",
                 overflowY: "auto",
                 fontSize: 14,

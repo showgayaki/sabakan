@@ -7,6 +7,8 @@
         ],
         "macOS": {
             "entitlements": "./Entitlements.plist",
+            "minimumSystemVersion": "12.0",
+            "bundleVersion": "9",
             "files": {
                 "embedded.provisionprofile": "./sabakan_appstore.provisionprofile"
             }

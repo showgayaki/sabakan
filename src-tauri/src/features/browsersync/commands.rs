@@ -11,7 +11,7 @@ pub async fn start_browsersync(
     proxy_url: String,
 ) -> Result<String, String> {
     debug!("start_browsersync command called");
-    state.start(window, &target_dir, &proxy_url).await
+    state.start(&window, &target_dir, &proxy_url).await
 }
 
 #[command]

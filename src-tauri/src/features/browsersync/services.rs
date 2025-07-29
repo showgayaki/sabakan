@@ -13,7 +13,7 @@ pub struct BrowsersyncState {
 impl BrowsersyncState {
     pub async fn start(
         &self,
-        window: Window,
+        window: &Window,
         target_dir: &str,
         proxy_url: &str,
     ) -> Result<String, String> {

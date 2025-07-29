@@ -1,10 +1,12 @@
 ToDo.md
+.env
+
 # `node-format.json`だけリポジトリに含める
 public/licenses/*
 !public/licenses/node-format.json
 
 # App Store
-*.plist
+Entitlements.plist
 *.provisionprofile
 
 # build scripts
