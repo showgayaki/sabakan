@@ -14,8 +14,9 @@
             {
                 "title": "サバカン！",
                 "width": 400,
-                "height": 450,
-                "resizable": false
+                "minWidth": 152,
+                "height": 470,
+                "minHeight": 470
             }
         ],
         "security": {

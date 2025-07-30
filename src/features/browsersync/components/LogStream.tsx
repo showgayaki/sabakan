@@ -1,18 +1,16 @@
 import { Box } from "@mui/material";
 
 interface LogStreamProps {
-    height: number;
     logs: string[];
     containerRef: React.RefObject<HTMLDivElement>;
 }
 
-export default function LogStream({ height, logs, containerRef }: LogStreamProps) {
+export default function LogStream({ logs, containerRef }: LogStreamProps) {
     return (
         <Box
             ref={containerRef}
             sx={{
                 width: "100%",
-                height,
                 backgroundColor: "#000",
                 px: 1,
                 py: 0.5,
@@ -21,6 +19,7 @@ export default function LogStream({ height, logs, containerRef }: LogStreamProps
                 fontSize: 14,
                 border: "1px solid #333",
                 whiteSpace: "pre",
+                flexGrow: 1,
             }}
         >
             {logs.map((line, index) => (

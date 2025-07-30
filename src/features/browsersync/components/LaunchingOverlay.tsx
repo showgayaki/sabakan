@@ -29,11 +29,9 @@ export default function LaunchingOverlay({
     logContainerRef,
     handleStopBrowsersync,
 }: LaunchingOverlayProps) {
-    const QR_CODE_SIZE = 100;
-    const LOG_STREAM_HEIGHT = 200;
-
+    const QR_CODE_SIZE = 120;
     const SPACING_1_HEIGHT = 8;
-    const STATUS_MESSAGE_HEIGHT = 32 + SPACING_1_HEIGHT;
+    const STATUS_MESSAGE_HEIGHT = 32 + SPACING_1_HEIGHT;  // 32px: 文字の高さ, 8px: spacing={1}の高さ
     const PROGRESS_ICON_SIZE = QR_CODE_SIZE - STATUS_MESSAGE_HEIGHT;
 
     return (
@@ -71,7 +69,6 @@ export default function LaunchingOverlay({
                             />
                     }
                     <LogStream
-                        height={LOG_STREAM_HEIGHT}
                         logs={logs}
                         containerRef={logContainerRef}
                     />

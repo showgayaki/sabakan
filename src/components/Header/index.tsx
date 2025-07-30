@@ -30,9 +30,13 @@ export default function Header({ variant }: HeaderProps) {
                     minHeight: 0,
                     px: 2,
                     py: 0.5,
+                    "@media (min-width:600px)": {
+                        minHeight: 0,
+                        px: 2,
+                    },
                 }}
             >
-                {variant === "home" ? <HomeHeaderContent />: <InnerHeaderContent />}
+                {variant === "home" ? <HomeHeaderContent /> : <InnerHeaderContent />}
             </Toolbar>
         </AppBar>
     );
@@ -47,6 +51,6 @@ function HomeHeaderContent() {
     )
 }
 
-function InnerHeaderContent(){
+function InnerHeaderContent() {
     return <BackButton />
 }
