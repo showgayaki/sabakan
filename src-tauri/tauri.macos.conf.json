@@ -5,6 +5,14 @@
         "icon": [
             "icons/icon.icns"
         ],
+        "resources": [
+            "binaries/node/bin/node",
+            "binaries/node/lib/**/*",
+            "binaries/node/node_modules/**/*",
+            "binaries/node/package.json",
+            "binaries/node/package-lock.json",
+            "binaries/browser-sync"
+        ],
         "macOS": {
             "entitlements": "./Entitlements.plist",
             "minimumSystemVersion": "12.0",

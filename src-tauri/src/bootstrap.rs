@@ -37,14 +37,19 @@ pub fn init_browsersync_path<R: Runtime>(resolver: &PathResolver<R>) {
         // リリースモード：resource_dir() で Resources ディレクトリを取得
         resolver.resource_dir().expect("Missing resource_dir")
     };
-    info!("resource_path: {:?}", resource_path);
+    info!("resource_path: {resource_path:?}");
 
-    let browsersync_path = resource_path.join("binaries").join("browser-sync");
+    let browsersync_binary = if cfg!(target_os = "windows") {
+        "browser-sync.cmd"
+    } else {
+        "browser-sync"
+    };
+    let browsersync_path = resource_path.join("binaries").join(browsersync_binary);
 
     BROWSERSYNC_PATH
         .set(browsersync_path)
         .expect("BROWSESYNC_PATH already initialized");
-    info!("BROWSESYNC_PATH: {:?}", BROWSERSYNC_PATH);
+    info!("BROWSESYNC_PATH: {BROWSERSYNC_PATH:?}");
 }
 
 pub fn init_logger() {

@@ -15,7 +15,7 @@ pub fn browsersync_command(target_dir: &str, proxy_url: &str) -> Result<Command,
     #[cfg(unix)]
     let command = macos_command(target_dir, proxy_url, &target_files)?;
 
-    info!("Executing: {:?}", command);
+    info!("Executing: {command:?}");
     Ok(command)
 }
 
