@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { emit } from "@tauri-apps/api/event";
 
 export type Hamburger = {
     anchorEl: HTMLElement | null;
@@ -12,7 +12,6 @@ export type Hamburger = {
 export default function useHamburger(): Hamburger {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const navigate = useNavigate();
 
     const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -22,9 +21,9 @@ export default function useHamburger(): Hamburger {
         setAnchorEl(null);
     };
 
-    const handleLicenseClick = () => {
+    const handleLicenseClick = async () => {
         handleClose();
-        navigate("/license");
+        await emit("show_license");
     };
 
     return {

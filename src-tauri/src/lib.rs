@@ -15,6 +15,7 @@ use constants::{HOST_ARCH, HOST_OS};
 
 use features::browsersync::commands::{start_browsersync, stop_browsersync};
 use features::browsersync::services::BrowsersyncState;
+use features::menu::services::{handle_menu_event, init_menu};
 
 pub fn run() {
     tauri::Builder::default()
@@ -30,8 +31,13 @@ pub fn run() {
             init_logger(); // ロガー初期化
             init_browsersync_path(resolver); // PATH設定
 
+            init_menu(app.app_handle()); // メニュー初期化
+
             info!("Application started on {HOST_OS}({HOST_ARCH})");
             Ok(())
+        })
+        .on_menu_event(|app, event| {
+            handle_menu_event(app, event);
         })
         .on_window_event(|window, event| {
             // ウィンドウが閉じられるときに、Browsersyncも終了する
