@@ -19,11 +19,13 @@
 - WordPressなどをライブリロードしたい場合は、「Proxyを使用する」にチェックを入れてローカルサイトのURLを入力します
 - ▶️ ボタンを押します
 
-<div style="display: flex; align-items: center;">
-    <img width="300" alt="Sabakan" src="docs/images/sabakan-main.png" />
-    ➡️
-    <img width="300" alt="SabakanQR" src="docs/images/sabakan-qr.png" />
-</div>
+<table>
+    <tr>
+        <td><img width="300" alt="Sabakan" src="docs/images/sabakan-main.png" /></td>
+        <td style="font-size: 2em; text-align: center;">➡️</td>
+        <td><img width="300" alt="SabakanQR" src="docs/images/sabakan-qr.png" /></td>
+    </tr>
+</table>
 
 
 ## 🐟 開発環境での実行
