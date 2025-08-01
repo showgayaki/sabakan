@@ -17,7 +17,7 @@ Entitlements.plist
 !/src-tauri/binaries/node/package.json
 
 # App Preview
-/assets/preview/original.mov
+/assets/preview/original/
 
 # Logs
 logs
