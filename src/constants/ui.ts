@@ -1,0 +1,2 @@
+export const ERROR_DISPLAY_DURATION_MS = 3000;
+export const BUTTON_FONT_SIZE = 75;

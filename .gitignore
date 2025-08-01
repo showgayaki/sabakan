@@ -1,4 +1,23 @@
 ToDo.md
+.env
+
+# `node-format.json`だけリポジトリに含める
+public/licenses/*
+!public/licenses/node-format.json
+
+# App Store
+Entitlements.plist
+*.provisionprofile
+
+# build scripts
+/build*.sh
+
+# binaries
+/src-tauri/binaries/node/*
+!/src-tauri/binaries/node/package.json
+
+# App Preview
+/assets/preview/original/
 
 # Logs
 logs

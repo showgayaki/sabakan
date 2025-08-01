@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- サンドボックスの設定: これがないとApp Storeにリリースできない -->
+    <key>com.apple.security.app-sandbox</key>
+    <true/>
+    <key>com.apple.application-identifier</key>
+    <string>${TEAM_ID}.world.kanke.sabakan</string>
+    <key>com.apple.developer.team-identifier</key>
+    <string>${TEAM_ID}</string>
+    <!-- これがないとディレクトリ選択ダイアログが開けない -->
+    <key>com.apple.security.files.user-selected.read-only</key>
+    <true/>
+    <key>com.apple.security.network.server</key>
+    <true/>
+    <!-- これがないとコンテンツが開けない(真っ暗ウィンドウになる) -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    <key>com.apple.security.get-task-allow</key>
+    <false/>
+</dict>
+</plist>
