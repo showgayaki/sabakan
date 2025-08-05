@@ -19,6 +19,9 @@ Entitlements.plist
 # App Preview
 /assets/preview/original/
 
+# Microsoft Store
+/scripts/cert.ps1
+
 # Logs
 logs
 *.log
