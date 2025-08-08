@@ -13,27 +13,7 @@ pub fn build_menu<R: Runtime>(app: &AppHandle<R>) -> Menu<R> {
         .unwrap()
 }
 
-fn app_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
-    let quit = MenuItem::with_id(app, "quit", "終了", true, None::<&str>).unwrap();
-    let about = about_submenu(app);
-
-    Submenu::with_items(
-        app,
-        "サバカン！",
-        true,
-        &[&about, &PredefinedMenuItem::separator(app).unwrap(), &quit],
-    )
-    .unwrap()
-}
-
-fn help_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
-    let help = MenuItem::with_id(app, "help", "ヘルプ", true, None::<&str>).unwrap();
-    let document = MenuItem::with_id(app, "license", "ライセンス", true, None::<&str>).unwrap();
-
-    Submenu::with_items(app, "ヘルプ", true, &[&help, &document]).unwrap()
-}
-
-fn about_submenu<R: Runtime>(app: &AppHandle<R>) -> PredefinedMenuItem<R> {
+pub fn about<R: Runtime>(app: &AppHandle<R>) -> PredefinedMenuItem<R> {
     let about_metadata = AboutMetadata {
         name: Some("サバカン！".to_string()),
         version: Some(app.package_info().version.to_string()),
@@ -47,4 +27,24 @@ fn about_submenu<R: Runtime>(app: &AppHandle<R>) -> PredefinedMenuItem<R> {
         Some(about_metadata),
     )
     .unwrap()
+}
+
+fn app_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
+    let about = about(app);
+    let quit = MenuItem::with_id(app, "quit", "終了", true, None::<&str>).unwrap();
+
+    Submenu::with_items(
+        app,
+        "サバカン！",
+        true,
+        &[&about, &PredefinedMenuItem::separator(app).unwrap(), &quit],
+    )
+    .unwrap()
+}
+
+fn help_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
+    let help = MenuItem::with_id(app, "help", "ヘルプ", true, None::<&str>).unwrap();
+    let license = MenuItem::with_id(app, "license", "ライセンス", true, None::<&str>).unwrap();
+
+    Submenu::with_items(app, "ヘルプ", true, &[&help, &license]).unwrap()
 }
