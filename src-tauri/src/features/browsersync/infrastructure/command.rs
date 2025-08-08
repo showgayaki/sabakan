@@ -20,11 +20,7 @@ pub fn browsersync_command(target_dir: &str, proxy_url: &str) -> Result<Command,
 }
 
 fn build_base_command(target_dir: &str, proxy_url: &str, target_files: &[&str]) -> Command {
-    let mut command = Command::new(
-        BROWSERSYNC_PATH
-            .get()
-            .expect("BROWSESYNC_PATH not initialized"),
-    );
+    let mut command = Command::new(&*BROWSERSYNC_PATH);
     command.current_dir(target_dir).arg("start");
 
     if proxy_url.trim().is_empty() {

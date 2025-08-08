@@ -7,14 +7,20 @@ mod bootstrap;
 mod commands;
 mod constants;
 mod features;
+mod utils;
 
-use bootstrap::{init_app_data_dir, init_browsersync_path, init_logger};
+use bootstrap::{copy_browser_sync_cmd, init_app_dir, init_logger};
 use commands::fs::directory_exists;
 use commands::system::get_host_os;
 use constants::{HOST_ARCH, HOST_OS};
 
 use features::browsersync::commands::{start_browsersync, stop_browsersync};
 use features::browsersync::services::BrowsersyncState;
+
+#[cfg(windows)]
+use features::installation::commands::{
+    check_installed_binaries, install_browsersync, install_nodejs,
+};
 
 pub fn run() {
     tauri::Builder::default()
@@ -26,9 +32,11 @@ pub fn run() {
         .setup(|app| {
             let resolver = app.path();
 
-            init_app_data_dir(resolver); // APP_DATA_DIR を初期化
+            init_app_dir(resolver); // ディレクトリ初期化
             init_logger(); // ロガー初期化
-            init_browsersync_path(resolver); // PATH設定
+
+            #[cfg(windows)]
+            copy_browser_sync_cmd(resolver);
 
             info!("Application started on {HOST_OS}({HOST_ARCH})");
             Ok(())
@@ -48,6 +56,12 @@ pub fn run() {
             directory_exists,
             start_browsersync,
             stop_browsersync,
+            #[cfg(windows)]
+            check_installed_binaries,
+            #[cfg(windows)]
+            install_nodejs,
+            #[cfg(windows)]
+            install_browsersync,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

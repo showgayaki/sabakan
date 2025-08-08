@@ -10,11 +10,7 @@
             "icons/icon.ico"
         ],
         "resources": [
-            "binaries\\node\\node.exe",
-            "binaries\\node\\node_modules\\**\\*",
-            "binaries\\node\\package.json",
-            "binaries\\node\\package-lock.json",
-            "binaries\\browser-sync.cmd"
+            "bin\\browser-sync.cmd"
         ],
         "windows": {
             "timestampUrl": "http://timestamp.digicert.com",

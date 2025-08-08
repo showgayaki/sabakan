@@ -2,6 +2,7 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 
 import darkTheme from "./theme";
 import { GlobalStyles } from "./GlobalStyles";
+import { AppInitializer } from "./Initializer";
 import { AppRouter } from "./router";
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
             <GlobalStyles />
             <ThemeProvider theme={darkTheme}>
                 <CssBaseline />
+                <AppInitializer />
                 <AppRouter />
             </ThemeProvider>
         </>

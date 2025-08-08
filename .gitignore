@@ -12,9 +12,9 @@ Entitlements.plist
 # build scripts
 /build*.sh
 
-# binaries
-/src-tauri/binaries/node/*
-!/src-tauri/binaries/node/package.json
+# bin
+/src-tauri/bin/node/*
+!/src-tauri/bin/node/package.json
 
 # App Preview
 /assets/preview/original/

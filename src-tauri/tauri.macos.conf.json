@@ -6,12 +6,12 @@
             "icons/icon.icns"
         ],
         "resources": [
-            "binaries/node/bin/node",
-            "binaries/node/lib/**/*",
-            "binaries/node/node_modules/**/*",
-            "binaries/node/package.json",
-            "binaries/node/package-lock.json",
-            "binaries/browser-sync"
+            "bin/node/bin/node",
+            "bin/node/lib/**/*",
+            "bin/node/node_modules/**/*",
+            "bin/node/package.json",
+            "bin/node/package-lock.json",
+            "bin/browser-sync"
         ],
         "macOS": {
             "entitlements": "./Entitlements.plist",
