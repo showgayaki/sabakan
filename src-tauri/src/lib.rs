@@ -11,7 +11,6 @@ mod utils;
 
 use bootstrap::{copy_browser_sync_cmd, init_app_dir, init_logger};
 use commands::fs::directory_exists;
-use commands::system::get_host_os;
 use constants::{HOST_ARCH, HOST_OS};
 
 use features::browsersync::commands::{start_browsersync, stop_browsersync};
@@ -24,6 +23,7 @@ use features::installation::commands::{
 
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .manage(BrowsersyncState {
@@ -52,7 +52,6 @@ pub fn run() {
             }
         })
         .invoke_handler(tauri::generate_handler![
-            get_host_os,
             directory_exists,
             start_browsersync,
             stop_browsersync,
