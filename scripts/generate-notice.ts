@@ -37,7 +37,7 @@ function extractNodeLicenses() {
 
     console.log("🔍 Extracting Node.js license data from src-tauri/binaries/node directory...");
     execSync(`${licenseCheckerPath} --production --json --customPath ${formatJsonPath} > ${tmpJsonPath}`, {
-        cwd: path.resolve(currentDir, "src-tauri", "binaries", "node"),
+        cwd: path.resolve(currentDir, "src-tauri", "bin", "node"),
     });
 
     // `/sabakan/src-tauri/binaries/node/package.json` の license を tmp.json に書き出す
