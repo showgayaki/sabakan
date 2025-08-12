@@ -16,11 +16,12 @@ use log4rs::{
     encode::pattern::PatternEncoder,
 };
 
-use crate::constants::{BINARY_DIR, BROWSERSYNC_PATH, HOME_DIR, RESOURCE_DIR};
-use crate::utils::fs::copy_file_to_dir;
+use crate::constants::{APP_DATA_DIR, BROWSERSYNC_PATH, HOME_DIR, RESOURCE_DIR};
 
 #[cfg(windows)]
-use crate::constants::APP_DATA_DIR;
+use crate::constants::BINARY_DIR;
+#[cfg(windows)]
+use crate::utils::fs::copy_file_to_dir;
 
 pub fn init_app_dir<R: Runtime>(resolver: &PathResolver<R>) {
     let home_dir = resolver.home_dir().expect("Failed to get home_dir");
@@ -49,6 +50,7 @@ pub fn init_app_dir<R: Runtime>(resolver: &PathResolver<R>) {
     info!("BROWSESYNC_PATH: {BROWSERSYNC_PATH:?}");
 }
 
+#[cfg(windows)]
 pub fn copy_browser_sync_cmd<R: Runtime>(resolver: &PathResolver<R>) {
     if !BROWSERSYNC_PATH.exists() {
         let resource_dir = resolver.resource_dir().expect("Missing resource_dir");

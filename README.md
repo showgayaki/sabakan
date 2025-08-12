@@ -38,12 +38,11 @@ cargo install --locked cargo-about
 ```
 グローバルにインストールされます
 
-2. Browsersync 用 Node.js の設置  
+2. Browsersync 用 Node.js の設置  (macOSのみ)
    1. [https://nodejs.org/ja/download](https://nodejs.org/ja/download) から実行OSにあったNode.jsのバイナリをダウンロードします  
       (ページ下の方の「スタンドアローンのバイナリー」)
-   2. 解凍して`node`にリネームし、以下のようなディレクトリ構成になるように`src-tauri/binaries`に置きます
 
-      - macOS
+   2. 解凍して`node`にリネームし、以下のようなディレクトリ構成になるように`src-tauri/bin`に置きます
       ```
       src-tauri/binaries
       ├── browser-sync
@@ -58,32 +57,10 @@ cargo install --locked cargo-about
           ├── package.json
           └── README.md
       ```
-      - Windows
-      ```
-      src-tauri\binaries
-      ├── browser-sync
-      ├── browser-sync.cmd
-      └── node
-          ├── CHANGELOG.md
-          ├── corepack
-          ├── corepack.cmd
-          ├── install_tools.bat
-          ├── LICENSE
-          ├── node.exe
-          ├── nodevars.bat
-          ├── npm
-          ├── npm.cmd
-          ├── npm.ps1
-          ├── npx
-          ├── npx.cmd
-          ├── npx.ps1
-          ├── package.json
-          └── README.md
-      ```
 
    3. Browsersyncのインストール
 
-      `src-tauri/binaries/node`で
+      `src-tauri/bin/node`で
       ```
       npm install
       ```

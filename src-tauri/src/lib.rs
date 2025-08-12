@@ -7,9 +7,8 @@ mod bootstrap;
 mod commands;
 mod constants;
 mod features;
-mod utils;
 
-use bootstrap::{copy_browser_sync_cmd, init_app_dir, init_logger};
+use bootstrap::{init_app_dir, init_logger};
 use commands::fs::directory_exists;
 use constants::{HOST_ARCH, HOST_OS};
 
@@ -18,8 +17,14 @@ use features::browsersync::services::BrowsersyncState;
 use features::menu::services::{handle_menu_event, init_menu};
 
 #[cfg(windows)]
-use features::installation::commands::{
-    check_installed_binaries, install_browsersync, install_nodejs,
+mod utils;
+
+#[cfg(windows)]
+use {
+    bootstrap::copy_browser_sync_cmd,
+    features::installation::commands::{
+        check_installed_binaries, install_browsersync, install_nodejs,
+    },
 };
 
 pub fn run() {
