@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { openUrl } from '@tauri-apps/plugin-opener';
+
+import { REPOSITORY_URL } from "@/constants/urls";
 
 export type Hamburger = {
     anchorEl: HTMLElement | null;
     open: boolean;
     handleMenuClick: (event: React.MouseEvent<HTMLElement>) => void;
     handleClose: () => void;
-    handleLicenseClick: () => void;
+    openLicense: () => void;
+    openHelp: () => void;
 }
 
 export default function useHamburger(): Hamburger {
@@ -22,9 +26,14 @@ export default function useHamburger(): Hamburger {
         setAnchorEl(null);
     };
 
-    const handleLicenseClick = () => {
+    const openLicense = async () => {
         handleClose();
         navigate("/license");
+    };
+
+    const openHelp = async () => {
+        handleClose();
+        openUrl(REPOSITORY_URL);
     };
 
     return {
@@ -32,6 +41,7 @@ export default function useHamburger(): Hamburger {
         open,
         handleMenuClick,
         handleClose,
-        handleLicenseClick,
+        openLicense,
+        openHelp,
     }
 }

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import Home from "@/pages/home/index";
-import License from "@/pages/license/index";
+import Home from "@/pages/home";
+import License from "@/pages/license";
 
 export function AppRouter() {
     return (

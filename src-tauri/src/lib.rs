@@ -7,18 +7,24 @@ mod bootstrap;
 mod commands;
 mod constants;
 mod features;
-mod utils;
 
-use bootstrap::{copy_browser_sync_cmd, init_app_dir, init_logger};
+use bootstrap::{init_app_dir, init_logger};
 use commands::fs::directory_exists;
 use constants::{HOST_ARCH, HOST_OS};
 
 use features::browsersync::commands::{start_browsersync, stop_browsersync};
 use features::browsersync::services::BrowsersyncState;
+use features::menu::services::{handle_menu_event, init_menu};
 
 #[cfg(windows)]
-use features::installation::commands::{
-    check_installed_binaries, install_browsersync, install_nodejs,
+mod utils;
+
+#[cfg(windows)]
+use {
+    bootstrap::copy_browser_sync_cmd,
+    features::installation::commands::{
+        check_installed_binaries, install_browsersync, install_nodejs,
+    },
 };
 
 pub fn run() {
@@ -38,8 +44,13 @@ pub fn run() {
             #[cfg(windows)]
             copy_browser_sync_cmd(resolver);
 
+            init_menu(app.app_handle()); // メニュー初期化
+
             info!("Application started on {HOST_OS}({HOST_ARCH})");
             Ok(())
+        })
+        .on_menu_event(|app, event| {
+            handle_menu_event(app, event);
         })
         .on_window_event(|window, event| {
             // ウィンドウが閉じられるときに、Browsersyncも終了する
