@@ -1,13 +1,12 @@
-import { useEffect, useState } from "react";
+import { useHostOs } from "@/app/context";
 
-import { getHostOS } from "../api";
 import useDirectory from "./useDirectory";
 import useBrowsersync from "./useBrowsersync";
 import useProxy from "./useProxy";
 import useLogStream from "./useLogStream";
 
 export default function useBrowsersyncForm() {
-    const [hostOs, setHostOs] = useState<string>("");
+    const hostOs = useHostOs();
 
     const directory = useDirectory(hostOs);
     const browsersync = useBrowsersync();
@@ -24,10 +23,6 @@ export default function useBrowsersyncForm() {
             browsersync.handleStart(directory.path, proxy.url);
         }
     }
-
-    useEffect(() => {
-        getHostOS().then(setHostOs).catch(console.error);
-    }, []);
 
     return {
         hostOs,

@@ -17,7 +17,5 @@
     <!-- これがないとコンテンツが開けない(真っ暗ウィンドウになる) -->
     <key>com.apple.security.network.client</key>
     <true/>
-    <key>com.apple.security.get-task-allow</key>
-    <false/>
 </dict>
 </plist>

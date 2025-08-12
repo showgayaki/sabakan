@@ -16,40 +16,53 @@ use log4rs::{
     encode::pattern::PatternEncoder,
 };
 
-use crate::constants::{APP_DATA_DIR, BROWSERSYNC_PATH};
+use crate::constants::{BINARY_DIR, BROWSERSYNC_PATH, HOME_DIR, RESOURCE_DIR};
+use crate::utils::fs::copy_file_to_dir;
 
-pub fn init_app_data_dir<R: Runtime>(resolver: &PathResolver<R>) {
-    let data_dir = resolver
-        .home_dir()
-        .expect("Failed to get home_dir")
-        .join(".sabakan");
+#[cfg(windows)]
+use crate::constants::APP_DATA_DIR;
 
-    APP_DATA_DIR
-        .set(data_dir)
-        .expect("APP_DATA_DIR already initialized");
-}
+pub fn init_app_dir<R: Runtime>(resolver: &PathResolver<R>) {
+    let home_dir = resolver.home_dir().expect("Failed to get home_dir");
 
-pub fn init_browsersync_path<R: Runtime>(resolver: &PathResolver<R>) {
-    let resource_path = if cfg!(debug_assertions) {
+    HOME_DIR.set(home_dir).expect("Failed to set HOME_DIR");
+    info!("HOME_DIR set to {HOME_DIR:?}");
+
+    let resource_dir = if cfg!(windows) {
+        // C:\Users\{username}\.sabakan\
+        APP_DATA_DIR.clone()
+    } else if cfg!(debug_assertions) {
+        // macOS
         // 開発モード：Cargo.tomlがあるディレクトリをベースにする
         PathBuf::from(env!("CARGO_MANIFEST_DIR"))
     } else {
-        // リリースモード：resource_dir() で Resources ディレクトリを取得
+        // リリースモード
+        // /Applications/Sabakan.app/Contents/Resources/
         resolver.resource_dir().expect("Missing resource_dir")
     };
-    info!("resource_path: {resource_path:?}");
 
-    let browsersync_binary = if cfg!(target_os = "windows") {
-        "browser-sync.cmd"
-    } else {
-        "browser-sync"
-    };
-    let browsersync_path = resource_path.join("binaries").join(browsersync_binary);
+    RESOURCE_DIR
+        .set(resource_dir)
+        .expect("Failed to set RESOURCE_DIR");
 
-    BROWSERSYNC_PATH
-        .set(browsersync_path)
-        .expect("BROWSESYNC_PATH already initialized");
+    info!("RESOURCE_DIR: {RESOURCE_DIR:?}");
     info!("BROWSESYNC_PATH: {BROWSERSYNC_PATH:?}");
+}
+
+pub fn copy_browser_sync_cmd<R: Runtime>(resolver: &PathResolver<R>) {
+    if !BROWSERSYNC_PATH.exists() {
+        let resource_dir = resolver.resource_dir().expect("Missing resource_dir");
+        info!("resource_dir: {resource_dir:?}");
+        if let Err(e) = copy_file_to_dir(
+            &resource_dir.join("bin").join("browser-sync.cmd"),
+            &BINARY_DIR,
+        ) {
+            panic!("Failed to copy browser-sync.cmd: {e}");
+        }
+        info!("Copied browser-sync.cmd to {BROWSERSYNC_PATH:?}");
+    } else {
+        info!("browser-sync.cmd already exists at {BROWSERSYNC_PATH:?}");
+    }
 }
 
 pub fn init_logger() {
@@ -62,12 +75,7 @@ pub fn init_logger() {
     // ログのフォーマット
     const LOG_PATTERN: &str = "[{d(%Y-%m-%d %H:%M:%S%:z)}] [{l}] [{f}:{L}]: {m}{n}";
 
-    static LOG_DIR: LazyLock<PathBuf> = LazyLock::new(|| {
-        APP_DATA_DIR
-            .get()
-            .expect("APP_DATA_DIR is not initialized")
-            .join("log")
-    });
+    static LOG_DIR: LazyLock<PathBuf> = LazyLock::new(|| APP_DATA_DIR.join("log"));
 
     // `sabakan.log` を `sabakan-{}.log` に変換
     let log_pattern = {

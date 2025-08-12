@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# `/Applications/Sabakan.app/Contents/Resources/binaries/` 想定
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+
+# Node 実行バイナリのパス
+NODE_EXEC="$basedir/node/bin/node"
+
+# BrowserSync の実行スクリプト（.bin を介さず直接 bin.js を実行）
+BIN_JS="$basedir/node/node_modules/browser-sync/dist/bin.js"
+
+echo "[INFO] Launching BrowserSync"
+echo "[INFO] Using BIN_JS=$BIN_JS"
+
+# --jitless: V8 の JIT 無効化
+"$NODE_EXEC" --jitless --no-expose_wasm "$BIN_JS" "$@"
