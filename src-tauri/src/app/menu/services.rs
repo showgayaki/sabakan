@@ -9,7 +9,7 @@ pub fn init_menu<R: Runtime>(app: &AppHandle<R>) {
 }
 
 pub fn handle_menu_event(app: &AppHandle, event: MenuEvent) {
-    debug!("Menu event received: {:?}", event);
+    debug!("Menu event received: {event:?}");
     match event.id.as_ref() {
         "quit" => {
             debug!("Quit menu item clicked");

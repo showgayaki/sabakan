@@ -3,7 +3,7 @@ use std::env;
 use std::path::PathBuf;
 use std::sync::LazyLock;
 use tauri::path::PathResolver;
-use tauri::Runtime;
+use tauri::{App, Manager, Runtime};
 
 use log4rs::{
     append::rolling_file::{
@@ -16,14 +16,51 @@ use log4rs::{
     encode::pattern::PatternEncoder,
 };
 
-use crate::constants::{APP_DATA_DIR, BROWSERSYNC_PATH, HOME_DIR, RESOURCE_DIR};
+use crate::constants::{
+    APP_DATA_DIR, BROWSERSYNC_PATH, HOME_DIR, HOST_ARCH, HOST_OS, RESOURCE_DIR,
+};
+
+#[cfg(target_os = "macos")]
+use crate::app::menu::services::init_menu;
 
 #[cfg(windows)]
 use crate::constants::BINARY_DIR;
 #[cfg(windows)]
 use crate::utils::fs::copy_file_to_dir;
 
-pub fn init_app_dir<R: Runtime>(resolver: &PathResolver<R>) {
+pub fn setup(app: &App) {
+    let resolver = app.path();
+
+    init_app_dir(app.path()); // ディレクトリ初期化
+    init_logger(); // ロガー初期化
+
+    #[cfg(target_os = "macos")]
+    init_menu(app.app_handle());
+
+    #[cfg(windows)]
+    copy_browser_sync_cmd(resolver);
+
+    info!("Application started on {HOST_OS}({HOST_ARCH})");
+}
+
+#[cfg(windows)]
+pub fn copy_browser_sync_cmd<R: Runtime>(resolver: &PathResolver<R>) {
+    if !BROWSERSYNC_PATH.exists() {
+        let resource_dir = resolver.resource_dir().expect("Missing resource_dir");
+        info!("resource_dir: {resource_dir:?}");
+        if let Err(e) = copy_file_to_dir(
+            &resource_dir.join("bin").join("browser-sync.cmd"),
+            &BINARY_DIR,
+        ) {
+            panic!("Failed to copy browser-sync.cmd: {e}");
+        }
+        info!("Copied browser-sync.cmd to {BROWSERSYNC_PATH:?}");
+    } else {
+        info!("browser-sync.cmd already exists at {BROWSERSYNC_PATH:?}");
+    }
+}
+
+fn init_app_dir<R: Runtime>(resolver: &PathResolver<R>) {
     let home_dir = resolver.home_dir().expect("Failed to get home_dir");
 
     HOME_DIR.set(home_dir).expect("Failed to set HOME_DIR");
@@ -50,24 +87,7 @@ pub fn init_app_dir<R: Runtime>(resolver: &PathResolver<R>) {
     info!("BROWSESYNC_PATH: {BROWSERSYNC_PATH:?}");
 }
 
-#[cfg(windows)]
-pub fn copy_browser_sync_cmd<R: Runtime>(resolver: &PathResolver<R>) {
-    if !BROWSERSYNC_PATH.exists() {
-        let resource_dir = resolver.resource_dir().expect("Missing resource_dir");
-        info!("resource_dir: {resource_dir:?}");
-        if let Err(e) = copy_file_to_dir(
-            &resource_dir.join("bin").join("browser-sync.cmd"),
-            &BINARY_DIR,
-        ) {
-            panic!("Failed to copy browser-sync.cmd: {e}");
-        }
-        info!("Copied browser-sync.cmd to {BROWSERSYNC_PATH:?}");
-    } else {
-        info!("browser-sync.cmd already exists at {BROWSERSYNC_PATH:?}");
-    }
-}
-
-pub fn init_logger() {
+fn init_logger() {
     const LOG_FILE_NAME: &str = "sabakan.log";
     const LOG_ROTATE_BASE: u32 = 1;
     const LOG_ROTATE_COUNT: u32 = 3;

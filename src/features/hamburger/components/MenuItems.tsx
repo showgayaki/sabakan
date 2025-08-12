@@ -1,6 +1,6 @@
 import { MenuItem } from "@mui/material";
 
-import { type Hamburger } from "@/features/menu/hooks/useHamburger";
+import { type Hamburger } from "@/features/hamburger/hooks/useHamburger";
 
 interface MenuItemsProps {
     hamburger: Hamburger;

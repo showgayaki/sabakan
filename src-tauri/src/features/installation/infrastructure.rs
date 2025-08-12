@@ -3,11 +3,11 @@ pub(super) mod node;
 
 use log::{error, info};
 
+use crate::constants::{windows::NODE_DIR, BINARY_DIR};
 use crate::utils::archive::extract;
 use crate::utils::fs::remove_file;
 use crate::utils::network::download_file;
 
-use crate::constants::{windows::NODE_DIR, BINARY_DIR};
 #[cfg(unix)]
 use crate::utils::fs::set_executable;
 

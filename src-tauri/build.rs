@@ -5,7 +5,7 @@ fn main() {
     if dotenv().is_ok() {
         for (key, value) in std::env::vars() {
             if key == "MY_NAME" {
-                println!("cargo:rustc-env={}={}", key, value);
+                println!("cargo:rustc-env={key}={value}");
             }
         }
     }
