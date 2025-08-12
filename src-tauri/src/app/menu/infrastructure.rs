@@ -17,7 +17,10 @@ pub fn about<R: Runtime>(app: &AppHandle<R>) -> PredefinedMenuItem<R> {
     let about_metadata = AboutMetadata {
         name: Some("サバカン！".to_string()),
         version: Some(app.package_info().version.to_string()),
-        copyright: Some(format!("© 2025 {:?}", std::env::var("MY_NAME"))),
+        copyright: Some(format!(
+            "© 2025 {}",
+            std::env::var("MY_NAME").unwrap_or_default()
+        )),
         ..Default::default()
     };
 

@@ -31,16 +31,16 @@ use crate::utils::fs::copy_file_to_dir;
 pub fn setup(app: &App) {
     let resolver = app.path();
 
-    init_app_dir(app.path()); // ディレクトリ初期化
+    init_app_dir(resolver); // ディレクトリ初期化
     init_logger(); // ロガー初期化
+
+    info!("Application started on {HOST_OS}({HOST_ARCH})");
 
     #[cfg(target_os = "macos")]
     init_menu(app.app_handle());
 
     #[cfg(windows)]
     copy_browser_sync_cmd(resolver);
-
-    info!("Application started on {HOST_OS}({HOST_ARCH})");
 }
 
 #[cfg(windows)]

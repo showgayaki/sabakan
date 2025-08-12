@@ -1,7 +1,7 @@
-use tauri::{Manager, Wry};
+use tauri::Wry;
 
-use crate::app::bootstrap::setup;
-use crate::app::menu::services::{handle_menu_event, init_menu};
+use super::base;
+use crate::app::menu::services::handle_menu_event;
 
 pub fn builder() -> tauri::Builder<Wry> {
     let base_builder = base::builder();
