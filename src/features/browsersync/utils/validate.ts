@@ -9,8 +9,8 @@ export async function validateDirectoryPath(
     }
 
     const pathRegex = (hostOs === "windows") ?
-        /^[a-zA-Z]:\\(?:[\w\s-]+\\)*[\w\s-]+$/ :  // WindowsのパスはC:\path\to\directoryの形式
-        /^\/(?:[\w\s-]+\/)*[\w\s-]+$/;  // macOSのパスは/path/to/directoryの形式
+        /^[a-zA-Z]:\\(?:[\w\s\-\.]+\\)*[\w\s\-\.]+$/ :  // WindowsのパスはC:\path\to\directoryの形式
+        /^\/(?:[\w\s\-\.]+\/)*[\w\s\-\.]+$/;  // macOSのパスは/path/to/directoryの形式
 
     if (!pathRegex.test(path)) {
         return "パス形式が正しくありません";
