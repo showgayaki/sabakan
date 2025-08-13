@@ -1,39 +1,36 @@
 use tauri::{
-    menu::{AboutMetadata, Menu, MenuBuilder, MenuItem, PredefinedMenuItem, Submenu},
+    menu::{
+        AboutMetadata, Menu, MenuBuilder, MenuItem, PredefinedMenuItem, Submenu, SubmenuBuilder,
+    },
     AppHandle, Runtime,
 };
 
 pub fn build_menu<R: Runtime>(app: &AppHandle<R>) -> Menu<R> {
     let app_menu = app_submenu(app);
+    let edit_menu = edit_submenu(app);
     let help_menu = help_submenu(app);
 
     MenuBuilder::new(app)
-        .items(&[&app_menu, &help_menu])
+        .items(&[&app_menu, &edit_menu, &help_menu])
         .build()
         .unwrap()
 }
 
-pub fn about<R: Runtime>(app: &AppHandle<R>) -> PredefinedMenuItem<R> {
-    let about_metadata = AboutMetadata {
-        name: Some("サバカン！".to_string()),
-        version: Some(app.package_info().version.to_string()),
-        copyright: Some(format!(
-            "© 2025 {}",
-            std::env::var("MY_NAME").unwrap_or_default()
-        )),
-        ..Default::default()
-    };
-
-    PredefinedMenuItem::about(
+fn app_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
+    let about = PredefinedMenuItem::about(
         app,
         Some(format!("{}について", app.package_info().name).as_str()),
-        Some(about_metadata),
+        Some(AboutMetadata {
+            name: Some("サバカン！".to_string()),
+            version: Some(app.package_info().version.to_string()),
+            copyright: Some(format!(
+                "© 2025 {}",
+                std::env::var("MY_NAME").unwrap_or_default()
+            )),
+            ..Default::default()
+        }),
     )
-    .unwrap()
-}
-
-fn app_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
-    let about = about(app);
+    .unwrap();
     let quit = MenuItem::with_id(app, "quit", "終了", true, None::<&str>).unwrap();
 
     Submenu::with_items(
@@ -43,6 +40,19 @@ fn app_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
         &[&about, &PredefinedMenuItem::separator(app).unwrap(), &quit],
     )
     .unwrap()
+}
+
+fn edit_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
+    SubmenuBuilder::new(app, "編集")
+        .undo_with_text("取り消す")
+        .redo_with_text("やり直す")
+        .separator()
+        .cut_with_text("カット")
+        .copy_with_text("コピー")
+        .paste_with_text("ペースト")
+        .select_all_with_text("すべてを選択")
+        .build()
+        .unwrap()
 }
 
 fn help_submenu<R: Runtime>(app: &AppHandle<R>) -> Submenu<R> {
