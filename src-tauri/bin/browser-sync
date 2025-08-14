@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# `/Applications/Sabakan.app/Contents/Resources/binaries/` 想定
+# `/Applications/Sabakan.app/Contents/Resources/bin/` 想定
 basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
 
 # Node 実行バイナリのパス

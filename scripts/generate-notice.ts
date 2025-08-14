@@ -35,12 +35,12 @@ function extractNodeLicenses() {
     // public/licenses/tmp.json を読み込み
     const tmpData: NodeLicenseMap & Record<string, { licenseText?: string }> = JSON.parse(fs.readFileSync(tmpJsonPath, "utf-8"));
 
-    console.log("🔍 Extracting Node.js license data from src-tauri/binaries/node directory...");
+    console.log("🔍 Extracting Node.js license data from src-tauri/bin/node directory...");
     execSync(`${licenseCheckerPath} --production --json --customPath ${formatJsonPath} > ${tmpJsonPath}`, {
         cwd: path.resolve(currentDir, "src-tauri", "bin", "node"),
     });
 
-    // `/sabakan/src-tauri/binaries/node/package.json` の license を tmp.json に書き出す
+    // `/sabakan/src-tauri/bin/node/package.json` の license を tmp.json に書き出す
     const tmpBinariesData: NodeLicenseMap & Record<string, { licenseText?: string }> = JSON.parse(fs.readFileSync(tmpJsonPath, "utf-8"));
 
     // tmpDataとtmpBinariesDataをガッチャンコ
