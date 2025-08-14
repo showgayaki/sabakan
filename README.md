@@ -1,5 +1,12 @@
 # 🐟 サバカン！
 
+<a href="https://apps.microsoft.com/detail/9mzwkjrsh6dr" target="_blank">
+    <img src="docs/images/badge_microsoft-store.svg" alt="Microsoft Store">
+</a>
+<a href="https://apps.apple.com/jp/app/サバカン/id6748916636" target="_blank">
+    <img src="docs/images/badge_app-store.svg" alt="App Store">
+</a>
+
 ## 🐟 プロジェクト概要
 「サバカン！」は、GUIからカンタンにライブリロードサーバーを起動できる Tauri アプリです。  
 内部的には **[Browsersync](https://browsersync.io/)** を使用しています。
