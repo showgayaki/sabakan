@@ -27,7 +27,12 @@ export default function ProxySection({
             <CheckboxWithLabel
                 htmlFor={id}
                 checked={useProxy}
-                onChange={setUseProxy}
+                onChange={(checked) => {
+                    setUseProxy(checked);
+                    if (!checked) {
+                        setUrl("");
+                    }
+                }}
                 label="Proxyを使用する"
                 helpText={helpText}
             />

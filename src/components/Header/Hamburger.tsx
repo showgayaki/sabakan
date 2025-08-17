@@ -1,9 +1,9 @@
 import { IconButton, Menu } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import MenuItems from "@/features/menu/components/MenuItems";
-import useHamburger from "@/features/menu/hooks/useHamburger";
-import { useMenuEvents } from "@/features/menu/hooks/useMenuEvents";
+import MenuItems from "@/features/hamburger/components/MenuItems";
+import useHamburger from "@/features/hamburger/hooks/useHamburger";
+import { useMenuEvents } from "@/features/hamburger/hooks/useMenuEvents";
 
 export default function Hamburger() {
     const hamburger = useHamburger();

@@ -10,5 +10,11 @@
     <string>サバカン！</string>
     <key>NSLocalNetworkUsageDescription</key>
     <string>Allow Sabakan to serve content to devices on your local network.</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+    <string>ja</string>
+    </array>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>ja_JP</string>
 </dict>
 </plist>

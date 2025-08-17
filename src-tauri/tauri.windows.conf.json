@@ -16,6 +16,9 @@
             "timestampUrl": "http://timestamp.digicert.com",
             "webviewInstallMode": {
                 "type": "offlineInstaller"
+            },
+            "wix": {
+                "language": "ja-JP"
             }
         }
     }
