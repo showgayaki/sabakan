@@ -8,9 +8,17 @@ interface CheckboxWithLabelProps {
     onChange: (checked: boolean) => void;
     label: string;
     helpText?: string;
+    isFormLabel?: boolean;
 }
 
-export default function CheckboxWithLabel({ htmlFor, checked, onChange, label, helpText }: CheckboxWithLabelProps) {
+export default function CheckboxWithLabel({
+    htmlFor,
+    checked,
+    onChange,
+    label,
+    helpText,
+    isFormLabel,
+}: CheckboxWithLabelProps) {
     return (
         <FormControlLabel
             sx={{
@@ -25,7 +33,7 @@ export default function CheckboxWithLabel({ htmlFor, checked, onChange, label, h
                     label={label}
                     htmlFor={htmlFor}
                     helpText={helpText}
-                    isFormLabel
+                    isFormLabel={isFormLabel}
                     cursor="pointer"
                 />
             }

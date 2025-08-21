@@ -35,6 +35,7 @@ export default function ProxySection({
                 }}
                 label="Proxyを使用する"
                 helpText={helpText}
+                isFormLabel={true}
             />
             <ValidationErrorTooltip title={error || ""}>
                 <CustomTextField

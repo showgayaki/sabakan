@@ -43,7 +43,7 @@ export default function Extensions({ extensions }: ExtensionsProps) {
             <Paper sx={{ p: 1 }}>
                 <Stack gap={1.5}>
                     {EXTENSION_GROUPS.map((group, groupIndex) => (
-                        <Stack key={groupIndex} spacing={1.5}>
+                        <Stack key={groupIndex} spacing={0.8}>
                             <Stack direction="row" gap={1} flexWrap="wrap">
                                 {group.map((ext) => (
                                     <CheckboxWithLabel
@@ -52,6 +52,7 @@ export default function Extensions({ extensions }: ExtensionsProps) {
                                         label={ext}
                                         checked={items.includes(ext)}
                                         onChange={() => handleToggle(ext)}
+                                        isFormLabel={true}
                                     />
                                 ))}
                             </Stack>

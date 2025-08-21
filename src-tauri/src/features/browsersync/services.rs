@@ -19,7 +19,7 @@ impl BrowsersyncState {
     ) -> Result<String, String> {
         let mut lock = self.process.lock().unwrap();
 
-        let command = browsersync_command(&params)?;
+        let command = browsersync_command(params)?;
         let (child, external_url) =
             spawn_browsersync(window, command).map_err(|e| e.to_string())?;
         info!("Browsersync process started with PID: {}", child.id());
