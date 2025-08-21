@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
 
 import ValidationErrorTooltip from "@/components/CustomTooltips";
-import CheckboxWithLabel from "@/components/Checkbox";
+import CheckboxWithLabel from "@/components/CheckboxWithLabel";
 import CustomTextField from "@/components/CustomTextField";
 
-interface ProxySectionProps {
+interface ProxyProps {
     useProxy: boolean;
     setUseProxy: (useProxy: boolean) => void;
     url: string;
-    setUrl: (username: string) => void;
+    setUrl: (url: string) => void;
     error?: string | null;
 }
 
@@ -18,8 +18,8 @@ export default function ProxySection({
     url,
     setUrl,
     error,
-}: ProxySectionProps) {
-    const id = "proxySection";
+}: ProxyProps) {
+    const id = "useProxy";
     const helpText = `ローカル環境のWordPressサイトなどと連携したい場合は、そのURLを入力してください`;
 
     return (

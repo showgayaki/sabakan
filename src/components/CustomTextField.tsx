@@ -43,6 +43,7 @@ export default function CustomTextField({
                         label={label}
                         htmlFor={id}
                         helpText={helpText}
+                        cursor="pointer"
                     />
                 )
             }

@@ -4,7 +4,7 @@ import { Folder } from "@mui/icons-material";
 import CustomTextField from "@/components/CustomTextField";
 import ValidationErrorTooltip from "@/components/CustomTooltips";
 
-interface DirectoryInputSectionProps {
+interface DirectoryProps {
     hostOs: string;
     path: string;
     setPath: (path: string) => void;
@@ -12,26 +12,20 @@ interface DirectoryInputSectionProps {
     error?: string | null;
 }
 
-export default function DirectoryInputSection({
+export default function Directory({
     hostOs,
     path,
     setPath,
     onClick,
     error,
-}: DirectoryInputSectionProps) {
-    console.log("DirectoryInputSection rendered with hostOs:", hostOs);
+}: DirectoryProps) {
+    console.log("Directory rendered with hostOs:", hostOs);
     const placeholder = hostOs === "windows"
         ? "C:\\path\\to\\directory"
         : "/path/to/directory";
     const helpText = `監視対象にするディレクトリを選択してください。
         このディレクトリをルートディレクトリとしてBrowsersyncサーバーが起動します。
-        選択されたディレクトリ内のファイルが更新されると、ブラウザがリロードされます。
-        対象のファイル拡張子は
-        ・.html
-        ・.css
-        ・.js
-        ・.php
-        です。`;
+        選択されたディレクトリ内のファイルが更新されると、ブラウザがリロードされます。`;
 
     return (
         <ValidationErrorTooltip title={error || ""}>

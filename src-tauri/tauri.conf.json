@@ -13,10 +13,10 @@
         "windows": [
             {
                 "title": "サバカン！",
-                "width": 400,
+                "width": 410,
                 "minWidth": 152,
-                "height": 470,
-                "minHeight": 470
+                "height": 686,
+                "minHeight": 686
             }
         ],
         "security": {

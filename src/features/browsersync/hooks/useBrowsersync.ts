@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import type { BrowsersyncParams } from "@/types/browsersyncParams";
 import type { ProgressStatus } from "@/types/progress";
 import {
     startBrowsersync,
@@ -15,16 +16,15 @@ export default function useBrowsersync() {
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [url, setUrl] = useState<string>("");
 
-    const handleStart = async (directoryPath: string, proxyUrl: string) => {
+    const handleStart = async (params: BrowsersyncParams) => {
         let startedSuccessfully = false;
 
         setStatus("pending");
         setStatusMessage("Browsersyncを起動しています...");
-        console.log("Starting Browsersync with directory:", directoryPath);
-        console.log("Using proxy URL:", proxyUrl);
+        console.log("BrowsersyncParams:", params);
 
         try {
-            const externalUrl = await startBrowsersync(directoryPath, proxyUrl);
+            const externalUrl = await startBrowsersync(params);
             console.log("Browsersync started at URL:", externalUrl);
 
             setUrl(externalUrl);

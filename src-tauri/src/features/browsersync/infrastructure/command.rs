@@ -2,13 +2,26 @@ use log::info;
 use std::process::{Command, Stdio};
 
 use crate::constants::BROWSERSYNC_PATH;
+use crate::types::browsersync::BrowsersyncParams;
 
-pub fn browsersync_command(target_dir: &str, proxy_url: &str) -> Result<Command, String> {
+pub fn browsersync_command(params: &BrowsersyncParams) -> Result<Command, String> {
     // Command Ex:
     // browser-sync start --server --files "**/*.html, **/*.css, **/*.js"
     // browser-sync start --proxy http://localhost:8888/hoge --files "**/*.html, **/*.css, **/*.js"
 
-    let target_files = ["**/*.html", "**/*.css", "**/*.js", "**/*.php"];
+    let BrowsersyncParams {
+        target_dir,
+        proxy_url,
+        extensions,
+    } = params;
+
+    let target_files: Vec<String> = extensions
+        .iter()
+        .map(|ext| format!("**/*{}", ext))
+        .collect();
+
+    info!("BrowsersyncParams: {params:?}");
+    info!("target_files: {target_files:?}");
 
     #[cfg(windows)]
     let command = windows_command(target_dir, proxy_url, &target_files)?;
@@ -19,7 +32,7 @@ pub fn browsersync_command(target_dir: &str, proxy_url: &str) -> Result<Command,
     Ok(command)
 }
 
-fn build_base_command(target_dir: &str, proxy_url: &str, target_files: &[&str]) -> Command {
+fn build_base_command(target_dir: &str, proxy_url: &str, target_files: &[String]) -> Command {
     let mut command = Command::new(&*BROWSERSYNC_PATH);
     command.current_dir(target_dir).arg("start");
 
@@ -58,7 +71,7 @@ fn windows_command(
 fn macos_command(
     target_dir: &str,
     proxy_url: &str,
-    target_files: &[&str],
+    target_files: &[String],
 ) -> Result<Command, String> {
     use std::os::unix::process::CommandExt;
     let mut command = build_base_command(target_dir, proxy_url, target_files);
