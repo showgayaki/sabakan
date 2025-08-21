@@ -11,11 +11,12 @@ interface ExtensionsProps {
 }
 
 const EXTENSION_GROUPS: string[][] = [
-    [".html", ".htm", ".css",],
+    [".html", ".htm", ".dwt", ".lbi",],
+    [".css", ".scss", ".sass", ".less", ".styl"],
     [".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs",],
     [".vue", ".astro", ".svelte",],
     [".php", ".py", ".rb", ".pl", ".cgi", ".jsp", ".asp", ".aspx",],
-    [".ejs", ".pug", ".jade", ".hbs", ".mustache", ".njk", ".twig", ".dwt", ".lbi",],
+    [".ejs", ".pug", ".jade", ".hbs", ".mustache", ".njk", ".twig"],
 ];
 
 export default function Extensions({ extensions }: ExtensionsProps) {
