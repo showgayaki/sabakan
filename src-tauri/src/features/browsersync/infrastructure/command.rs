@@ -15,10 +15,7 @@ pub fn browsersync_command(params: &BrowsersyncParams) -> Result<Command, String
         extensions,
     } = params;
 
-    let target_files: Vec<String> = extensions
-        .iter()
-        .map(|ext| format!("**/*{}", ext))
-        .collect();
+    let target_files: Vec<String> = extensions.iter().map(|ext| format!("**/*{ext}")).collect();
 
     info!("BrowsersyncParams: {params:?}");
     info!("target_files: {target_files:?}");
@@ -55,7 +52,7 @@ fn build_base_command(target_dir: &str, proxy_url: &str, target_files: &[String]
 fn windows_command(
     target_dir: &str,
     proxy_url: &str,
-    target_files: &[&str],
+    target_files: &[String],
 ) -> Result<Command, String> {
     use std::os::windows::process::CommandExt;
     use winapi::um::winbase::CREATE_NEW_PROCESS_GROUP;
