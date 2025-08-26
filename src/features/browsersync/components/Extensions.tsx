@@ -20,8 +20,7 @@ const EXTENSION_GROUPS: string[][] = [
 ];
 
 export default function Extensions({ extensions }: ExtensionsProps) {
-    const helpText = `監視対象にするファイル拡張子を選択してください。
-                      あまり多くしすぎると、リロードが重くなる可能性があります。`;
+    const helpText = `監視対象にするファイル拡張子を選択してください。`;
 
     const { items, setItems } = extensions;
 
@@ -36,7 +35,7 @@ export default function Extensions({ extensions }: ExtensionsProps) {
     return (
         <FormControl fullWidth>
             <CustomLabel
-                label="監視対象にするファイル拡張子"
+                label="監視対象にする拡張子"
                 htmlFor="extensions"
                 helpText={helpText}
             />

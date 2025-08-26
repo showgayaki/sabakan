@@ -15,7 +15,12 @@ pub fn browsersync_command(params: &BrowsersyncParams) -> Result<Command, String
         extensions,
     } = params;
 
-    let target_files: Vec<String> = extensions.iter().map(|ext| format!("**/*{ext}")).collect();
+    let target_files: Vec<String> = if extensions.is_empty() {
+        // 何も選択されていないときは、すべてのファイルが対象
+        vec!["**/*.*".to_string()]
+    } else {
+        extensions.iter().map(|ext| format!("**/*{ext}")).collect()
+    };
 
     info!("BrowsersyncParams: {params:?}");
     info!("target_files: {target_files:?}");
