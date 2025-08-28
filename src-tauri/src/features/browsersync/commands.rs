@@ -2,16 +2,16 @@ use log::debug;
 use tauri::{command, State, Window};
 
 use super::services::BrowsersyncState;
+use crate::types::browsersync::BrowsersyncParams;
 
 #[command]
 pub async fn start_browsersync(
     window: Window,
     state: State<'_, BrowsersyncState>,
-    target_dir: String,
-    proxy_url: String,
+    params: BrowsersyncParams,
 ) -> Result<String, String> {
     debug!("start_browsersync command called");
-    state.start(&window, &target_dir, &proxy_url).await
+    state.start(&window, &params).await
 }
 
 #[command]

@@ -1,9 +1,10 @@
 import { Stack } from "@mui/material";
 
 import useBrowsersyncForm from "../hooks/useBrowsersyncForm";
-import DirectoryInputSection from "./DirectoryInputSection";
-import ProxySection from "./ProxySection";
-import ButtonSection from "./ButtonSection";
+import Directory from "./Directory";
+import Proxy from "./Proxy";
+import Extensions from "./Extensions";
+import Submit from "./Submit";
 import LaunchingOverlay from "./LaunchingOverlay";
 
 export default function BrowsersyncForm() {
@@ -11,6 +12,7 @@ export default function BrowsersyncForm() {
         hostOs,
         directory,
         browsersync,
+        extensions,
         proxy,
         logStream,
         handleSubmit,
@@ -40,14 +42,15 @@ export default function BrowsersyncForm() {
                 sx={{flexGrow: 1}}
             >
                 <Stack spacing={2}>
-                    <DirectoryInputSection
+                    <Directory
                         hostOs={hostOs}
                         path={directory.path}
                         setPath={directory.setPath}
                         onClick={directory.selectDirectory}
                         error={directory.error}
                     />
-                    <ProxySection
+                    <Extensions extensions={extensions} />
+                    <Proxy
                         useProxy={proxy.useProxy}
                         setUseProxy={proxy.setUseProxy}
                         url={proxy.url}
@@ -56,7 +59,7 @@ export default function BrowsersyncForm() {
                     />
                 </Stack>
                 {browsersync.status === "idle" &&
-                    <ButtonSection />
+                    <Submit />
                 }
             </Stack>
         </>

@@ -1,7 +1,9 @@
 import { invoke } from "@tauri-apps/api/core";
 
-export const startBrowsersync = (targetDir: String, proxyUrl: String): Promise<string> =>
-    invoke("start_browsersync", { targetDir, proxyUrl });
+import type { BrowsersyncParams } from "@/types/browsersyncParams";
+
+export const startBrowsersync = (params: BrowsersyncParams): Promise<string> =>
+    invoke("start_browsersync", { params });
 
 export const stopBrowsersync = (): Promise<{ success: boolean }> =>
     invoke("stop_browsersync");

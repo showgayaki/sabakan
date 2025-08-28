@@ -10,9 +10,16 @@ interface CustomLabelProps {
     htmlFor: string;
     helpText?: string;
     isFormLabel?: boolean;
+    cursor?: string;
 }
 
-export default function CustomLabel({ label, htmlFor, helpText, isFormLabel = false }: CustomLabelProps) {
+export default function CustomLabel({
+    label,
+    htmlFor,
+    helpText,
+    isFormLabel = false,
+    cursor = "auto",
+}: CustomLabelProps) {
     return (
         <Stack
             direction="row"
@@ -28,6 +35,7 @@ export default function CustomLabel({ label, htmlFor, helpText, isFormLabel = fa
                 sx={{
                     fontSize: isFormLabel ? 14 : 12,
                     color: isFormLabel ? "inherit" : "rgb(170, 170, 170)",
+                    cursor: cursor,
                 }}
             >
                 {label}
