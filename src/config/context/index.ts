@@ -6,7 +6,7 @@ export interface AppContextValue {
 
 export const AppContext = createContext<AppContextValue | undefined>(undefined);
 
-export const useHostOs = () => {
+export function useHostOs() {
     const context = useContext(AppContext);
     if (!context) {
         throw new Error("useHostOs must be used within an AppProvider");

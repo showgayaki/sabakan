@@ -1,7 +1,7 @@
 import { Global, css } from "@emotion/react";
 
-export const GlobalStyles = () => (
-    <Global
+export default function GlobalStyles() {
+    return <Global
         styles={css`
             #root {
                 min-height: 100vh;
@@ -10,4 +10,4 @@ export const GlobalStyles = () => (
             }`
         }
     />
-);
+}

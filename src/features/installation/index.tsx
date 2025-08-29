@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import InstallationProgress from "@/features/installation/components/InstallationProgress";
+import InstallationProgress from "./components/InstallationProgress";
 
-export const AppInitializer = () => {
+export default function WindowsSetup() {
     const [installComplete, setInstallComplete] = useState(false);
 
     return (
