@@ -1,18 +1,20 @@
 import { useState } from "react";
 
+import type { TranslationKeys } from "@/types/i18next";
 import type { BrowsersyncParams } from "@/types/browsersyncParams";
 import type { ProgressStatus } from "@/types/progress";
+import { delayMs } from "@/utils/delay";
+
 import {
     startBrowsersync,
     stopBrowsersync,
 } from "../api";
-import { delayMs } from "@/utils/delay";
 
 export default function useBrowsersync() {
     const MESSAGE_DISPLAY_DURATION_MS = 1000;  // メッセージ表示時間（ミリ秒）
 
     const [status, setStatus] = useState<ProgressStatus>("idle");
-    const [statusMessage, setStatusMessage] = useState<string | undefined>("Browsersyncを起動しています..");
+    const [statusMessage, setStatusMessage] = useState<TranslationKeys | undefined>(undefined);
     const [isRunning, setIsRunning] = useState<boolean>(false);
     const [url, setUrl] = useState<string>("");
 
@@ -20,7 +22,7 @@ export default function useBrowsersync() {
         let startedSuccessfully = false;
 
         setStatus("pending");
-        setStatusMessage("Browsersyncを起動しています...");
+        setStatusMessage("overlay.starting");
         console.log("BrowsersyncParams:", params);
 
         try {
@@ -29,13 +31,13 @@ export default function useBrowsersync() {
 
             setUrl(externalUrl);
             setStatus("success");
-            setStatusMessage("Browsersyncを起動しました");
+            setStatusMessage("overlay.started");
 
             startedSuccessfully = true;
         } catch (error) {
             console.error("Failed to start Browsersync:", error);
             setStatus("error");
-            setStatusMessage("Browsersyncの起動に失敗しました😭");
+            setStatusMessage("overlay.startError");
             return;
         }
 
@@ -53,19 +55,19 @@ export default function useBrowsersync() {
 
         setStatus("pending");
         setIsRunning(false);
-        setStatusMessage("Browsersyncを停止しています...");
+        setStatusMessage("overlay.stopping");
 
         await delayMs(1000);
         const result = await stopBrowsersync();
 
         if (result) {
             setStatus("success");
-            setStatusMessage("Browsersyncを停止しました");
+            setStatusMessage("overlay.stopped");
             console.log("Browsersync stopped successfully.");
             stoppedSuccessfully = true;
         } else {
             setStatus("error");
-            setStatusMessage("Browsersyncの停止に失敗しました😭");
+            setStatusMessage("overlay.stopError");
             console.error("Failed to stop Browsersync.");
             setIsRunning(true);
         }

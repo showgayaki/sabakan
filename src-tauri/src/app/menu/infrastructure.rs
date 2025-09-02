@@ -1,3 +1,4 @@
+use log::info;
 use tauri::{
     menu::{
         AboutMetadata, Menu, MenuBuilder, MenuItem, PredefinedMenuItem, Submenu, SubmenuBuilder,
@@ -6,6 +7,7 @@ use tauri::{
 };
 
 pub fn build_menu<R: Runtime>(app: &AppHandle<R>) -> Menu<R> {
+    info!("Building application menu");
     let app_menu = app_submenu(app);
     let edit_menu = edit_submenu(app);
     let help_menu = help_submenu(app);

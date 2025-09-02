@@ -1,0 +1,31 @@
+{
+    "hamburger": {
+        "license": "ライセンス",
+        "help": "ヘルプ"
+    },
+    "home": {
+        "directory": {
+            "label": "ルートディレクトリ選択",
+            "help_text": "監視対象にするディレクトリを選択してください。\nこのディレクトリをルートディレクトリとしてBrowsersyncサーバーが起動します。\n選択されたディレクトリ内のファイルが更新されると、ブラウザがリロードされます。"
+        },
+        "extensions": {
+            "label": "監視対象にする拡張子",
+            "help_text": "監視対象にするファイルの拡張子を選択してください。\n選択した拡張子のファイルが更新されるとブラウザがリロードされます"
+        },
+        "proxy": {
+            "label": "Proxyを使用する",
+            "help_text": "ローカル環境のWordPressサイトなどと連携したい場合は、そのURLを入力してください"
+        }
+    },
+    "license": {
+        "title": "ライセンス"
+    },
+    "overlay": {
+        "starting": "Browsersyncを起動しています...",
+        "started": "Browsersyncを起動しました",
+        "startError": "Browsersyncの起動に失敗しました😭",
+        "stopping": "Browsersyncを停止しています...",
+        "stopped": "Browsersyncを停止しました",
+        "stopError": "Browsersyncの停止に失敗しました😭"
+    }
+}

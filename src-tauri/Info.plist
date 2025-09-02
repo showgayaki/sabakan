@@ -12,9 +12,10 @@
     <string>Allow Sabakan to serve content to devices on your local network.</string>
     <key>CFBundleLocalizations</key>
     <array>
+    <string>en</string>
     <string>ja</string>
     </array>
     <key>CFBundleDevelopmentRegion</key>
-    <string>ja_JP</string>
+    <string>ja</string>
 </dict>
 </plist>

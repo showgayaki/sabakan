@@ -2,8 +2,9 @@ use log::info;
 use std::env;
 use std::path::PathBuf;
 use std::sync::LazyLock;
+use sys_locale::get_locale;
 use tauri::path::PathResolver;
-use tauri::{App, Manager, Runtime};
+use tauri::{App, Emitter, Manager, Runtime};
 
 use log4rs::{
     append::rolling_file::{
@@ -41,23 +42,6 @@ pub fn setup(app: &App) {
 
     #[cfg(windows)]
     copy_browser_sync_cmd(resolver);
-}
-
-#[cfg(windows)]
-pub fn copy_browser_sync_cmd<R: Runtime>(resolver: &PathResolver<R>) {
-    if !BROWSERSYNC_PATH.exists() {
-        let resource_dir = resolver.resource_dir().expect("Missing resource_dir");
-        info!("resource_dir: {resource_dir:?}");
-        if let Err(e) = copy_file_to_dir(
-            &resource_dir.join("bin").join("browser-sync.cmd"),
-            &BINARY_DIR,
-        ) {
-            panic!("Failed to copy browser-sync.cmd: {e}");
-        }
-        info!("Copied browser-sync.cmd to {BROWSERSYNC_PATH:?}");
-    } else {
-        info!("browser-sync.cmd already exists at {BROWSERSYNC_PATH:?}");
-    }
 }
 
 fn init_app_dir<R: Runtime>(resolver: &PathResolver<R>) {
@@ -157,4 +141,21 @@ fn init_logger() {
         "Logger initialized. Log file: {}",
         LOG_DIR.join(LOG_FILE_NAME).display()
     );
+}
+
+#[cfg(windows)]
+fn copy_browser_sync_cmd<R: Runtime>(resolver: &PathResolver<R>) {
+    if !BROWSERSYNC_PATH.exists() {
+        let resource_dir = resolver.resource_dir().expect("Missing resource_dir");
+        info!("resource_dir: {resource_dir:?}");
+        if let Err(e) = copy_file_to_dir(
+            &resource_dir.join("bin").join("browser-sync.cmd"),
+            &BINARY_DIR,
+        ) {
+            panic!("Failed to copy browser-sync.cmd: {e}");
+        }
+        info!("Copied browser-sync.cmd to {BROWSERSYNC_PATH:?}");
+    } else {
+        info!("browser-sync.cmd already exists at {BROWSERSYNC_PATH:?}");
+    }
 }

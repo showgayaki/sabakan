@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import ValidationErrorTooltip from "@/components/CustomTooltips";
 import CheckboxWithLabel from "@/components/CheckboxWithLabel";
@@ -20,12 +21,12 @@ export default function ProxySection({
     error,
 }: ProxyProps) {
     const id = "useProxy";
-    const helpText = `ローカル環境のWordPressサイトなどと連携したい場合は、そのURLを入力してください`;
+    const { t } = useTranslation();
 
     return (
         <Box>
             <CheckboxWithLabel
-                htmlFor={id}
+                htmlFor="useProxy"
                 checked={useProxy}
                 onChange={(checked) => {
                     setUseProxy(checked);
@@ -33,8 +34,8 @@ export default function ProxySection({
                         setUrl("");
                     }
                 }}
-                label="Proxyを使用する"
-                helpText={helpText}
+                label={t("home.proxy.label")}
+                helpText={t("home.proxy.help_text")}
                 isFormLabel={true}
             />
             <ValidationErrorTooltip title={error || ""}>

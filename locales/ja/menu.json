@@ -1,0 +1,27 @@
+{
+    "app": {
+        "title": "サバカン！",
+        "submenu": {
+            "about": "サバカン！について",
+            "quit": "サバカン！を終了"
+        }
+    },
+    "edit": {
+        "title": "編集",
+        "submenu": {
+            "undo": "取り消す",
+            "redo": "やり直す",
+            "cut": "カット",
+            "copy": "コピー",
+            "paste": "ペースト",
+            "select_all": "すべてを選択"
+        }
+    },
+    "help": {
+        "title": "ヘルプ",
+        "submenu": {
+            "license": "ライセンス",
+            "help": "ヘルプ"
+        }
+    }
+}

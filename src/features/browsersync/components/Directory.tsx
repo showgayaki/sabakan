@@ -1,5 +1,6 @@
 import { IconButton } from "@mui/material";
 import { Folder } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 import CustomTextField from "@/components/CustomTextField";
 import ValidationErrorTooltip from "@/components/CustomTooltips";
@@ -20,18 +21,17 @@ export default function Directory({
     error,
 }: DirectoryProps) {
     console.log("Directory rendered with hostOs:", hostOs);
+    const { t } = useTranslation();
+
     const placeholder = hostOs === "windows"
         ? "C:\\path\\to\\directory"
         : "/path/to/directory";
-    const helpText = `監視対象にするディレクトリを選択してください。
-        このディレクトリをルートディレクトリとしてBrowsersyncサーバーが起動します。
-        選択されたディレクトリ内のファイルが更新されると、ブラウザがリロードされます。`;
 
     return (
         <ValidationErrorTooltip title={error || ""}>
             <CustomTextField
                 id="directoryInput"
-                label="ルートディレクトリ選択"
+                label={t("home.directory.label")}
                 type="text"
                 value={path}
                 onChange={setPath}
@@ -45,7 +45,7 @@ export default function Directory({
                         <Folder />
                     </IconButton>
                 }
-                helpText={helpText}
+                helpText={t("home.directory.help_text")}
                 textFieldProps={{
                     error: Boolean(error),
                 }}

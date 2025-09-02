@@ -1,0 +1,31 @@
+{
+    "hamburger": {
+        "license": "License",
+        "help": "Help"
+    },
+    "home": {
+        "directory": {
+            "label": "Select root directory",
+            "help_text": "Select the directory to be watched.\nBrowsersync server will start with this directory as the root.\nWhen files inside the selected directory are updated, the browser will reload."
+        },
+        "extensions": {
+            "label": "File extensions to watch",
+            "help_text": "Select the file extensions to be watched.\nWhen files with these extensions are updated, the browser will reload."
+        },
+        "proxy": {
+            "label": "Use Proxy",
+            "help_text": "If you want to integrate with a local WordPress site or similar, enter its URL here."
+        }
+    },
+    "license": {
+        "title": "License"
+    },
+    "overlay": {
+        "starting": "Starting Browsersync...",
+        "started": "Browsersync started",
+        "startError": "Failed to start Browsersync 😭",
+        "stopping": "Stopping Browsersync...",
+        "stopped": "Browsersync stopped",
+        "stopError": "Failed to stop Browsersync 😭"
+    }
+}

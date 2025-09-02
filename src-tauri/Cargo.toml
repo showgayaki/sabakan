@@ -38,3 +38,4 @@ windows-sys = { version = "0.52.0", features = ["Win32_System_Threading"] }
 winapi = "0.3.9"
 tauri-plugin-os = "2"
 ts-rs = "11.0.1"
+sys-locale = "0.3.2"
