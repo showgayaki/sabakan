@@ -1,9 +1,17 @@
 use std::env;
 use std::path::PathBuf;
 use std::sync::{LazyLock, OnceLock};
+use sys_locale::get_locale;
 
 pub(crate) const HOST_OS: &str = env::consts::OS;
 pub(crate) const HOST_ARCH: &str = env::consts::ARCH;
+pub(crate) static OS_LANGUAGE: LazyLock<String> = LazyLock::new(|| {
+    let locale = get_locale().unwrap_or_else(|| "en-US".to_string());
+    // let locale = "en-US".to_string();
+    // 先頭2文字だけ取り出す（例: "ja-JP" → "ja"）
+    let lang = locale.split('-').next().unwrap_or("en").to_string();
+    lang
+});
 
 pub(crate) static HOME_DIR: OnceLock<PathBuf> = OnceLock::new();
 

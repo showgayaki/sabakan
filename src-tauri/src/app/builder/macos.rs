@@ -11,7 +11,7 @@ pub fn builder() -> tauri::Builder<Wry> {
         })
         .invoke_handler(tauri::generate_handler![
             crate::commands::fs::directory_exists,
-            crate::commands::locale::get_os_locale,
+            crate::commands::language::get_os_language,
             crate::features::browsersync::commands::start_browsersync,
             crate::features::browsersync::commands::stop_browsersync,
         ])

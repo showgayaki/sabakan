@@ -1,14 +1,14 @@
 {
     "app": {
         "title": "サバカン！",
-        "submenu": {
+        "app_submenu": {
             "about": "About サバカン！",
             "quit": "Quit サバカン！"
         }
     },
     "edit": {
         "title": "Edit",
-        "submenu": {
+        "edit_submenu": {
             "undo": "Undo",
             "redo": "Redo",
             "cut": "Cut",
@@ -19,9 +19,9 @@
     },
     "help": {
         "title": "Help",
-        "submenu": {
+        "help_submenu": {
             "license": "License",
-            "help": "help"
+            "help": "Help"
         }
     }
 }

@@ -2,9 +2,8 @@ use log::info;
 use std::env;
 use std::path::PathBuf;
 use std::sync::LazyLock;
-use sys_locale::get_locale;
 use tauri::path::PathResolver;
-use tauri::{App, Emitter, Manager, Runtime};
+use tauri::{App, Manager, Runtime};
 
 use log4rs::{
     append::rolling_file::{

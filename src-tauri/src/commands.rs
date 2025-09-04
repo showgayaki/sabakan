@@ -1,2 +1,2 @@
 pub(crate) mod fs;
-pub(crate) mod locale;
+pub(crate) mod language;
