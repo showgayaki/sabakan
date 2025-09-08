@@ -1,6 +1,4 @@
 use dotenvy::dotenv;
-use json_typegen_shared::{codegen, Options, OutputMode};
-use std::fs;
 
 fn main() {
     // .env を読み込み
@@ -20,6 +18,8 @@ fn main() {
 
 #[cfg(target_os = "macos")]
 fn generate_menu_type() {
+    use json_typegen_shared::{codegen, Options, OutputMode};
+
     // Cargo.tomlからの相対パス
     let input_path = "../locales/ja/menu.json";
     let dest_path = "../src-tauri/src/types/menu.rs";

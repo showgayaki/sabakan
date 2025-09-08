@@ -21,11 +21,19 @@
         "title": "ライセンス"
     },
     "overlay": {
-        "starting": "Browsersyncを起動しています...",
-        "started": "Browsersyncを起動しました",
-        "startError": "Browsersyncの起動に失敗しました😭",
-        "stopping": "Browsersyncを停止しています...",
-        "stopped": "Browsersyncを停止しました",
-        "stopError": "Browsersyncの停止に失敗しました😭"
+        "browsersync": {
+            "starting": "Browsersyncを起動しています...",
+            "started": "Browsersyncを起動しました",
+            "startError": "Browsersyncの起動に失敗しました😭",
+            "stopping": "Browsersyncを停止しています...",
+            "stopped": "Browsersyncを停止しました",
+            "stopError": "Browsersyncの停止に失敗しました😭"
+        },
+        "installation": {
+            "title": "初回セットアップを行っています",
+            "installing": "{{task}}をインストールしています...",
+            "installError": "{{task}}のインストールに失敗しました😰\nアプリを再起動してみてください",
+            "installed": "インストールが完了しました！🎉"
+        }
     }
 }

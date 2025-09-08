@@ -22,7 +22,7 @@ export default function useBrowsersync() {
         let startedSuccessfully = false;
 
         setStatus("pending");
-        setStatusMessage("overlay.starting");
+        setStatusMessage("overlay.browsersync.starting");
         console.log("BrowsersyncParams:", params);
 
         try {
@@ -31,13 +31,13 @@ export default function useBrowsersync() {
 
             setUrl(externalUrl);
             setStatus("success");
-            setStatusMessage("overlay.started");
+            setStatusMessage("overlay.browsersync.started");
 
             startedSuccessfully = true;
         } catch (error) {
             console.error("Failed to start Browsersync:", error);
             setStatus("error");
-            setStatusMessage("overlay.startError");
+            setStatusMessage("overlay.browsersync.startError");
             return;
         }
 
@@ -55,19 +55,19 @@ export default function useBrowsersync() {
 
         setStatus("pending");
         setIsRunning(false);
-        setStatusMessage("overlay.stopping");
+        setStatusMessage("overlay.browsersync.stopping");
 
         await delayMs(1000);
         const result = await stopBrowsersync();
 
         if (result) {
             setStatus("success");
-            setStatusMessage("overlay.stopped");
+            setStatusMessage("overlay.browsersync.stopped");
             console.log("Browsersync stopped successfully.");
             stoppedSuccessfully = true;
         } else {
             setStatus("error");
-            setStatusMessage("overlay.stopError");
+            setStatusMessage("overlay.browsersync.stopError");
             console.error("Failed to stop Browsersync.");
             setIsRunning(true);
         }

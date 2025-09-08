@@ -30,12 +30,11 @@ export default function InstallationProgress({ onComplete }: { onComplete: () =>
             {isInstalling && (
                 <FullscreenOverlay>
                     <Typography variant="h6" sx={{ mb: 2 }}>
-                        初回セットアップを行っています
-                        {/* {t("ui.settingUp")} */}
+                        {t("overlay.installation.title")}
                     </Typography>
                     <ProgressIcon size={80} status={status} />
                     <Typography variant="body1" sx={{ height: "3em", mb: 1, whiteSpace: "pre-line" }}>
-                        {statusMessage}
+                        {statusMessage && t(statusMessage.key, statusMessage.params)}
                     </Typography>
                     <TaskList groupedTaskStatuses={groupedTaskStatuses} />
                 </FullscreenOverlay>

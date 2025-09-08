@@ -1,6 +1,6 @@
 import "i18next";
 
-import ja from "@/config/i18n/locales/ja/ui.json";
+import ja from "../../locales/ja/ui.json";
 
 declare module "i18next" {
     interface CustomTypeOptions {

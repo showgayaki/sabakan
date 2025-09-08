@@ -21,11 +21,19 @@
         "title": "License"
     },
     "overlay": {
-        "starting": "Starting Browsersync...",
-        "started": "Browsersync started",
-        "startError": "Failed to start Browsersync 😭",
-        "stopping": "Stopping Browsersync...",
-        "stopped": "Browsersync stopped",
-        "stopError": "Failed to stop Browsersync 😭"
+        "browsersync": {
+            "starting": "Starting Browsersync...",
+            "started": "Browsersync started",
+            "startError": "Failed to start Browsersync 😭",
+            "stopping": "Stopping Browsersync...",
+            "stopped": "Browsersync stopped",
+            "stopError": "Failed to stop Browsersync 😭"
+        },
+        "installation": {
+            "title": "Running initial setup",
+            "installing": "Installing {{task}}...",
+            "installError": "Failed to install {{task}} 😰\nPlease try restarting the app.",
+            "installed": "Installation completed successfully! 🎉"
+        }
     }
 }
