@@ -38,6 +38,6 @@ fn generate_menu_type() {
 
     if needs_update {
         // Rust ファイルに書き出す
-        fs::write(dest_path, generate_from_json).expect("Failed to write menu.rs");
+        std::fs::write(dest_path, generate_from_json).expect("Failed to write menu.rs");
     }
 }

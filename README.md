@@ -1,4 +1,5 @@
 # 🐟 サバカン！
+[English version](./README.en.md)
 
 <a href="https://apps.microsoft.com/detail/9mzwkjrsh6dr" target="_blank">
     <img src="docs/images/badge_microsoft-store.svg" alt="Microsoft Store">
