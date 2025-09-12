@@ -19,6 +19,10 @@ i18n
 
 export default i18n;
 
-const lang: string = await invoke("get_os_language");
-i18n.changeLanguage(lang);
-console.log("Language set to:", lang);
+async function setLanguage() {
+    const lang: string = await invoke("get_os_language");
+    await i18n.changeLanguage(lang);
+    console.log("Language set to:", lang);
+}
+
+setLanguage();
