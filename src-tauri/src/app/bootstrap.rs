@@ -17,7 +17,7 @@ use log4rs::{
 };
 
 use crate::constants::{
-    APP_DATA_DIR, BROWSERSYNC_PATH, HOME_DIR, HOST_ARCH, HOST_OS, RESOURCE_DIR,
+    APP_DATA_DIR, BROWSERSYNC_PATH, HOME_DIR, HOST_ARCH, HOST_OS, OS_LANGUAGE, RESOURCE_DIR,
 };
 
 #[cfg(target_os = "macos")]
@@ -35,29 +35,13 @@ pub fn setup(app: &App) {
     init_logger(); // ロガー初期化
 
     info!("Application started on {HOST_OS}({HOST_ARCH})");
+    info!("Current locale: {}", OS_LANGUAGE.clone());
 
     #[cfg(target_os = "macos")]
     init_menu(app.app_handle());
 
     #[cfg(windows)]
     copy_browser_sync_cmd(resolver);
-}
-
-#[cfg(windows)]
-pub fn copy_browser_sync_cmd<R: Runtime>(resolver: &PathResolver<R>) {
-    if !BROWSERSYNC_PATH.exists() {
-        let resource_dir = resolver.resource_dir().expect("Missing resource_dir");
-        info!("resource_dir: {resource_dir:?}");
-        if let Err(e) = copy_file_to_dir(
-            &resource_dir.join("bin").join("browser-sync.cmd"),
-            &BINARY_DIR,
-        ) {
-            panic!("Failed to copy browser-sync.cmd: {e}");
-        }
-        info!("Copied browser-sync.cmd to {BROWSERSYNC_PATH:?}");
-    } else {
-        info!("browser-sync.cmd already exists at {BROWSERSYNC_PATH:?}");
-    }
 }
 
 fn init_app_dir<R: Runtime>(resolver: &PathResolver<R>) {
@@ -157,4 +141,21 @@ fn init_logger() {
         "Logger initialized. Log file: {}",
         LOG_DIR.join(LOG_FILE_NAME).display()
     );
+}
+
+#[cfg(windows)]
+fn copy_browser_sync_cmd<R: Runtime>(resolver: &PathResolver<R>) {
+    if !BROWSERSYNC_PATH.exists() {
+        let resource_dir = resolver.resource_dir().expect("Missing resource_dir");
+        info!("resource_dir: {resource_dir:?}");
+        if let Err(e) = copy_file_to_dir(
+            &resource_dir.join("bin").join("browser-sync.cmd"),
+            &BINARY_DIR,
+        ) {
+            panic!("Failed to copy browser-sync.cmd: {e}");
+        }
+        info!("Copied browser-sync.cmd to {BROWSERSYNC_PATH:?}");
+    } else {
+        info!("browser-sync.cmd already exists at {BROWSERSYNC_PATH:?}");
+    }
 }

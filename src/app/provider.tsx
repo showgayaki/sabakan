@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { type } from "@tauri-apps/plugin-os";
 
-import { AppContext } from "./context";
+import { AppContext } from "../config/context";
 
 export default function AppProvider({ children }: { children: React.ReactNode }) {
     const [hostOs, setHostOs] = useState("");

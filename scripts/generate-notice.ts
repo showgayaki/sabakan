@@ -162,29 +162,15 @@ for (const [name, info] of Object.entries(sortedNodeLicenses)) {
     output += `### ${name}\n`;
     output += `License: ${info.licenses}\n`;
     output += `Repository: ${info.repository ?? "N/A"}\n\n`;
-
-    const licenseTextPath = path.join(nodeLicenseTextDir, `${name.replace(/\//g, "__slash__")}.txt`);
-    const licenseText = fs.readFileSync(licenseTextPath, "utf-8");
-
-    output += "```\n";
-    output += licenseText.trim();
-    output += "\n```\n\n";
 }
 
-output += `## Rust Crates\n\n`;
+output += `\n## Rust Crates\n\n`;
 const sortedRustLicenses: Record<string, { licenses: string; repository?: string }> = JSON.parse(fs.readFileSync(rustJsonPath, "utf-8"));
 const rustLicenseTextDir = path.resolve(currentDir, "public", "licenses", "license-texts", "rust");
 for (const [name, info] of Object.entries(sortedRustLicenses)) {
     output += `### ${name}\n`;
     output += `License: ${info.licenses}\n`;
     output += `Repository: ${info.repository ?? "N/A"}\n\n`;
-
-    const licenseTextPath = path.join(rustLicenseTextDir, `${name.replace(/\//g, "__slash__")}.txt`);
-    const licenseText = fs.readFileSync(licenseTextPath, "utf-8");
-
-    output += "```\n";
-    output += licenseText.trim();
-    output += "\n```\n\n";
 }
 
 // --- Write to NOTICE ---

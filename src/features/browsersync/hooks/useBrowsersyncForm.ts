@@ -1,4 +1,4 @@
-import { useHostOs } from "@/app/context";
+import { useHostOs } from "@/config/context";
 
 import type { BrowsersyncParams } from "@/types/browsersyncParams";
 import useDirectory from "./useDirectory";

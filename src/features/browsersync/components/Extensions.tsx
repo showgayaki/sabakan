@@ -1,4 +1,5 @@
 import { Paper, Stack, FormControl, Divider } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import CheckboxWithLabel from "@/components/CheckboxWithLabel";
 import CustomLabel from "@/components/CustomLabel";
@@ -20,8 +21,7 @@ const EXTENSION_GROUPS: string[][] = [
 ];
 
 export default function Extensions({ extensions }: ExtensionsProps) {
-    const helpText = `監視対象にするファイル拡張子を選択してください。`;
-
+    const { t } = useTranslation();
     const { items, setItems } = extensions;
 
     const handleToggle = (ext: string) => {
@@ -35,9 +35,9 @@ export default function Extensions({ extensions }: ExtensionsProps) {
     return (
         <FormControl fullWidth>
             <CustomLabel
-                label="監視対象にする拡張子"
+                label={t("home.extensions.label")}
                 htmlFor="extensions"
-                helpText={helpText}
+                helpText={t("home.extensions.help_text")}
             />
             <Paper sx={{ p: 1 }}>
                 <Stack gap={1.5}>

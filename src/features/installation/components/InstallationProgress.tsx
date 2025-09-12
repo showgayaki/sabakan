@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import FullscreenOverlay from "@/components/FullscreenOverlay";
 import ProgressIcon from "@/components/ProgressIcon";
@@ -16,6 +17,8 @@ export default function InstallationProgress({ onComplete }: { onComplete: () =>
         statusMessage,
     } = useInstallationProgress(INSTALL_TASKS);
 
+    const { t } = useTranslation();
+
     useEffect(() => {
         if (status == "success" && !isInstalling) {
             onComplete();
@@ -27,11 +30,11 @@ export default function InstallationProgress({ onComplete }: { onComplete: () =>
             {isInstalling && (
                 <FullscreenOverlay>
                     <Typography variant="h6" sx={{ mb: 2 }}>
-                        初回セットアップを行っています
+                        {t("overlay.installation.title")}
                     </Typography>
                     <ProgressIcon size={80} status={status} />
                     <Typography variant="body1" sx={{ height: "3em", mb: 1, whiteSpace: "pre-line" }}>
-                        {statusMessage}
+                        {statusMessage && t(statusMessage.key, statusMessage.params)}
                     </Typography>
                     <TaskList groupedTaskStatuses={groupedTaskStatuses} />
                 </FullscreenOverlay>

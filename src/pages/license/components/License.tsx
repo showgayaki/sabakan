@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, Stack } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import FullscreenOverlay from "@/components/FullscreenOverlay";
 import ProgressIcon from "@/components/ProgressIcon";
@@ -8,6 +9,8 @@ import { H2, H3, Ul, Li } from "./Element";
 import { LicenseAccordion } from "./LicenseAccordion";
 
 export default function Licenses() {
+    const { t } = useTranslation();
+
     const [nodeLicenses, setNodeLicenses] = useState<Record<string, any>>({});
     const [rustLicenses, setRustLicenses] = useState<Record<string, any>>({});
 
@@ -36,7 +39,7 @@ export default function Licenses() {
                 </FullscreenOverlay>
             )}
             <Box sx={{ width: "100%" }}>
-                <H2 text="Licenses" />
+                <H2 text={t("license.title")} />
 
                 <Stack spacing={5}>
                     <Box component="section">

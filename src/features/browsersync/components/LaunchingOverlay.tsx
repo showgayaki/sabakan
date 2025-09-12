@@ -1,18 +1,20 @@
 import { Stack, Typography } from "@mui/material";
 import { StopCircle } from "@mui/icons-material";
 import { QRCodeCanvas } from "qrcode.react";
+import { useTranslation } from "react-i18next";
 
-import type { ProgressStatus } from "@/types/progress";
 import { BUTTON_FONT_SIZE } from "@/constants/ui";
 import CustomIconButton from "@/components/CustomIconButton";
 import FullscreenOverlay from "@/components/FullscreenOverlay";
 import ProgressIcon from "@/components/ProgressIcon";
+import type { TranslationKeys } from "@/types/i18next";
+import type { ProgressStatus } from "@/types/progress";
 
 import LogStream from "./LogStream";
 
 interface LaunchingOverlayProps {
     status: ProgressStatus;
-    statusMessage?: string;
+    statusMessage?: TranslationKeys;
     isRunning: boolean;
     url: string;
     logs: string[];
@@ -33,6 +35,8 @@ export default function LaunchingOverlay({
     const SPACING_1_HEIGHT = 8;
     const STATUS_MESSAGE_HEIGHT = 32 + SPACING_1_HEIGHT;  // 32px: 文字の高さ, 8px: spacing={1}の高さ
     const PROGRESS_ICON_SIZE = QR_CODE_SIZE - STATUS_MESSAGE_HEIGHT;
+
+    const { t } = useTranslation();
 
     return (
         <FullscreenOverlay>
@@ -65,7 +69,7 @@ export default function LaunchingOverlay({
                             <Progress
                                 status={status}
                                 iconSize={PROGRESS_ICON_SIZE}
-                                statusMessage={statusMessage}
+                                statusMessage={statusMessage && t(statusMessage)}
                             />
                     }
                     <LogStream

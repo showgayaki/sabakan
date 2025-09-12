@@ -17,6 +17,10 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 dotenvy = "0.15.7"
 
+[target.'cfg(target_os = "macos")'.build-dependencies]
+json_typegen_shared = "0.7.0"
+serde_derive = "1.0.219"
+
 [dependencies]
 tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"
@@ -38,3 +42,6 @@ windows-sys = { version = "0.52.0", features = ["Win32_System_Threading"] }
 winapi = "0.3.9"
 tauri-plugin-os = "2"
 ts-rs = "11.0.1"
+sys-locale = "0.3.2"
+serde_derive = "1.0.219"
+chrono = "0.4.41"
