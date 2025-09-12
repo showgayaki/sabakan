@@ -17,7 +17,7 @@ use log4rs::{
 };
 
 use crate::constants::{
-    APP_DATA_DIR, BROWSERSYNC_PATH, HOME_DIR, HOST_ARCH, HOST_OS, RESOURCE_DIR,
+    APP_DATA_DIR, BROWSERSYNC_PATH, HOME_DIR, HOST_ARCH, HOST_OS, OS_LANGUAGE, RESOURCE_DIR,
 };
 
 #[cfg(target_os = "macos")]
@@ -35,6 +35,7 @@ pub fn setup(app: &App) {
     init_logger(); // ロガー初期化
 
     info!("Application started on {HOST_OS}({HOST_ARCH})");
+    info!("Current locale: {}", OS_LANGUAGE.clone());
 
     #[cfg(target_os = "macos")]
     init_menu(app.app_handle());

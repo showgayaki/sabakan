@@ -23,7 +23,7 @@ Under the hood, it uses **[Browsersync](https://browsersync.io/)**.
 ## 🐟 How to Use
 1. Select the root directory  
 2. Choose the file extensions you want to watch
-3. If you want to live reload a site built with WordPress, Docker, etc., check "Use Proxy" and enter the local site's URL
+3. If you want to live reload a local site built with WordPress, Docker, etc., check "Use Proxy" and enter the local site's URL
 4. Press the ▶️ button
 
 <table>
@@ -50,7 +50,7 @@ This will be installed globally.
 
    2. Extract and rename the folder to `node`, then place it in `src-tauri/bin` so that the directory structure looks like this:
       ```
-      src-tauri/binaries
+      src-tauri/bin
       ├── browser-sync
       ├── browser-sync.cmd
       └── node

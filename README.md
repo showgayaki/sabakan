@@ -24,7 +24,7 @@
 ## 🐟 操作方法
 1. ルートディレクトリを選択します  
 2. 監視対象にしたいファイルの拡張子を選択します
-3. WordPressやDockerなどで構築したサイトをライブリロードしたい場合は、「Proxyを使用する」にチェックを入れてローカルサイトのURLを入力します
+3. WordPressやDockerなどで構築したローカルサイトをライブリロードしたい場合は、「Proxyを使用する」にチェックを入れてローカルサイトのURLを入力します
 4. ▶️ ボタンを押します
 
 <table>
@@ -52,7 +52,7 @@ cargo install --locked cargo-about
 
    2. 解凍して`node`にリネームし、以下のようなディレクトリ構成になるように`src-tauri/bin`に置きます
       ```
-      src-tauri/binaries
+      src-tauri/bin
       ├── browser-sync
       ├── browser-sync.cmd
       └── node

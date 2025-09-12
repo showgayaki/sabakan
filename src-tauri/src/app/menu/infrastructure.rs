@@ -12,7 +12,6 @@ use crate::types::menu::{App, Edit, Help, MenuTranslations};
 
 pub fn build_menu<R: Runtime>(app: &AppHandle<R>) -> Menu<R> {
     info!("Building application menu");
-    info!("Current locale: {}", OS_LANGUAGE.clone());
 
     let menu = load_translation(&OS_LANGUAGE).unwrap_or_default();
     info!("Loaded menu translations: {menu:?}");

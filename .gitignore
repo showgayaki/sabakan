@@ -9,9 +9,6 @@ public/licenses/*
 Entitlements.plist
 *.provisionprofile
 
-# build scripts
-/build*.sh
-
 # bin
 /src-tauri/bin/node/*
 !/src-tauri/bin/node/package.json
@@ -21,6 +18,7 @@ Entitlements.plist
 
 # Microsoft Store
 /scripts/cert.ps1
+
 
 # Logs
 logs
