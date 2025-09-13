@@ -1,15 +1,13 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { StopCircle } from "@mui/icons-material";
-import { QRCodeCanvas } from "qrcode.react";
-import { useTranslation } from "react-i18next";
 
 import { BUTTON_FONT_SIZE } from "@/constants/ui";
 import CustomIconButton from "@/components/CustomIconButton";
 import FullscreenOverlay from "@/components/FullscreenOverlay";
-import ProgressIcon from "@/components/ProgressIcon";
 import type { TranslationKeys } from "@/types/i18next";
 import type { ProgressStatus } from "@/types/progress";
 
+import LaunchingStatus from "./LaunchingStatus";
 import LogStream from "./LogStream";
 
 interface LaunchingOverlayProps {
@@ -36,8 +34,6 @@ export default function LaunchingOverlay({
     const STATUS_MESSAGE_HEIGHT = 32 + SPACING_1_HEIGHT;  // 32px: 文字の高さ, 8px: spacing={1}の高さ
     const PROGRESS_ICON_SIZE = QR_CODE_SIZE - STATUS_MESSAGE_HEIGHT;
 
-    const { t } = useTranslation();
-
     return (
         <FullscreenOverlay>
             <Stack
@@ -57,21 +53,14 @@ export default function LaunchingOverlay({
                         height: `calc(100% - ${BUTTON_FONT_SIZE}px)`,
                     }}
                 >
-                    {
-                        isRunning ?
-                            <QRCodeCanvas
-                                height={QR_CODE_SIZE}
-                                size={QR_CODE_SIZE}
-                                value={url}
-                                marginSize={2}
-                            />
-                            :
-                            <Progress
-                                status={status}
-                                iconSize={PROGRESS_ICON_SIZE}
-                                statusMessage={statusMessage && t(statusMessage)}
-                            />
-                    }
+                    <LaunchingStatus
+                        isRunning={isRunning}
+                        url={url}
+                        status={status}
+                        statusMessage={statusMessage}
+                        qrCodeSize={QR_CODE_SIZE}
+                        progressIconSize={PROGRESS_ICON_SIZE}
+                    />
                     <LogStream
                         logs={logs}
                         containerRef={logContainerRef}
@@ -87,31 +76,5 @@ export default function LaunchingOverlay({
                 />
             </Stack>
         </FullscreenOverlay>
-    );
-}
-
-interface ProgressProps {
-    status: ProgressStatus;
-    iconSize: number;
-    statusMessage?: string;
-}
-
-function Progress({ status, iconSize, statusMessage }: ProgressProps) {
-    return (
-        <Stack
-            spacing={1}
-            alignItems="center"
-            sx={{
-                width: "100%",
-            }}
-        >
-            <ProgressIcon
-                size={iconSize}
-                status={status}
-            />
-            <Typography variant="h6">
-                {statusMessage}
-            </Typography>
-        </Stack>
     );
 }
