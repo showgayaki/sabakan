@@ -10,6 +10,7 @@ pub fn builder() -> tauri::Builder<Wry> {
         .plugin(tauri_plugin_os::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_clipboard_manager::init())
         .manage(BrowsersyncState {
             process: Arc::new(Mutex::new(None)),
         })
