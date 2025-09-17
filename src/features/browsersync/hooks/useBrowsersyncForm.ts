@@ -1,19 +1,18 @@
-import { useHostOs } from "@/config/context";
-
 import type { BrowsersyncParams } from "@/types/browsersyncParams";
+
 import useDirectory from "./useDirectory";
 import useBrowsersync from "./useBrowsersync";
 import useProxy from "./useProxy";
 import useExtensions from "./useExtensions";
-import useLogStream from "./useLogStream";
+import useQrCode from "./LaunchingOverlay/useQrCode";
+import useLogStream from "./LaunchingOverlay/useLogStream";
 
 export default function useBrowsersyncForm() {
-    const hostOs = useHostOs();
-
-    const directory = useDirectory(hostOs);
+    const directory = useDirectory();
     const browsersync = useBrowsersync();
     const proxy = useProxy();
     const extensions = useExtensions();
+    const qrCode = useQrCode();
     const logStream = useLogStream();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,11 +33,11 @@ export default function useBrowsersyncForm() {
     }
 
     return {
-        hostOs,
         directory,
         browsersync,
         extensions,
         proxy,
+        qrCode,
         logStream,
         handleSubmit,
     }

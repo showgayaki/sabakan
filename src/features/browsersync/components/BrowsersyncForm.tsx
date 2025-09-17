@@ -9,11 +9,11 @@ import LaunchingOverlay from "./LaunchingOverlay";
 
 export default function BrowsersyncForm() {
     const {
-        hostOs,
         directory,
         browsersync,
         extensions,
         proxy,
+        qrCode,
         logStream,
         handleSubmit,
     } = useBrowsersyncForm();
@@ -22,17 +22,9 @@ export default function BrowsersyncForm() {
         <>
             {browsersync.status !== "idle" &&
                 <LaunchingOverlay
-                    status={browsersync.status}
-                    statusMessage={browsersync.statusMessage}
-                    isRunning={browsersync.isRunning}
-                    url={browsersync.url}
-                    logs={logStream.lines}
-                    logContainerRef={logStream.containerRef}
-                    handleStopBrowsersync={async () => {
-                        await browsersync.handleStop();
-                        // LogStreamをクリア
-                        logStream.setLines([]);
-                    }}
+                    browsersync={browsersync}
+                    qrCode={qrCode}
+                    logStream={logStream}
                 />
             }
             <Stack
@@ -42,21 +34,9 @@ export default function BrowsersyncForm() {
                 sx={{flexGrow: 1}}
             >
                 <Stack spacing={2}>
-                    <Directory
-                        hostOs={hostOs}
-                        path={directory.path}
-                        setPath={directory.setPath}
-                        onClick={directory.selectDirectory}
-                        error={directory.error}
-                    />
+                    <Directory directory={directory} />
                     <Extensions extensions={extensions} />
-                    <Proxy
-                        useProxy={proxy.useProxy}
-                        setUseProxy={proxy.setUseProxy}
-                        url={proxy.url}
-                        setUrl={proxy.setUrl}
-                        error={proxy.error}
-                    />
+                    <Proxy proxy={proxy}/>
                 </Stack>
                 {browsersync.status === "idle" &&
                     <Submit />

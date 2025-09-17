@@ -2,26 +2,26 @@ import { IconButton } from "@mui/material";
 import { Folder } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 
+import { useHostOs } from "@/config/context";
 import CustomTextField from "@/components/CustomTextField";
 import ValidationErrorTooltip from "@/components/CustomTooltips";
+import type { DirectoryParams } from "@/types/browsersyncForm";
 
 interface DirectoryProps {
-    hostOs: string;
-    path: string;
-    setPath: (path: string) => void;
-    onClick: () => void;
-    error?: string | null;
+    directory: DirectoryParams,
 }
 
-export default function Directory({
-    hostOs,
-    path,
-    setPath,
-    onClick,
-    error,
-}: DirectoryProps) {
-    console.log("Directory rendered with hostOs:", hostOs);
+export default function Directory({ directory }: DirectoryProps) {
+    const {
+        path,
+        setPath,
+        onClick,
+        error,
+    } = directory;
+
     const { t } = useTranslation();
+    const hostOs = useHostOs();
+    console.log("Directory rendered with hostOs:", hostOs);
 
     const placeholder = hostOs === "windows"
         ? "C:\\path\\to\\directory"

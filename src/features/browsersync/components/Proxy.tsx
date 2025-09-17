@@ -4,29 +4,21 @@ import { useTranslation } from "react-i18next";
 import ValidationErrorTooltip from "@/components/CustomTooltips";
 import CheckboxWithLabel from "@/components/CheckboxWithLabel";
 import CustomTextField from "@/components/CustomTextField";
+import type { ProxyParams } from "@/types/browsersyncForm";
 
-interface ProxyProps {
-    useProxy: boolean;
-    setUseProxy: (useProxy: boolean) => void;
-    url: string;
-    setUrl: (url: string) => void;
-    error?: string | null;
+interface ProxySectionProps {
+    proxy: ProxyParams,
 }
 
-export default function ProxySection({
-    useProxy,
-    setUseProxy,
-    url,
-    setUrl,
-    error,
-}: ProxyProps) {
+export default function ProxySection({ proxy }: ProxySectionProps) {
+    const { useProxy, setUseProxy, url, setUrl, error } = proxy;
     const id = "useProxy";
     const { t } = useTranslation();
 
     return (
         <Box>
             <CheckboxWithLabel
-                htmlFor="useProxy"
+                htmlFor={id}
                 checked={useProxy}
                 onChange={(checked) => {
                     setUseProxy(checked);

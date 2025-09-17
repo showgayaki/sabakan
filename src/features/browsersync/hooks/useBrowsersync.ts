@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import type { TranslationKeys } from "@/types/i18next";
 import type { BrowsersyncParams } from "@/types/browsersyncParams";
+import type { BrowsersyncState } from "@/types/browsersyncForm";
 import type { ProgressStatus } from "@/types/progress";
 import { delayMs } from "@/utils/delay";
 
@@ -10,7 +11,7 @@ import {
     stopBrowsersync,
 } from "../api";
 
-export default function useBrowsersync() {
+export default function useBrowsersync(): BrowsersyncState {
     const MESSAGE_DISPLAY_DURATION_MS = 1000;  // メッセージ表示時間（ミリ秒）
 
     const [status, setStatus] = useState<ProgressStatus>("idle");

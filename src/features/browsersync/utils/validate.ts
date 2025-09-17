@@ -1,9 +1,6 @@
 import { directoryExists } from "../api";
 
-export async function validateDirectoryPath(
-    path: string,
-    hostOs: string
-) : Promise<string | null> {
+export async function validateDirectoryPath(path: string, hostOs: string) : Promise<string | null> {
     if (!path) {
         return "ディレクトリを選択してください";
     }

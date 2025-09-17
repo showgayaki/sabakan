@@ -1,7 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { listen } from "@tauri-apps/api/event";
 
-export default function useLogStream() {
+import type { LogStreemState } from "@/types/browsersyncForm";
+
+export default function useLogStream(): LogStreemState {
     const [lines, setLines] = useState<string[]>([]);
     const containerRef = useRef<HTMLDivElement>(null);
 

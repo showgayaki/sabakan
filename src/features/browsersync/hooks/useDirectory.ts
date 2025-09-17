@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { open } from "@tauri-apps/plugin-dialog";
 
+import { useHostOs } from "@/config/context";
 import { ERROR_DISPLAY_DURATION_MS } from "@/constants/ui";
+import type { DirectoryParams } from "@/types/browsersyncForm";
+
 import { validateDirectoryPath } from "../utils/validate";
 
-export default function useBrowsersyncForm(hostOs: string) {
+export default function useBrowsersyncForm() {
+    const hostOs = useHostOs();
+
     const [path, setPath] = useState<string>("");
     const [error, setError] = useState<string | null>(null);
 
@@ -32,11 +37,13 @@ export default function useBrowsersyncForm(hostOs: string) {
         return message === null;
     };
 
-    return {
+    const params: DirectoryParams = {
         path,
         setPath,
         validate,
-        selectDirectory,
+        onClick: selectDirectory,
         error,
-    }
+    };
+
+    return params;
 }

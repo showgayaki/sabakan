@@ -3,13 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import CheckboxWithLabel from "@/components/CheckboxWithLabel";
 import CustomLabel from "@/components/CustomLabel";
-
-interface ExtensionsProps {
-    extensions: {
-        items: string[];
-        setItems: (items: string[]) => void;
-    };
-}
+import type { ExtensionsParams } from "@/types/browsersyncForm";
 
 const EXTENSION_GROUPS: string[][] = [
     [".html", ".htm", ".dwt", ".lbi",],
@@ -20,9 +14,13 @@ const EXTENSION_GROUPS: string[][] = [
     [".ejs", ".pug", ".jade", ".hbs", ".mustache", ".njk", ".twig"],
 ];
 
+interface ExtensionsProps {
+    extensions: ExtensionsParams
+}
+
 export default function Extensions({ extensions }: ExtensionsProps) {
-    const { t } = useTranslation();
     const { items, setItems } = extensions;
+    const { t } = useTranslation();
 
     const handleToggle = (ext: string) => {
         if (items.includes(ext)) {
