@@ -7,7 +7,7 @@ export type DirectoryParams = {
     setPath: (path: string) => void,
     validate: () => Promise<boolean>,
     onClick: () => Promise<void>,
-    error: string | null,
+    errorKey: TranslationKeys | undefined,
 }
 
 export type ExtensionsParams = {
@@ -20,7 +20,7 @@ export type ProxyParams = {
     setUseProxy: (useProxy: boolean) => void,
     url: string,
     setUrl: (url: string) => void,
-    error: string | null,
+    errorKey: TranslationKeys | undefined,
 }
 
 export type BrowsersyncState = {
@@ -35,6 +35,7 @@ export type BrowsersyncState = {
 export type QrCodeState = {
     canvasRef: React.RefObject<HTMLCanvasElement>,
     copyQrImage: () => void,
+    copied: TranslationKeys | undefined,
 }
 
 export type LogStreemState = {

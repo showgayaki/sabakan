@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { MESSAGE_DISPLAY_DURATION_MS } from "@/constants/ui"
 import type { TranslationKeys } from "@/types/i18next";
 import type { BrowsersyncParams } from "@/types/browsersyncParams";
 import type { BrowsersyncState } from "@/types/browsersyncForm";
@@ -12,8 +13,6 @@ import {
 } from "../api";
 
 export default function useBrowsersync(): BrowsersyncState {
-    const MESSAGE_DISPLAY_DURATION_MS = 1000;  // メッセージ表示時間（ミリ秒）
-
     const [status, setStatus] = useState<ProgressStatus>("idle");
     const [statusMessage, setStatusMessage] = useState<TranslationKeys | undefined>(undefined);
     const [isRunning, setIsRunning] = useState<boolean>(false);

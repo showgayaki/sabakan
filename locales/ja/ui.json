@@ -35,5 +35,20 @@
             "installError": "{{task}}のインストールに失敗しました😰\nアプリを再起動してみてください",
             "installed": "インストールが完了しました！🎉"
         }
+    },
+    "clipboard": {
+        "copySuccess": "コピーしました",
+        "copyError": "コピーに失敗しました"
+    },
+    "validation": {
+        "directory": {
+            "empty": "ディレクトリを選択してください",
+            "invalid": "パス形式が正しくありません",
+            "notFound": "指定されたディレクトリが存在しません"
+        },
+        "url": {
+            "empty": "URLを入力してください",
+            "invalid": "URLの形式が正しくありません"
+        }
     }
 }

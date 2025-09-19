@@ -35,5 +35,20 @@
             "installError": "Failed to install {{task}} 😰\nPlease try restarting the app.",
             "installed": "Installation completed successfully! 🎉"
         }
+    },
+    "clipboard": {
+        "copySuccess": "Copied!",
+        "copyError": "Failed to copy"
+    },
+    "validation": {
+        "directory": {
+            "empty": "Please select a directory",
+            "invalid": "The path format is invalid",
+            "notFound": "The specified directory does not exist"
+        },
+        "url": {
+            "empty": "Please enter a URL",
+            "invalid": "The URL format is invalid"
+        }
     }
 }

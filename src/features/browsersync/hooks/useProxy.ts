@@ -1,12 +1,14 @@
 import { useState } from "react";
 
 import { ERROR_DISPLAY_DURATION_MS } from "@/constants/ui";
+import type { TranslationKeys } from "@/types/i18next";
+
 import { validateUrl } from "../utils/validate";
 
 export default function useProxy() {
     const [useProxy, setUseProxy] = useState<boolean>(false);
     const [url, setUrl] = useState<string>("");
-    const [error, setError] = useState<string | null>(null);
+    const [errorKey, setErrorKey] = useState<TranslationKeys | undefined>(undefined);
 
     const validate =() => {
         // Proxyを使用するチェックボックスがオフの場合はバリデーションをスキップ
@@ -17,15 +19,15 @@ export default function useProxy() {
         const message = validateUrl(url);
         if (message) {
             console.error("Proxy URL validation failed:", message);
-            setError(message);
+            setErrorKey(message);
 
             setTimeout(() => {
-                setError(null);
+                setErrorKey(undefined);
             }, ERROR_DISPLAY_DURATION_MS);
 
             return false;
         }
-        return message === null;
+        return message === undefined;
     }
 
     return {
@@ -34,6 +36,6 @@ export default function useProxy() {
         url,
         setUrl,
         validate,
-        error,
+        errorKey,
     }
 }

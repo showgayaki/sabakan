@@ -1,8 +1,9 @@
+import type { TranslationKeys } from "@/types/i18next";
 import { directoryExists } from "../api";
 
-export async function validateDirectoryPath(path: string, hostOs: string) : Promise<string | null> {
+export async function validateDirectoryPath(path: string, hostOs: string) : Promise<TranslationKeys | undefined> {
     if (!path) {
-        return "ディレクトリを選択してください";
+        return "validation.directory.empty";
     }
 
     const pathRegex = (hostOs === "windows") ?
@@ -10,27 +11,27 @@ export async function validateDirectoryPath(path: string, hostOs: string) : Prom
         /^\/(?:[\w\s\-\.]+\/)*[\w\s\-\.]+$/;  // macOSのパスは/path/to/directoryの形式
 
     if (!pathRegex.test(path)) {
-        return "パス形式が正しくありません";
+        return "validation.directory.invalid";
     }
 
     const doesExist = await directoryExists(path);
     if (!doesExist) {
-        return "指定されたディレクトリが存在しません";
+        return "validation.directory.notFound";
     }
 
-    return null; // エラーなし
+    return undefined; // エラーなし
 }
 
-export function validateUrl(proxyUrl: string): string | null {
+export function validateUrl(proxyUrl: string): TranslationKeys | undefined {
     if (!proxyUrl) {
-        return "URLを入力してください";
+        return "validation.url.empty";
     }
 
     const urlRegex = /^(http|https):\/\/[^\s/$.?#].[^\s]*$/;
 
     if (!urlRegex.test(proxyUrl)) {
-        return "URLの形式が正しくありません";
+        return "validation.url.invalid";
     }
 
-    return null; // エラーなし
+    return undefined; // エラーなし
 }

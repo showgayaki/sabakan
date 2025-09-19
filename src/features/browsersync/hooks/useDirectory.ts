@@ -4,6 +4,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { useHostOs } from "@/config/context";
 import { ERROR_DISPLAY_DURATION_MS } from "@/constants/ui";
 import type { DirectoryParams } from "@/types/browsersyncForm";
+import type { TranslationKeys } from "@/types/i18next";
 
 import { validateDirectoryPath } from "../utils/validate";
 
@@ -11,7 +12,7 @@ export default function useBrowsersyncForm() {
     const hostOs = useHostOs();
 
     const [path, setPath] = useState<string>("");
-    const [error, setError] = useState<string | null>(null);
+    const [errorKey, setErrorKey] = useState<TranslationKeys | undefined>(undefined);
 
     const selectDirectory = async () => {
         console.log("Selecting directory...");
@@ -25,16 +26,16 @@ export default function useBrowsersyncForm() {
     };
 
     const validate = async () => {
-        const message = await validateDirectoryPath(path, hostOs);
-        if (message) {
-            console.log("Directory validation failed:", message);
-            setError(message);
+        const key = await validateDirectoryPath(path, hostOs);
+        if (key) {
+            console.log("Directory validation failed:", key);
+            setErrorKey(key);
 
             setTimeout(() => {
-                setError(null);
+                setErrorKey(undefined);
             }, ERROR_DISPLAY_DURATION_MS);
         }
-        return message === null;
+        return key === undefined;
     };
 
     const params: DirectoryParams = {
@@ -42,7 +43,7 @@ export default function useBrowsersyncForm() {
         setPath,
         validate,
         onClick: selectDirectory,
-        error,
+        errorKey,
     };
 
     return params;

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { useHostOs } from "@/config/context";
 import CustomTextField from "@/components/CustomTextField";
-import ValidationErrorTooltip from "@/components/CustomTooltips";
+import { ValidationErrorTooltip } from "@/components/CustomTooltips";
 import type { DirectoryParams } from "@/types/browsersyncForm";
 
 interface DirectoryProps {
@@ -12,12 +12,7 @@ interface DirectoryProps {
 }
 
 export default function Directory({ directory }: DirectoryProps) {
-    const {
-        path,
-        setPath,
-        onClick,
-        error,
-    } = directory;
+    const { path, setPath, onClick, errorKey } = directory;
 
     const { t } = useTranslation();
     const hostOs = useHostOs();
@@ -28,7 +23,9 @@ export default function Directory({ directory }: DirectoryProps) {
         : "/path/to/directory";
 
     return (
-        <ValidationErrorTooltip title={error || ""}>
+        <ValidationErrorTooltip
+            title={errorKey ? t(errorKey) : ""}
+        >
             <CustomTextField
                 id="directoryInput"
                 label={t("home.directory.label")}
@@ -47,7 +44,7 @@ export default function Directory({ directory }: DirectoryProps) {
                 }
                 helpText={t("home.directory.help_text")}
                 textFieldProps={{
-                    error: Boolean(error),
+                    error: Boolean(errorKey),
                 }}
             />
         </ValidationErrorTooltip>
