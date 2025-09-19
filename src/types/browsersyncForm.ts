@@ -35,7 +35,9 @@ export type BrowsersyncState = {
 export type QrCodeState = {
     canvasRef: React.RefObject<HTMLCanvasElement>,
     copyQrImage: () => void,
-    copied: TranslationKeys | undefined,
+    copiedQr: TranslationKeys | undefined,
+    copyUrl: (url: string) => void,
+    copiedUrl: TranslationKeys | undefined,
 }
 
 export type LogStreemState = {

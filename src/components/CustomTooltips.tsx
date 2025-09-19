@@ -4,7 +4,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 export function ValidationErrorTooltip({
     children,
     ...props
-}: TooltipProps & { children: React.ReactNode }) {
+}: { children: React.ReactNode } & TooltipProps) {
     return (
         <Base
             {...props}
@@ -33,7 +33,7 @@ export function ValidationErrorTooltip({
 export function CopyResultTooltip({
     children,
     ...props
-}: TooltipProps & { children: React.ReactNode }) {
+}: { children: React.ReactNode } & TooltipProps) {
     return (
         <Base
             {...props}
@@ -49,7 +49,7 @@ export function CopyResultTooltip({
 function Base({
     children,
     ...props
-}: TooltipProps & { children: React.ReactNode }) {
+}: { children: React.ReactNode } & TooltipProps) {
     return (
         <Tooltip
             {...props}

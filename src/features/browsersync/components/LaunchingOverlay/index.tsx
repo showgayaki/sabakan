@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import { StopCircle } from "@mui/icons-material";
 
 import { BUTTON_FONT_SIZE } from "@/constants/ui";
-import CustomIconButton from "@/components/CustomIconButton";
+import { CircleIconButton } from "@/components/CustomIconButton";
 import FullscreenOverlay from "@/components/FullscreenOverlay";
 import type {
     BrowsersyncState,
@@ -52,14 +52,14 @@ export default function LaunchingOverlay({
                         containerRef={logStream.containerRef}
                     />
                 </Stack>
-                <CustomIconButton
+                <CircleIconButton
+                    icon={<StopCircle sx={{ fontSize: BUTTON_FONT_SIZE }} />}
                     onClick={async () => {
                         console.log("Stop Browsersync clicked");
                         await browsersync.handleStop();
                         // LogStreamをクリア
                         logStream.setLines([]);
                     }}
-                    icon={<StopCircle sx={{ fontSize: BUTTON_FONT_SIZE }} />}
                     disabled={browsersync.status !== "error" && browsersync.status !== "success"}
                 />
             </Stack>

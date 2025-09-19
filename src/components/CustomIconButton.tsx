@@ -1,29 +1,27 @@
 import { IconButton, IconButtonProps } from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
-interface CustomIconButtonProps {
-    size?: 'small' | 'medium' | 'large';
-    onClick?: () => void;
-    icon: React.ReactNode;
-    disabled?: boolean;
-    iconButtonProps?: IconButtonProps;
-}
-
-export default function CustomIconButton({
-    size,
-    onClick,
+export function CircleIconButton({
     icon,
-    disabled,
-    iconButtonProps,
-}: CustomIconButtonProps) {
+    ...props
+}: {icon: React.ReactNode} & IconButtonProps) {
     return (
         <IconButton
             sx={{ p: 0 }}
-            size={size}
-            onClick={onClick}
-            disabled={disabled}
-            {...iconButtonProps}
+            {...props}
         >
             {icon}
         </IconButton>
     );
+}
+
+export function CopyIconButton({
+    fontSize,
+    ...props
+}: { fontSize: number } & IconButtonProps) {
+    return (
+        <IconButton {...props}>
+            <ContentCopyIcon sx={{ fontSize: fontSize }} />
+        </IconButton>
+    )
 }
