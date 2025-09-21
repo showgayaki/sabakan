@@ -4,9 +4,9 @@ import { writeImage, writeText } from "@tauri-apps/plugin-clipboard-manager";
 
 import { MESSAGE_DISPLAY_DURATION_MS } from "@/constants/ui"
 import type { TranslationKeys } from "@/types/i18next";
-import type { QrCodeState } from "@/types/browsersyncForm";
+import type { QrCodeStore } from "@/types/browsersyncForm";
 
-export default function useQrCode(): QrCodeState {
+export default function useQrCode(): QrCodeStore {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [copiedQr, setCopiedQr] = useState<TranslationKeys | undefined>(undefined);
     const [copiedUrl, setCopiedUrl] = useState<TranslationKeys | undefined>(undefined);

@@ -4,13 +4,13 @@ import { useTranslation } from "react-i18next";
 import CheckboxWithLabel from "@/components/CheckboxWithLabel";
 import CustomTextField from "@/components/CustomTextField";
 import { ValidationErrorTooltip } from "@/components/CustomTooltips";
-import type { ProxyParams } from "@/types/browsersyncForm";
+import type { ProxyStore } from "@/types/browsersyncForm";
 
-interface ProxySectionProps {
-    proxy: ProxyParams,
+interface ProxyProps {
+    proxy: ProxyStore,
 }
 
-export default function ProxySection({ proxy }: ProxySectionProps) {
+export default function Proxy({ proxy }: ProxyProps) {
     const { useProxy, setUseProxy, url, setUrl, errorKey } = proxy;
     const id = "useProxy";
     const { t } = useTranslation();

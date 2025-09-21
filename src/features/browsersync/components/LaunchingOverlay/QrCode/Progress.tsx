@@ -2,10 +2,10 @@ import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import ProgressIcon from "@/components/ProgressIcon";
-import type { BrowsersyncState } from "@/types/browsersyncForm";
+import type { BrowsersyncStore } from "@/types/browsersyncForm";
 
 interface ProgressProps {
-    browsersync: BrowsersyncState,
+    browsersync: BrowsersyncStore,
 }
 
 export default function Progress({ browsersync }: ProgressProps) {

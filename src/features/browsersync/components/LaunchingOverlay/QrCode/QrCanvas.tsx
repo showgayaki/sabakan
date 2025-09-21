@@ -4,11 +4,11 @@ import { QRCodeCanvas } from "qrcode.react";
 
 import { CopyIconButton } from "@/components/CustomIconButton";
 import { CopyResultTooltip } from "@/components/CustomTooltips";
-import type { QrCodeState } from "@/types/browsersyncForm";
+import type { QrCodeStore } from "@/types/browsersyncForm";
 
 interface QrCanvasProps {
     url: string,
-    qrCode: QrCodeState,
+    qrCode: QrCodeStore,
 }
 
 export default function QrCanvas({ url, qrCode }: QrCanvasProps) {

@@ -1,16 +1,17 @@
 import { useState } from "react";
 
 import { ERROR_DISPLAY_DURATION_MS } from "@/constants/ui";
+import type { ProxyStore } from "@/types/browsersyncForm";
 import type { TranslationKeys } from "@/types/i18next";
 
 import { validateUrl } from "../utils/validate";
 
-export default function useProxy() {
+export default function useProxy(): ProxyStore {
     const [useProxy, setUseProxy] = useState<boolean>(false);
     const [url, setUrl] = useState<string>("");
     const [errorKey, setErrorKey] = useState<TranslationKeys | undefined>(undefined);
 
-    const validate =() => {
+    const validate = () => {
         // Proxyを使用するチェックボックスがオフの場合はバリデーションをスキップ
         if (!useProxy) {
             return true;

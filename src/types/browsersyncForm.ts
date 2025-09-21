@@ -2,7 +2,7 @@ import type { BrowsersyncParams } from "@/types/browsersyncParams";
 import type { TranslationKeys } from "@/types/i18next";
 import type { ProgressStatus } from "@/types/progress";
 
-export type DirectoryParams = {
+export type DirectoryStore = {
     path: string,
     setPath: (path: string) => void,
     validate: () => Promise<boolean>,
@@ -10,20 +10,23 @@ export type DirectoryParams = {
     errorKey: TranslationKeys | undefined,
 }
 
-export type ExtensionsParams = {
+export type ExtensionsStore = {
     items: string[],
     setItems: (items: string[]) => void,
 }
 
-export type ProxyParams = {
+export type ProxyStore = {
     useProxy: boolean,
     setUseProxy: (useProxy: boolean) => void,
     url: string,
     setUrl: (url: string) => void,
+    validate: () => void,
     errorKey: TranslationKeys | undefined,
 }
 
-export type BrowsersyncState = {
+export type SyncStore = {}
+
+export type BrowsersyncStore = {
     isRunning: boolean,
     status: ProgressStatus,
     statusMessage: TranslationKeys | undefined,
@@ -32,7 +35,7 @@ export type BrowsersyncState = {
     url: string,
 };
 
-export type QrCodeState = {
+export type QrCodeStore = {
     canvasRef: React.RefObject<HTMLCanvasElement>,
     copyQrImage: () => void,
     copiedQr: TranslationKeys | undefined,
@@ -40,7 +43,7 @@ export type QrCodeState = {
     copiedUrl: TranslationKeys | undefined,
 }
 
-export type LogStreemState = {
+export type LogStreemStore = {
     lines: string[],
     setLines: (lines: string[]) => void,
     containerRef: React.RefObject<HTMLDivElement>,

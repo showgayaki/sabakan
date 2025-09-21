@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 
 import { CopyIconButton } from "@/components/CustomIconButton";
 import { CopyResultTooltip } from "@/components/CustomTooltips";
-import type { QrCodeState } from "@/types/browsersyncForm";
+import type { QrCodeStore } from "@/types/browsersyncForm";
 
 interface UrlTextProps {
     url: string,
-    qrCode: QrCodeState,
+    qrCode: QrCodeStore,
 }
 
 export default function UrlText({ url, qrCode }: UrlTextProps) {

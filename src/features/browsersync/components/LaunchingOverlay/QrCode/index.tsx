@@ -1,13 +1,13 @@
 import { Stack } from "@mui/material";
-import type { BrowsersyncState, QrCodeState } from "@/types/browsersyncForm";
+import type { BrowsersyncStore, QrCodeStore } from "@/types/browsersyncForm";
 
 import QrCanvas from "./QrCanvas";
 import UrlText from "./UrlText";
 import Progress from "./Progress";
 
 interface QrCodeProps {
-    browsersync: BrowsersyncState,
-    qrCode: QrCodeState,
+    browsersync: BrowsersyncStore,
+    qrCode: QrCodeStore,
 }
 
 export default function QrCode({ browsersync, qrCode }: QrCodeProps) {

@@ -5,10 +5,10 @@ import { useTranslation } from "react-i18next";
 import { useHostOs } from "@/config/context";
 import CustomTextField from "@/components/CustomTextField";
 import { ValidationErrorTooltip } from "@/components/CustomTooltips";
-import type { DirectoryParams } from "@/types/browsersyncForm";
+import type { DirectoryStore } from "@/types/browsersyncForm";
 
 interface DirectoryProps {
-    directory: DirectoryParams,
+    directory: DirectoryStore,
 }
 
 export default function Directory({ directory }: DirectoryProps) {

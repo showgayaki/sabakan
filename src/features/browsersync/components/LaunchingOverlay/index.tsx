@@ -5,18 +5,18 @@ import { BUTTON_FONT_SIZE } from "@/constants/ui";
 import { CircleIconButton } from "@/components/CustomIconButton";
 import FullscreenOverlay from "@/components/FullscreenOverlay";
 import type {
-    BrowsersyncState,
-    QrCodeState,
-    LogStreemState,
+    BrowsersyncStore,
+    QrCodeStore,
+    LogStreemStore,
 } from "@/types/browsersyncForm";
 
 import QrCode from "./QrCode";
 import LogStream from "./LogStream";
 
 interface LaunchingOverlayProps {
-    browsersync: BrowsersyncState,
-    qrCode: QrCodeState,
-    logStream: LogStreemState,
+    browsersync: BrowsersyncStore,
+    qrCode: QrCodeStore,
+    logStream: LogStreemStore,
 }
 
 export default function LaunchingOverlay({

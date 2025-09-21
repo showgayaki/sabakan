@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import CheckboxWithLabel from "@/components/CheckboxWithLabel";
 import CustomLabel from "@/components/CustomLabel";
-import type { ExtensionsParams } from "@/types/browsersyncForm";
+import type { ExtensionsStore } from "@/types/browsersyncForm";
 
 const EXTENSION_GROUPS: string[][] = [
     [".html", ".htm", ".dwt", ".lbi",],
@@ -15,7 +15,7 @@ const EXTENSION_GROUPS: string[][] = [
 ];
 
 interface ExtensionsProps {
-    extensions: ExtensionsParams
+    extensions: ExtensionsStore
 }
 
 export default function Extensions({ extensions }: ExtensionsProps) {
