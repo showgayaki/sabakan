@@ -2,16 +2,18 @@ import type { BrowsersyncParams } from "@/types/browsersyncParams";
 
 import useDirectory from "./useDirectory";
 import useBrowsersync from "./useBrowsersync";
-import useProxy from "./useProxy";
+import useSync from "./useSync";
 import useExtensions from "./useExtensions";
+import useProxy from "./useProxy";
 import useQrCode from "./LaunchingOverlay/useQrCode";
 import useLogStream from "./LaunchingOverlay/useLogStream";
 
 export default function useBrowsersyncForm() {
     const directory = useDirectory();
     const browsersync = useBrowsersync();
-    const proxy = useProxy();
     const extensions = useExtensions();
+    const sync = useSync();
+    const proxy = useProxy();
     const qrCode = useQrCode();
     const logStream = useLogStream();
 
@@ -36,6 +38,7 @@ export default function useBrowsersyncForm() {
         directory,
         browsersync,
         extensions,
+        sync,
         proxy,
         qrCode,
         logStream,

@@ -12,6 +12,14 @@
             "label": "File extensions to watch",
             "help_text": "Select the file extensions to be watched.\nWhen files with these extensions are updated, the browser will reload."
         },
+        "sync": {
+            "label": "Use Sync",
+            "help_text": "Select the interactions to synchronize across browsers and devices.\nClicks, scrolling, form inputs, and page navigation will be reflected on all other connected devices.",
+            "scroll": "Scroll",
+            "clicks": "Clicks",
+            "forms": "Forms",
+            "location": "Location"
+        },
         "proxy": {
             "label": "Use Proxy",
             "help_text": "If you want to integrate with a local WordPress site or similar, enter its URL here."

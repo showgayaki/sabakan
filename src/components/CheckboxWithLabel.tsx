@@ -9,6 +9,7 @@ interface CheckboxWithLabelProps {
     label: string;
     helpText?: string;
     isFormLabel?: boolean;
+    disabled?: boolean;
 }
 
 export default function CheckboxWithLabel({
@@ -18,9 +19,11 @@ export default function CheckboxWithLabel({
     label,
     helpText,
     isFormLabel,
+    disabled,
 }: CheckboxWithLabelProps) {
     return (
         <FormControlLabel
+            disabled={disabled}
             sx={{
                 mr: 0,
                 ml: 0,
@@ -39,7 +42,7 @@ export default function CheckboxWithLabel({
             }
             control={
                 <Checkbox
-                    sx={{ py: 0, pr:0,  mr: 0.5 }}
+                    sx={{ py: 0, pr: 0, mr: 0.5 }}
                     id={htmlFor}
                     checked={checked}
                     onChange={(e) => onChange(e.target.checked)}

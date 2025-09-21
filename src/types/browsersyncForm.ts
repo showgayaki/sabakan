@@ -2,6 +2,15 @@ import type { BrowsersyncParams } from "@/types/browsersyncParams";
 import type { TranslationKeys } from "@/types/i18next";
 import type { ProgressStatus } from "@/types/progress";
 
+export type BrowsersyncStore = {
+    isRunning: boolean,
+    status: ProgressStatus,
+    statusMessage: TranslationKeys | undefined,
+    handleStart: (params: BrowsersyncParams) => Promise<void>,
+    handleStop: () => Promise<void>
+    url: string,
+};
+
 export type DirectoryStore = {
     path: string,
     setPath: (path: string) => void,
@@ -15,6 +24,19 @@ export type ExtensionsStore = {
     setItems: (items: string[]) => void,
 }
 
+export type SyncStore = {
+    enabled: boolean;
+    toggleEnabled: (v: boolean) => void;
+    scroll: boolean;
+    setScroll: (v: boolean) => void;
+    clicks: boolean;
+    setClicks: (v: boolean) => void;
+    forms: boolean;
+    setForms: (v: boolean) => void;
+    location: boolean;
+    setLocation: (v: boolean) => void;
+}
+
 export type ProxyStore = {
     useProxy: boolean,
     setUseProxy: (useProxy: boolean) => void,
@@ -23,17 +45,6 @@ export type ProxyStore = {
     validate: () => void,
     errorKey: TranslationKeys | undefined,
 }
-
-export type SyncStore = {}
-
-export type BrowsersyncStore = {
-    isRunning: boolean,
-    status: ProgressStatus,
-    statusMessage: TranslationKeys | undefined,
-    handleStart: (params: BrowsersyncParams) => Promise<void>,
-    handleStop: () => Promise <void>
-    url: string,
-};
 
 export type QrCodeStore = {
     canvasRef: React.RefObject<HTMLCanvasElement>,

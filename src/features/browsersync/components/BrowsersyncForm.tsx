@@ -2,8 +2,9 @@ import { Stack } from "@mui/material";
 
 import useBrowsersyncForm from "../hooks/useBrowsersyncForm";
 import Directory from "./Directory";
-import Proxy from "./Proxy";
 import Extensions from "./Extensions";
+import Sync from "./Sync";
+import Proxy from "./Proxy";
 import Submit from "./Submit";
 import LaunchingOverlay from "./LaunchingOverlay";
 
@@ -12,6 +13,7 @@ export default function BrowsersyncForm() {
         directory,
         browsersync,
         extensions,
+        sync,
         proxy,
         qrCode,
         logStream,
@@ -36,6 +38,7 @@ export default function BrowsersyncForm() {
                 <Stack spacing={2}>
                     <Directory directory={directory} />
                     <Extensions extensions={extensions} />
+                    <Sync sync={sync} />
                     <Proxy proxy={proxy}/>
                 </Stack>
                 {browsersync.status === "idle" &&

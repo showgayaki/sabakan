@@ -4,10 +4,16 @@ import type { ExtensionsStore } from "@/types/browsersyncForm";
 const STORAGE_KEY = "sabakan.extensions";
 
 export default function useExtensions(): ExtensionsStore {
+    const defaultExtensions = [".html", ".htm", ".css", ".js", ".php"];
+
     const [items, setItems] = useState<string[]>(() => {
-        // 初回は localStorage から読み込む
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : [".html", ".htm", ".css", ".js", ".php"];
+        try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            return saved ? JSON.parse(saved) : defaultExtensions;
+        } catch (err) {
+            console.error("[useExtensions] Failed to read or parse localStorage:", err);
+            return defaultExtensions;
+        }
     });
 
     // items が変わったら localStorage に保存
