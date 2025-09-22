@@ -12,7 +12,7 @@
             "label": "File extensions to watch",
             "help_text": "Select the file extensions to be watched.\nWhen files with these extensions are updated, the browser will reload."
         },
-        "sync": {
+        "ghost_mode": {
             "label": "Use Sync",
             "help_text": "Select the interactions to synchronize across browsers and devices.\nClicks, scrolling, form inputs, and page navigation will be reflected on all other connected devices.",
             "scroll": "Scroll",

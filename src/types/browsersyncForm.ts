@@ -24,7 +24,7 @@ export type ExtensionsStore = {
     setItems: (items: string[]) => void,
 }
 
-export type SyncStore = {
+export type GhostModeStore = {
     enabled: boolean;
     toggleEnabled: (v: boolean) => void;
     scroll: boolean;

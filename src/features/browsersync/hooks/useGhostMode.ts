@@ -1,14 +1,14 @@
 import { useState, useCallback, useEffect } from "react";
-import type { SyncStore } from "@/types/browsersyncForm";
+import type { GhostModeStore } from "@/types/browsersyncForm";
 
 const STORAGE_KEY = "sabakan.sync";
 
-export default function useSync(): SyncStore {
+export default function useGhostMode(): GhostModeStore {
     // 初期値を localStorage から読み込む
     const getInitial = () => {
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) return JSON.parse(saved) as Omit<SyncStore, "toggleEnabled">;
+            if (saved) return JSON.parse(saved) as Omit<GhostModeStore, "toggleEnabled">;
         } catch (err) {
             console.error("[useSync] Failed to read or parse localStorage:", err);
         }

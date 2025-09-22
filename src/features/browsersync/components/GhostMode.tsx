@@ -2,13 +2,13 @@ import { Box, Paper, Stack } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import CheckboxWithLabel from "@/components/CheckboxWithLabel";
-import type { SyncStore } from "@/types/browsersyncForm";
+import type { GhostModeStore } from "@/types/browsersyncForm";
 
 interface SyncProps {
-    sync: SyncStore;
+    ghostMode: GhostModeStore;
 }
 
-export default function Sync({ sync }: SyncProps) {
+export default function GhostMode({ ghostMode }: SyncProps) {
     const {
         enabled,
         toggleEnabled,
@@ -20,7 +20,7 @@ export default function Sync({ sync }: SyncProps) {
         setForms,
         location,
         setLocation,
-    } = sync;
+    } = ghostMode;
     const id = "ghostMode";
     const { t } = useTranslation();
 
@@ -30,8 +30,8 @@ export default function Sync({ sync }: SyncProps) {
                 htmlFor={id}
                 checked={enabled}
                 onChange={toggleEnabled}
-                label={t("home.sync.label")}
-                helpText={t("home.sync.help_text")}
+                label={t("home.ghost_mode.label")}
+                helpText={t("home.ghost_mode.help_text")}
                 isFormLabel={true}
             />
 
@@ -39,7 +39,7 @@ export default function Sync({ sync }: SyncProps) {
                 <Stack direction="row" gap={1.2}>
                     <CheckboxWithLabel
                         htmlFor={`${id}-scroll`}
-                        label={t("home.sync.scroll")}
+                        label={t("home.ghost_mode.scroll")}
                         checked={scroll}
                         onChange={setScroll}
                         isFormLabel={true}
@@ -47,7 +47,7 @@ export default function Sync({ sync }: SyncProps) {
                     />
                     <CheckboxWithLabel
                         htmlFor={`${id}-clicks`}
-                        label={t("home.sync.clicks")}
+                        label={t("home.ghost_mode.clicks")}
                         checked={clicks}
                         onChange={setClicks}
                         isFormLabel={true}
@@ -55,7 +55,7 @@ export default function Sync({ sync }: SyncProps) {
                     />
                     <CheckboxWithLabel
                         htmlFor={`${id}-forms`}
-                        label={t("home.sync.forms")}
+                        label={t("home.ghost_mode.forms")}
                         checked={forms}
                         onChange={setForms}
                         isFormLabel={true}
@@ -63,7 +63,7 @@ export default function Sync({ sync }: SyncProps) {
                     />
                     <CheckboxWithLabel
                         htmlFor={`${id}-location`}
-                        label={t("home.sync.location")}
+                        label={t("home.ghost_mode.location")}
                         checked={location}
                         onChange={setLocation}
                         isFormLabel={true}
