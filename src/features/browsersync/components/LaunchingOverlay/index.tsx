@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { StopCircle } from "@mui/icons-material";
 
-import { BUTTON_FONT_SIZE } from "@/constants/ui";
+import { BUTTON_FONT_SIZE, BUTTON_MARGIN_SCALE } from "@/constants/ui";
 import { CircleIconButton } from "@/components/CustomIconButton";
 import FullscreenOverlay from "@/components/FullscreenOverlay";
 import type {
@@ -27,7 +27,7 @@ export default function LaunchingOverlay({
     return (
         <FullscreenOverlay>
             <Stack
-                spacing={1}
+                spacing={BUTTON_MARGIN_SCALE}
                 alignItems="center"
                 sx={{
                     width: "100%",
@@ -38,10 +38,10 @@ export default function LaunchingOverlay({
                 <Stack
                     spacing={1}
                     alignItems="center"
-                    sx={{
+                    sx={(theme) => ({
                         width: "100%",
-                        height: `calc(100% - ${BUTTON_FONT_SIZE}px)`,
-                    }}
+                        height: `calc(100% - ${BUTTON_FONT_SIZE}px - ${theme.spacing(BUTTON_MARGIN_SCALE)})`,
+                    })}
                 >
                     <QrCode
                         browsersync={browsersync}

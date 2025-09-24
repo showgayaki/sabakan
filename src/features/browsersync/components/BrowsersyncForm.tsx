@@ -1,5 +1,7 @@
 import { Stack } from "@mui/material";
 
+import {BUTTON_MARGIN_SCALE} from "@/constants/ui";
+
 import useBrowsersyncForm from "../hooks/useBrowsersyncForm";
 import Directory from "./Directory";
 import Extensions from "./Extensions";
@@ -32,6 +34,7 @@ export default function BrowsersyncForm() {
             <Stack
                 component="form"
                 justifyContent="space-between"
+                spacing={BUTTON_MARGIN_SCALE}
                 onSubmit={handleSubmit}
                 sx={{flexGrow: 1}}
             >

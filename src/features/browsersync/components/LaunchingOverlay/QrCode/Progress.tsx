@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import ProgressIcon from "@/components/ProgressIcon";
@@ -14,11 +14,15 @@ export default function Progress({ browsersync }: ProgressProps) {
     const progressIconSize = 80;
 
     return (
-        <>
+        <Stack
+            alignItems="center"
+            justifyContent="center"
+            sx={{ height: "100%" }}
+        >
             <ProgressIcon size={progressIconSize} status={status} />
             <Typography variant="h6">
                 {statusMessage && t(statusMessage)}
             </Typography>
-        </>
+        </Stack>
     )
 }
