@@ -43,20 +43,20 @@ export default function useGhostMode(): GhostModeStore {
 
     // どれかが変わったら保存
     useEffect(() => {
-        const state = { enabled, scroll, clicks, forms, location };
+        const state = { enabled, scroll, clicks, forms };
         try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (err) {
             console.error("[useSync] Failed to write localStorage:", err);
         }
-    }, [enabled, scroll, clicks, forms, location]);
+    }, [enabled, scroll, clicks, forms]);
 
     useEffect(() => {
         // 4つがすべて false なら自動的に enabled を false に
-        if (!scroll && !clicks && !forms && !location) {
+        if (!scroll && !clicks && !forms) {
             setEnabled(false);
         }
-    }, [scroll, clicks, forms, location]);
+    }, [scroll, clicks, forms]);
 
     return {
         enabled,
