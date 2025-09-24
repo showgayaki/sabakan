@@ -33,8 +33,6 @@ export type GhostModeStore = {
     setClicks: (v: boolean) => void;
     forms: boolean;
     setForms: (v: boolean) => void;
-    location: boolean;
-    setLocation: (v: boolean) => void;
 }
 
 export type ProxyStore = {

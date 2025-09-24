@@ -17,8 +17,7 @@
             "help_text": "Select the interactions to synchronize across browsers and devices.\nClicks, scrolling, form inputs, and page navigation will be reflected on all other connected devices.",
             "scroll": "Scroll",
             "clicks": "Clicks",
-            "forms": "Forms",
-            "location": "Location"
+            "forms": "Forms"
         },
         "proxy": {
             "label": "Use Proxy",

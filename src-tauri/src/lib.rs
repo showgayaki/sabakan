@@ -14,8 +14,9 @@ pub fn run() {
     #[cfg(debug_assertions)]
     {
         use ts_rs::TS;
-        use types::browsersync::BrowsersyncParams;
+        use types::browsersync::{BrowsersyncParams, GhostMode};
         BrowsersyncParams::export().unwrap();
+        GhostMode::export().unwrap();
     }
 
     let builder = builder();

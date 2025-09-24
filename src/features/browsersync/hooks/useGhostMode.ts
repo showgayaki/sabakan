@@ -18,7 +18,6 @@ export default function useGhostMode(): GhostModeStore {
             scroll: true,
             clicks: true,
             forms: true,
-            location: true,
         };
     };
 
@@ -28,7 +27,6 @@ export default function useGhostMode(): GhostModeStore {
     const [scroll, setScroll] = useState<boolean>(initial.scroll);
     const [clicks, setClicks] = useState<boolean>(initial.clicks);
     const [forms, setForms] = useState<boolean>(initial.forms);
-    const [location, setLocation] = useState<boolean>(initial.location);
 
     const toggleEnabled = useCallback((value: boolean) => {
         setEnabled(value);
@@ -36,12 +34,10 @@ export default function useGhostMode(): GhostModeStore {
             setScroll(true);
             setClicks(true);
             setForms(true);
-            setLocation(true);
         } else {
             setScroll(false);
             setClicks(false);
             setForms(false);
-            setLocation(false);
         }
     }, []);
 
@@ -71,7 +67,5 @@ export default function useGhostMode(): GhostModeStore {
         setClicks,
         forms,
         setForms,
-        location,
-        setLocation,
     };
 }

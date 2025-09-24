@@ -18,8 +18,6 @@ export default function GhostMode({ ghostMode }: SyncProps) {
         setClicks,
         forms,
         setForms,
-        location,
-        setLocation,
     } = ghostMode;
     const id = "ghostMode";
     const { t } = useTranslation();
@@ -36,7 +34,7 @@ export default function GhostMode({ ghostMode }: SyncProps) {
             />
 
             <Paper sx={{ p: 1 }} >
-                <Stack direction="row" gap={1.2}>
+                <Stack direction="row" gap={2}>
                     <CheckboxWithLabel
                         htmlFor={`${id}-scroll`}
                         label={t("home.ghost_mode.scroll")}
@@ -58,14 +56,6 @@ export default function GhostMode({ ghostMode }: SyncProps) {
                         label={t("home.ghost_mode.forms")}
                         checked={forms}
                         onChange={setForms}
-                        isFormLabel={true}
-                        disabled={!enabled}
-                    />
-                    <CheckboxWithLabel
-                        htmlFor={`${id}-location`}
-                        label={t("home.ghost_mode.location")}
-                        checked={location}
-                        onChange={setLocation}
                         isFormLabel={true}
                         disabled={!enabled}
                     />

@@ -24,6 +24,11 @@ export default function useBrowsersyncForm() {
             targetDir: directory.path,
             proxyUrl: proxy.url,
             extensions: extensions.items,
+            ghostMode: {
+                scroll: ghostMode.scroll,
+                clicks: ghostMode.clicks,
+                forms: ghostMode.forms,
+            },
         };
 
         const validateDirectory = await directory.validate();
