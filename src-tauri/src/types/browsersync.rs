@@ -28,13 +28,13 @@ impl BrowsersyncParams {
 
         writeln!(out, "extensions: [").unwrap();
         for ext in &self.extensions {
-            writeln!(out, "    \"{}\",", ext).unwrap();
+            writeln!(out, "    \"{ext}\",").unwrap();
         }
         writeln!(out, "]").unwrap();
 
         writeln!(out, "ghost_mode: {{").unwrap();
         for (key, value) in self.ghost_mode.as_map() {
-            writeln!(out, "    {}: {},", key, value).unwrap();
+            writeln!(out, "    {key}: {value},").unwrap();
         }
         writeln!(out, "}}").unwrap();
         writeln!(out, "-------------------------------------").unwrap();
