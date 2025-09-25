@@ -17,8 +17,7 @@ export default function QrCode({ browsersync, qrCode }: QrCodeProps) {
     return (
         <Stack
             alignItems="center"
-            justifyContent="center"
-            sx={{ width: "100%", height: height }}
+            sx={{ width: "100%", height, minHeight: height }}
         >
             {isRunning ?
                 <>
