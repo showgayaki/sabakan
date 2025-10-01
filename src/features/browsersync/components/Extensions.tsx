@@ -6,7 +6,7 @@ import CustomLabel from "@/components/CustomLabel";
 import type { ExtensionsStore } from "@/types/browsersyncForm";
 
 const EXTENSION_GROUPS: string[][] = [
-    [".html", ".htm", ".dwt", ".lbi",],
+    [".html", ".htm", ".xhtml", ".dwt", ".lbi",],
     [".css", ".scss", ".sass", ".less", ".styl"],
     [".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs",],
     [".vue", ".astro", ".svelte",],
