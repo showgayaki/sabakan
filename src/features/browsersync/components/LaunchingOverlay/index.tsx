@@ -57,8 +57,6 @@ export default function LaunchingOverlay({
                     onClick={async () => {
                         console.log("Stop Browsersync clicked");
                         await browsersync.handleStop();
-                        // LogStreamをクリア
-                        logStream.setLines([]);
                     }}
                     disabled={browsersync.status !== "error" && browsersync.status !== "success"}
                 />
