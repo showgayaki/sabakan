@@ -7,6 +7,7 @@ import useExtensions from "./useExtensions";
 import useProxy from "./useProxy";
 import useQrCode from "./LaunchingOverlay/useQrCode";
 import useLogStream from "./LaunchingOverlay/useLogStream";
+import { useEffect } from "react";
 
 export default function useBrowsersyncForm() {
     const directory = useDirectory();
@@ -38,6 +39,12 @@ export default function useBrowsersyncForm() {
             browsersync.handleStart(params);
         }
     }
+
+    useEffect(() => {
+        if (browsersync.status === "idle") {
+            logStream.setLines([]);
+        }
+    }, [browsersync.status]);
 
     return {
         directory,

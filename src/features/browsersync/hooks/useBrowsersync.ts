@@ -38,13 +38,14 @@ export default function useBrowsersync(): BrowsersyncStore {
             console.error("Failed to start Browsersync:", error);
             setStatus("error");
             setStatusMessage("overlay.browsersync.startError");
-            return;
         }
 
         setTimeout(() => {
             setStatusMessage(undefined);
             if (startedSuccessfully) {
                 setIsRunning(true);
+            } else {
+                setStatus("idle");
             }
         }, MESSAGE_DISPLAY_DURATION_MS);
     }
@@ -57,8 +58,8 @@ export default function useBrowsersync(): BrowsersyncStore {
         setIsRunning(false);
         setStatusMessage("overlay.browsersync.stopping");
 
-        await delayMs(1000);
         const result = await stopBrowsersync();
+        await delayMs(500);
 
         if (result) {
             setStatus("success");
