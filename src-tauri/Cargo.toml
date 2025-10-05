@@ -46,3 +46,9 @@ sys-locale = "0.3.2"
 serde_derive = "1.0.219"
 chrono = "0.4.41"
 tauri-plugin-clipboard-manager = "2"
+
+[profile.release]
+strip = "symbols"   # デバッグシンボル削除
+lto = true          # Link Time Optimization 有効
+codegen-units = 1   # 最適化を進める
+opt-level = "z"     # サイズ最適化
